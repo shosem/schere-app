@@ -274,3 +274,7 @@
 - モデル間の正しいアソシエーション
 
 ---
+## 画面遷移図
+[Schere_画面遷移図](https://www.figma.com/design/dLZ0Tlj4gocESDssrxk3AJ/Schere-%E7%94%BB%E9%9D%A2%E9%81%B7%E7%A7%BB%E5%9B%B3-260529?node-id=0-1&p=f&t=Ho25bnyNCOcue6kL-0)
+
+---
