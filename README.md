@@ -279,6 +279,6 @@
 
 ## ER図
 
-[Schere_ER_diagram](https://raw.githubusercontent.com/shosem/schere-app/images/ERD.png)
+[Schere_ER_diagram](https://drive.google.com/file/d/1fOK17w2h4PzbChYna3Uq8jVbRlWAatlT/view?usp=sharing)
 
 ---
