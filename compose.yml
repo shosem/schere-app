@@ -18,9 +18,10 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
-    command: bash -c "yarn build --watch & yarn build:css --watch & bundle exec rails server -b 0.0.0.0"
+    command: bash -c "rm -f tmp/pids/server.pid && yarn build --watch & yarn build:css --watch & bundle exec rails server -b 0.0.0.0"
     volumes:
       - .:/app
+      - bundle_data:/usr/local/bundle
     ports:
       - "3000:3000"
     environment:
@@ -32,3 +33,4 @@ services:
 
 volumes:
   postgres_data:
+  bundle_data:
