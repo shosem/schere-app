@@ -26,9 +26,7 @@ RSpec.describe User, type: :model do
 
     it 'メールアドレスが重複する場合' do
       user1 = create(:user)
-      pp user1.email
       user2 = build(:user, name: "dup_user", email: user1.email)
-      pp user2.email
       expect(user2).to be_invalid
     end
   end
