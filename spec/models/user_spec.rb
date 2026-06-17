@@ -7,7 +7,6 @@ RSpec.describe User, type: :model do
       expect(user).to be_valid
     end
   end
-  
   context '作成失敗' do
     it '名前が空白の場合' do
       user = build(:user, name: "")
