@@ -35,7 +35,7 @@ module App
       g.assets false    # css,javascriptファイルを作成しない
       g.helper false    # helperファイルを作成しない
       g.test_framework false  # テストファイルを作成しない
-      g.factory_bot dir: 'spec/factories'
+      g.factory_bot dir: "spec/factories"
     end
 
     # Configuration for the application, engines, and railties goes here.
