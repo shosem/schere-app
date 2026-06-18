@@ -1,3 +1,8 @@
 <h1><%= t('.title') %></h1>
 <p><%= t('.description') %></p>
 <p>現在のテーブルは<%= ActiveRecord::Base.connection.tables %>だよ</p>
+<% if signed_in? %>
+  <%= link_to 'ログアウト', destroy_user_session_path, data: { turbo_method: :delete } %>
+<% else %>
+  <%= link_to '新規登録', new_user_registration_path %>
+<% end %>
