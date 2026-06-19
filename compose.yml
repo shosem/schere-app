@@ -30,6 +30,7 @@ services:
       DATABASE_URL: ${DATABASE_URL}
       RAILS_ENV: development
       SELENIUM_DRIVER_URL: ${SELENIUM_DRIVER_URL}
+      TEST_DATABASE_URL: ${TEST_DATABASE_URL}
     depends_on:
       db:
         condition: service_healthy
