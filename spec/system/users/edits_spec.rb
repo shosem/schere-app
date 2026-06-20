@@ -57,7 +57,7 @@ RSpec.describe "Edits", type: :system do
       page.accept_confirm do
         click_on "アカウント削除"
       end
-      expect(page).to have_current_path(edit_user_registration_path)
+      expect(page).to have_current_path(root_path)
       only_login(user)
       expect(page).to have_current_path(new_user_session_path)
       expect(page).to have_content("Eメールまたはパスワードが違います。")
