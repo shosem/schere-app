@@ -22,7 +22,7 @@
 
         <div class="mb-4">
           <p><%= f.label :password, class: "block text-sm font-medium text-gray-700" %></p>
-          <p class="text-sm mb-1">(変更したくない場合は空白のままページを離れてください)</p>
+          <p class="text-sm mb-1">(変更したくない場合は空白にしてください)</p>
           <p><%= f.password_field :password, autocomplete: "new-password", class: "w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" %></p>
           <% if @minimum_password_length %>
             <p class="text-sm text-red-500">※<%= @minimum_password_length %>文字以上</p>
