@@ -6,7 +6,7 @@
 
   <div class="w-full md:w-1/2 flex items-center justify-center bg-white p-6 md:p-12">
     <div class="w-full max-w-sm">
-      <h2 class="text-2xl font-bold text-gray-800 mb-6">ユーザー情報の編集</h2>
+      <h2 class="text-2xl font-bold text-gray-800 mb-6">アカウント情報の変更</h2>
       
       <%= form_with(model: resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
         <%= render "users/shared/error_messages", resource: resource %>
@@ -46,6 +46,6 @@
         <div class="flex-grow border-t border-gray-200"></div>
       </div>
 
-       <%= button_to t("devise.registrations.edit.cancel_my_account"), registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete, class: "w-full bg-red-500 text-white rounded-lg border border-transparent hover:bg-white hover:text-red-500 hover:border hover:border-red-500" %>
+       <%= button_to t("devise.registrations.edit.cancel_my_account"), registration_path(resource_name), data: { confirm: t("devise.registrations.edit.are_you_sure"), turbo_confirm: t("devise.registrations.edit.are_you_sure") }, method: :delete, class: "w-full bg-red-500 text-white rounded-lg border border-transparent hover:bg-white hover:text-red-500 hover:border hover:border-red-500" %>
 
        <%= link_to "戻る", :back, class: "block w-full mt-4 text-center bg-gray-200 text-black rounded-lg hover:bg- hover:bg-gray-300" %>
