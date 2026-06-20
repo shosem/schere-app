@@ -7,7 +7,7 @@ RSpec.describe "Sessions", type: :system do
     end
 
     let(:user) { create(:user) }
-  
+
     context "ログイン可能" do
       it "ログインできること" do
         fill_in "Eメール", with: user.email
