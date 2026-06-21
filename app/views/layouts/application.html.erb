@@ -23,9 +23,10 @@
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
   </head>
 
-  <body>
+  <body class="pb-16 md:pb-0">
     <%= render 'shared/header' %>
     <%= render 'shared/flash_messages' %>
     <%= yield %>
+    <%= render 'shared/footer' %>
   </body>
 </html>
