@@ -1,4 +1,4 @@
-<footer class="md:hidden fixed bottom-0 inset-x-0 h-20 bg-white border-t border-gray-200 py-4">
+<nav class="md:hidden fixed bottom-0 inset-x-0 h-20 bg-white border-t border-gray-200 py-4" aria-label="モバイルナビ">
   <div class="grid grid-cols-3">
     <% # ダッシュボード %>
     <%= link_to root_path, class: "flex flex-col justify-center items-center" do %>
@@ -21,4 +21,8 @@
       <p class="text-sm text-gray-400 text-center">設定</p>
     <% end %>
   </div>
+</nav>
+
+<footer class="hidden md:block border-t border-gray-200 py-6 text-center text-sm text-gray-400">
+  © 2026 Schere
 </footer>
