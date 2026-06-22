@@ -1,13 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe "Headers", type: :system do
-
   include LoginMacros
 
   describe "ログイン状態によるヘッダーの画面表示" do
-  
     context "ログイン時" do
-
       let(:user) { create(:user) }
 
       before do
