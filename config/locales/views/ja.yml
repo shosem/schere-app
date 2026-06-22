@@ -10,5 +10,5 @@ ja:
       logout: ログアウト
       create_user: 新規登録
     footer:
-      dashbord: "ダッシュボード"
+      dashboard: "ダッシュボード"
       edit: "設定"
