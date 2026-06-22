@@ -10,9 +10,9 @@
           <%= current_user.name.first %>                                                                                                                                                   
         </button>
         <div data-dropdown-target="menu" class="absolute hidden top-full right-0 w-44 bg-white border border-gray-200 rounded-lg shadow-lg py-1">
-          <%= link_to "グループ作成", "#", class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" %>
+          <%= link_to t('.create_group'), "#", class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" %>
           <div>
-            <%= button_to "ログアウト", destroy_user_session_path, method: :delete,                                                                                                            
+            <%= button_to t('.logout'), destroy_user_session_path, method: :delete,                                                                                                            
                 class: "px-4 py-2 text-sm font-medium text-red-500 hover:bg-gray-50" %>
           </div>
         </div>
@@ -20,9 +20,9 @@
     <% else %>                                                                                                                                                                             
       <%# 非ログイン時 %>                                                                                                                                                                  
       <nav class="flex items-center gap-4">                                                                                                                                                
-        <%= link_to "ログイン", new_user_session_path,                                                                                                                                     
+        <%= link_to t('.login'), new_user_session_path,                                                                                                                                     
               class: "text-sm font-medium text-gray-600 hover:text-gray-900" %>                                                                                                            
-        <%= link_to "新規登録", new_user_registration_path,                                                                                                                                
+        <%= link_to t('.create_user'), new_user_registration_path,                                                                                                                                
               class: "text-sm font-medium px-4 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600" %>                                                                                
       </nav>                                                                                                                                                                               
    <% end %>                                                                                                                                                                              
