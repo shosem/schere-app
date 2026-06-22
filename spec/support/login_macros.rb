@@ -3,7 +3,7 @@ module LoginMacros
     visit new_user_session_path
     fill_in 'Eメール', with: user.email
     fill_in 'パスワード', with: "pass"
-    click_on 'ログイン'
+    find('input[type="submit"]').click
     expect(page).to have_content("ログインしました。")
   end
 
@@ -11,6 +11,6 @@ module LoginMacros
     visit new_user_session_path
     fill_in 'Eメール', with: user.email
     fill_in 'パスワード', with: "pass"
-    click_on 'ログイン'
+    find('input[type="submit"]').click
   end
 end
