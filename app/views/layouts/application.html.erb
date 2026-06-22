@@ -23,8 +23,14 @@
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
   </head>
 
-  <body>
+  <body class="min-h-screen flex flex-col pb-20 md:pb-0">
+    <%= render 'shared/header' %>
     <%= render 'shared/flash_messages' %>
-    <%= yield %>
+
+    <main class="flex-grow">      <%# コンテンツをここで包んで伸ばす %>
+      <%= yield %>
+    </main> 
+
+    <%= render 'shared/footer' %>
   </body>
 </html>

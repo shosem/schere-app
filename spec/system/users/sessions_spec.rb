@@ -12,7 +12,7 @@ RSpec.describe "Sessions", type: :system do
       it "ログインできること" do
         fill_in "Eメール", with: user.email
         fill_in "パスワード", with: "pass"
-        click_on "ログイン"
+        find('input[type="submit"]').click
         expect(page).to have_current_path(root_path)
         expect(page).to have_content("ログインしました。")
       end
@@ -22,7 +22,7 @@ RSpec.describe "Sessions", type: :system do
       it "間違ったメールアドレスを入力するとログインできないこと" do
         fill_in "Eメール", with: "non-#{user.email}"
         fill_in "パスワード", with: "pass"
-        click_on "ログイン"
+        find('input[type="submit"]').click
         expect(page).to have_current_path(new_user_session_path)
         expect(page).to have_content("Eメールまたはパスワードが違います。")
       end
@@ -30,7 +30,7 @@ RSpec.describe "Sessions", type: :system do
       it "間違ったパスワードを入力するとログインできないこと" do
         fill_in "Eメール", with: user.email
         fill_in "パスワード", with: "nonpass"
-        click_on "ログイン"
+        find('input[type="submit"]').click
         expect(page).to have_current_path(new_user_session_path)
         expect(page).to have_content("Eメールまたはパスワードが違います。")
       end
