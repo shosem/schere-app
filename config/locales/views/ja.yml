@@ -12,3 +12,7 @@ ja:
     footer:
       dashboard: "ダッシュボード"
       edit: "設定"
+  groups:
+    new:
+      create: グループを作成する
+      submit: 作成

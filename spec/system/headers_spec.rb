@@ -19,7 +19,7 @@ RSpec.describe "Headers", type: :system do
       it "名前の頭文字のアイコンをクリックし、開いたドロップダウンメニューからログアウトできること" do
         click_button(user.name.first)
         click_on("ログアウト")
-        expect(page).to have_current_path(root_path)
+        expect(page).to have_current_path(new_user_session_path)
         expect(page).to have_content("ログアウトしました")
         expect(page).to have_link("ログイン")
       end
