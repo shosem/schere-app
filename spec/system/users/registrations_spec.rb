@@ -14,7 +14,7 @@ RSpec.describe "Registrations", type: :system do
         fill_in "パスワード（確認用）", with: "password"
         click_on "保存する"
         expect(page).to have_current_path(root_path)
-        expect(page).to have_content("トップページ")
+        expect(page).to have_content("アカウント登録が完了しました")
       end
     end
 

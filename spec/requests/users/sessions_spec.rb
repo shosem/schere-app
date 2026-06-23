@@ -14,7 +14,7 @@ RSpec.describe "User::Sessions", type: :request do
     it "ログアウトできること" do
       sign_in user
       delete destroy_user_session_path
-      expect(response).to redirect_to(root_path)
+      expect(response).to redirect_to(new_user_session_path)
     end
   end
 end
