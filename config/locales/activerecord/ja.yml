@@ -1,1 +1,8 @@
 ja:
+  activerecord:
+    models:
+      user: "ユーザー"
+      group: "グループ"
+    attributes:
+      group:
+        name: "グループ名"
