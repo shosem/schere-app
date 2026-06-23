@@ -4,7 +4,7 @@
       <h2 class="text-4xl text-gray-800 font-bold">こんにちは、<%= current_user.name %>さん！</h2>
       <p class="text-sm text-gray-400">予定を管理しましょう！</p>
     </div>
-    <%= link_to "＋ グループ作成", "#", class: "text-center bg-blue-500 hover:bg-blue-600 text-white font-semibold p-3 rounded-xl transition" %>
+    <%= link_to "＋ グループ作成", new_group_path, class: "text-center bg-blue-500 hover:bg-blue-600 text-white font-semibold p-3 rounded-xl transition" %>
   </div>
 
   <% if @groups.present? %>
