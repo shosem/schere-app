@@ -1,0 +1,22 @@
+<div>
+  <div class="flex justify-between items-center">
+    <div>
+      <h2 class="text-4xl text-gray-800 font-bold">こんにちは、<%= current_user.name %>さん！</h2>
+      <p class="text-sm text-gray-400">予定を管理しましょう！</p>
+    </div>
+    <%= link_to "＋ グループ作成", "#", class: "text-center bg-blue-500 hover:bg-blue-600 text-white font-semibold p-3 rounded-xl transition" %>
+  </div>
+
+  <% if @groups.present? %>
+
+    <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <% @groups.each do |group| %>
+        <div class="bg-white rounded-2xl shadow-sm p-5">
+          <%= group.name %>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <p>まだグループはありません</p>
+  <% end %>
+</div>
