@@ -12,5 +12,4 @@ class Group < ApplicationRecord
     end
     self.join_token = token
   end
-
 end
