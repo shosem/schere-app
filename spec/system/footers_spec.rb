@@ -34,7 +34,7 @@ RSpec.describe "Footers", type: :system do
 
     context "PCレイアウトの場合" do
       before do
-        page.current_window.resize_to(1680,1050)
+        page.current_window.resize_to(1680, 1050)
         login(user)
       end
 
@@ -62,7 +62,6 @@ RSpec.describe "Footers", type: :system do
   end
 
   describe "認証画面のフッター表示" do
-
     context "新規作成画面の場合" do
       before do
         visit new_user_registration_path
