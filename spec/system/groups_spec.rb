@@ -7,7 +7,7 @@ RSpec.describe "Groups", type: :system do
     login(user)
   end
 
-  describe "作成機能" do
+  describe "作成機能(new create)" do
     before do
       visit new_group_path
     end
@@ -32,7 +32,7 @@ RSpec.describe "Groups", type: :system do
     end
   end
 
-  describe "一覧表示" do
+  describe "一覧表示(index)" do
     it "自分のグループが0件のとき、グループが無い旨を表示する" do
       visit root_path
       expect(page).to have_content("まだグループはありません")
@@ -54,13 +54,27 @@ RSpec.describe "Groups", type: :system do
     end
   end
 
-  describe "詳細画面" do
+  describe "詳細(show)" do
     it "一覧画面から該当グループの詳細画面に遷移できること" do
       create(:group, user: user)
       other_group = create(:group, user: user)
       visit groups_path
       click_on other_group.name
       expect(page).to have_current_path(group_path(other_group))
+      expect(page).to have_content(other_group.name)
+    end
+  end
+
+  describe "削除機能(destroy)" do
+    it "削除ボタンからグループを削除できること" do
+      group = create(:group, user: user)
+      other_group = create(:group, user: user)
+      visit group_path(group)
+      page.accept_confirm do
+        click_on "グループを削除"
+      end
+      expect(page).to have_current_path(root_path)
+      expect(page).to have_no_content(group.name)
       expect(page).to have_content(other_group.name)
     end
   end
