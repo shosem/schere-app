@@ -1,5 +1,6 @@
 class GroupsController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_group, only: %i[ show destroy ]
   def index
     @groups = current_user.groups
   end
@@ -18,13 +19,20 @@ class GroupsController < ApplicationController
     end
   end
 
-  def show
-    @group = current_user.groups.find(params[:id])
+  def show; end
+
+  def destroy
+    @group.destroy!
+    redirect_to root_path, status: :see_other, notice: "グループを削除しました"
   end
 
   private
 
   def group_params
     params.require(:group).permit(:name)
+  end
+
+  def set_group
+    @group = current_user.groups.find(params[:id])
   end
 end
