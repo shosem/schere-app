@@ -53,4 +53,15 @@ RSpec.describe "Groups", type: :system do
       expect(page).not_to have_content(other_group.name)
     end
   end
+
+  describe "詳細画面" do
+    it "一覧画面から該当グループの詳細画面に遷移できること" do
+      create(:group, user: user)
+      other_group = create(:group, user: user)
+      visit groups_path
+      click_on other_group.name
+      expect(page).to have_current_path(group_path(other_group))
+      expect(page).to have_content(other_group.name)
+    end
+  end
 end
