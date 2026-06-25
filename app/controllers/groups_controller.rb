@@ -18,6 +18,10 @@ class GroupsController < ApplicationController
     end
   end
 
+  def show
+    @group = current_user.groups.find(params[:id])
+  end
+
   private
 
   def group_params
