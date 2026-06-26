@@ -1,11 +1,12 @@
 class Group < ApplicationRecord
   belongs_to :user
+  has_many :guests, dependent: :destroy
 
   validates :name, presence: true
-  before_create :generate_token
+  before_create :generate_join_token
 
   private
-  def generate_token
+  def generate_join_token
     token = SecureRandom.urlsafe_base64(16)
     while Group.exists?(join_token: token)
       token = SecureRandom.urlsafe_base64(16)
