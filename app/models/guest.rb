@@ -11,5 +11,5 @@ class Guest < ApplicationRecord
       token = SecureRandom.urlsafe_base64(16)
     end
     self.session_token = token
-  end 
+  end
 end
