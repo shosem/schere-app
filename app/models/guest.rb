@@ -1,7 +1,6 @@
 class Guest < ApplicationRecord
   belongs_to :group
   validates :name, length: { maximum: 10 }, presence: true
-  validates :session_token
   before_create :generate_session_token
 
   private
