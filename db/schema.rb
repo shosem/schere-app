@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_22_083618) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_26_064318) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -22,6 +22,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_22_083618) do
     t.bigint "user_id"
     t.index ["join_token"], name: "index_groups_on_join_token", unique: true
     t.index ["user_id"], name: "index_groups_on_user_id"
+  end
+
+  create_table "guests", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "group_id", null: false
+    t.string "name", null: false
+    t.string "session_token", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_guests_on_group_id"
+    t.index ["name", "group_id"], name: "index_guests_on_name_and_group_id", unique: true
+    t.index ["session_token"], name: "index_guests_on_session_token", unique: true
   end
 
   create_table "users", force: :cascade do |t|
@@ -38,4 +49,5 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_22_083618) do
   end
 
   add_foreign_key "groups", "users"
+  add_foreign_key "guests", "groups"
 end
