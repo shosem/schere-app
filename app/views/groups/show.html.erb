@@ -3,14 +3,14 @@
     <div>
       <h2 class="text-xl md:text-4xl text-gray-800 font-bold"><%= @group.name %></h2>
     </div>
-    <%= link_to "＋ イベント作成", "#", class: "text-center bg-blue-500 hover:bg-blue-600 text-white font-semibold p-2 md:p-3 rounded-xl transition" %>
+    <%= link_to "＋ イベント作成", "#", class: "btn btn-primary" %>
   </div>
 
   <div class="mt-4 bg-gray-50 flex-grow flex flex-col p-4">
     <% if @events.present? %>
       <div class="mt-4 space-y-4">
         <% @events.each do |event| %>
-          <div class="bg-white rounded-2xl shadow-sm p-5">
+          <div class="card">
             <%= event.title %>
           </div>
         <% end %>
@@ -19,5 +19,5 @@
       <p class="mt-4 flex-grow flex items-center justify-center text-gray-400">まだイベントはありません</p>
     <% end %>
   </div>
-  <%= link_to "グループを削除", group_path(@group), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, class: "mt-4 text-center self-end bg-red-500 hover:bg-red-600 text-white font-semibold p-2 md:p-3 rounded-xl transition" %>
+  <%= link_to "グループを削除", group_path(@group), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, class: "mt-4 self-end btn btn-danger" %>
 </div>
