@@ -15,5 +15,9 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "groups#index"
 
+  # join_tokenによるゲストログイン
+  get 'join/:join_token', to: 'guest_sessions#new_by_token', as: :new_group_join
+  post 'join/:join_token', to: 'guest_sessions#create_by_token', as: :group_join
+
   resources :groups, only: %i[ index new create show destroy ]
 end
