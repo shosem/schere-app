@@ -6,3 +6,5 @@ ja:
     attributes:
       group:
         name: "グループ名"
+      guest:
+        name: "ゲスト名"

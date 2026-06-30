@@ -19,5 +19,5 @@ ja:
   guest_sessions:
     new_by_token:
       title: "ゲスト参加"
-      name: "名前"
+      name: "ゲスト名"
       submit: "参加する"
