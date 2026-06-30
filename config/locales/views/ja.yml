@@ -16,3 +16,8 @@ ja:
     new:
       create: グループを作成する
       submit: 作成
+  guest_sessions:
+    new_by_token:
+      title: "ゲスト参加"
+      name: "名前"
+      submit: "参加する"
