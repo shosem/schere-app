@@ -5,7 +5,7 @@
   </div>
   <div class="flex-grow flex flex-col justify-center items-center">
     <div class="w-full max-w-3xl mx-auto card">
-      <%= form_with model: @guest, url: group_join_path do |f| %>
+      <%= form_with model: @guest, url: group_join_path(@group.join_token) do |f| %>
         <%= render "shared/error_messages", resource: @guest %>
       <div>
         <%= f.label :name,  class: "block text-sm font-medium text-gray-700 mb-1" %>
