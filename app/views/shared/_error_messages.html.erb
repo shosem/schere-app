@@ -1,0 +1,9 @@
+<% if resource.errors.any? %>
+  <div id="error_explanation" data-turbo-temporary>
+    <ul class="bg-red-50 text-red-800 border-red-200 p-1 mb-1 rounded-lg">
+      <% resource.errors.full_messages.each do |message| %>
+        <li>・<%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
