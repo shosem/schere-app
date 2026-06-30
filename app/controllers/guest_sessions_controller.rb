@@ -7,10 +7,14 @@ class GuestSessionsController < ApplicationController
 
   def create_by_token
     @guest = Guest.find_or_initialize_by(group_id: @group.id, name: params[:guest][:name])
-    @guest.save! if @guest.new_record?
 
-    session[:guest_token] = @guest.session_token
-    redirect_to group_path(@group), notice: "#{@group.name}に#{@guest.name}さんとして入室しました"
+    if @guest.persisted? || @guest.save
+      session[:guest_token] = @guest.session_token
+      redirect_to group_path(@group), notice: "#{@group.name}に#{@guest.name}さんとして入室しました"
+    else
+      flash.now[:danger] = "入室できませんでした"
+      render :new_by_token, status: :unprocessable_entity
+    end
   end
 
   private
