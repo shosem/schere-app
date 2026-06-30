@@ -40,7 +40,7 @@ class GroupsController < ApplicationController
 
   # 未ログインの人を省く
   def signed_in!
-    redirect_to new_user_session_path, notice: "ログインするか、ゲスト入室リンクから入室してください" unless current_user || current_guest 
+    redirect_to new_user_session_path, notice: "ログインするか、ゲスト入室リンクから入室してください" unless current_user || current_guest
   end
 
   # ログイン中のユーザー、もしくはゲストが、そのグループに紐づいているか
