@@ -45,5 +45,41 @@ RSpec.describe "Headers", type: :system do
         expect(page).to have_no_button(user.name.first)
       end
     end
+
+    context "ゲスト入室時" do
+      let(:group) { create(:group) }
+      before do
+        visit new_group_join_path(group.join_token)
+        fill_in "ゲスト名", with: "テストさん"
+        click_on "参加する"
+      end
+
+      it "ロゴがリンク化されていないこと" do
+        expect(page).to have_no_link("Schere")
+      end
+
+      it "グループ名が表示されていること" do
+        expect(page).to have_content(group.name), match: :first
+      end
+
+      it "ゲスト名が表示されていること" do
+        expect(page).to have_content("テストさん"), match: :first
+      end
+    end
+
+    context "ゲスト入室後、ユーザーとしてログインした場合" do
+      let(:group) { create(:group) }
+      before do
+        visit new_group_join_path(group.join_token)
+        fill_in "ゲスト名", with: "テストさん"
+        click_on "参加する"
+      end
+
+      it "ログイン時のヘッダーが表示されること" do
+        login(user)
+        expect(page).to have_button(user.name.first)
+        expect(page).to have_no_link("ログイン")
+      end
+    end
   end
 end
