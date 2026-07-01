@@ -1,0 +1,23 @@
+<div class="min-h-[80vh] flex flex-col">
+  <div>
+    <h2 class="text-4xl text-gray-800 font-bold"><%= t('.title') %></h2>
+    <p class="mt-2 text-sm text-gray-400">ゲスト名を入力して、グループに参加しましょう！</p>
+  </div>
+  <div class="flex-grow flex flex-col justify-center items-center">
+    <div class="w-full max-w-3xl mx-auto card">
+      <%= form_with model: @guest, url: group_join_path(@group.join_token) do |f| %>
+        <%= render "shared/error_messages", resource: @guest %>
+      <div>
+        <%= f.label :name,  class: "block text-sm font-medium text-gray-700 mb-1" %>
+        <%= f.text_field :name, class: "w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400" %>
+      </div>
+
+      <%= f.submit t('.submit'), class: "mt-4 w-full btn btn-primary py-2" %>
+      <% end %>
+    </div>
+    <div class="card mt-4 bg-yellow-400">
+      <p>※名前によってゲストを識別するため、覚えやすい名前にしてください</p>
+      <p>※一度入室したことのある方は、そのときの名前で入室してください</p>
+  </div>
+  </div>
+</div>
