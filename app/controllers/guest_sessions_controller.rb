@@ -1,5 +1,6 @@
 class GuestSessionsController < ApplicationController
   before_action :set_group
+  before_action :redirect_if_joined, only: :new_by_token
 
   def new_by_token
     @guest = Guest.new
@@ -21,5 +22,11 @@ class GuestSessionsController < ApplicationController
 
   def set_group
     @group = Group.find_by!(join_token: params[:join_token])
+  end
+
+  def redirect_if_joined
+    if current_guest && current_guest&.group_id == @group.id
+      redirect_to group_path(@group)
+    end
   end
 end
