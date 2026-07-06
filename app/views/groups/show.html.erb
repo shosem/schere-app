@@ -3,7 +3,15 @@
     <div>
       <h2 class="text-xl md:text-4xl text-gray-800 font-bold"><%= @group.name %></h2>
     </div>
-    <%= link_to "＋ イベント作成", "#", class: "btn btn-primary" %>
+    <div data-controller="share" data-share-url-value="<%= new_group_join_url(@group.join_token) %>" 
+                                 data-share-name-value="<%= @group.name %>"
+                                 class="flex flex-col items-end">
+      <div>
+        <%= link_to "＋ イベント作成", "#", class: "btn btn-primary" %>
+        <button data-action="click->share#share" class="btn text-gray-800 border border-gray-800 hover:bg-gray-200">共有</button>
+      </div>
+      <p data-share-target="sharedMessage" class="px-2 rounded-xl"></p>
+    </div>
   </div>
 
   <div class="mt-4 bg-gray-50 flex-grow flex flex-col p-4">

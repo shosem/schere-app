@@ -2,6 +2,16 @@ require 'rails_helper'
 
 RSpec.describe "Groups", type: :system do
   include LoginMacros
+
+  def stab_share(js_return)
+    page.execute_script(<<~JS)
+      navigator.share = () => {
+        window.__shared = true;
+        return #{js_return}
+    }
+    JS
+  end
+
   let(:user) { create(:user) }
   before do
     login(user)
@@ -52,16 +62,55 @@ RSpec.describe "Groups", type: :system do
       visit root_path
       expect(page).not_to have_content(other_group.name)
     end
-  end
 
-  describe "詳細(show)" do
     it "一覧画面から該当グループの詳細画面に遷移できること" do
-      create(:group, user: user)
+      group = create(:group, user: user)
       other_group = create(:group, user: user)
       visit groups_path
       click_on other_group.name
       expect(page).to have_current_path(group_path(other_group))
       expect(page).to have_content(other_group.name)
+    end
+  end
+
+  describe "詳細(show)" do
+    let(:group) { create(:group, user: user) }
+
+    describe "共有ボタン" do
+      context "共有成功" do
+        it "共有ボタンを押すとリンクを共有する関数が呼ばれ成功用のテキストが表示されること" do
+          visit group_path(group)
+          page.execute_script("navigator.share = ()=> { window.__shared = true; return Promise.resolve() }")
+          click_on "共有"
+          expect(page).to have_content("成功しました")
+          expect(evaluate_script("window.__shared")).to eq true
+        end
+
+        it "正しいjoin_tokenを含むurlが、erbからstimulusへ渡されていること" do
+          visit group_path(group)
+          element = find("[data-controller='share']")
+          expect(element["data-share-url-value"]).to end_with(new_group_join_path(group.join_token))
+        end
+      end
+
+      context "共有失敗" do
+        it "共有ボタンを押すとリンクを共有する関数が呼ばれ失敗用のテキストが表示されること" do
+          visit group_path(group)
+          stab_share("Promise.reject(new Error())")
+          click_on "共有"
+          expect(page).to have_content("失敗しました")
+          expect(evaluate_script("window.__shared")).to eq true
+        end
+
+        it "キャンセルした場合、成功・失敗のテキストは表示されないこと" do
+          visit group_path(group)
+          stab_share("Promise.reject(new DOMException('canceled', 'AbortError'))")
+          click_on "共有"
+          expect(page).to have_no_content("成功しました", wait: 0)
+          expect(page).to have_no_content("失敗しました", wait: 0)
+          expect(evaluate_script("window.__shared")).to eq true
+        end
+      end
     end
   end
 
