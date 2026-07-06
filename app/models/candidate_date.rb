@@ -1,0 +1,2 @@
+class CandidateDate < ApplicationRecord
+end
