@@ -85,6 +85,12 @@ RSpec.describe "Groups", type: :system do
           expect(page).to have_content("成功しました")
           expect(evaluate_script("window.__shared")).to eq true
         end
+
+        it "正しいjoin_tokenを含むurlが、erbからstimulusへ渡されていること" do
+          visit group_path(group)
+          element = find("[data-controller='share']")
+          expect(element["data-share-url-value"]).to end_with(new_group_join_path(group.join_token))
+        end
       end
 
       context "共有失敗" do
