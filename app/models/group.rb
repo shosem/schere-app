@@ -1,6 +1,7 @@
 class Group < ApplicationRecord
   belongs_to :user
   has_many :guests, dependent: :destroy
+  has_many :events, dependent: :destroy
 
   validates :name, presence: true
   before_create :generate_join_token
