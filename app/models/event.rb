@@ -10,4 +10,5 @@ class Event < ApplicationRecord
 
   validates :title, presence: true, length: { maximum: 25 }
   validates :description, length: { maximum: 10_000 }
+  validates :candidate_dates, presence: true
 end
