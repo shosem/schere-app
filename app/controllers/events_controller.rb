@@ -7,6 +7,7 @@ class EventsController < ApplicationController
 
   def create
     @event = @group.events.build(event_paramas)
+    @event.user = current_user
     if @event.save
       redirect_to group_path(@group), notice: "イベントを作成しました"
     else
@@ -18,7 +19,7 @@ class EventsController < ApplicationController
   private
 
   def event_paramas
-    params.require(:event).parmit(:title, :description, :loaction, candidate_dates_attributes: [:id, :date, :start_time, :end_time])
+    params.require(:event).permit(:title, :description, :location, candidate_dates_attributes: [:id, :date, :start_time, :end_time])
   end
 
   def set_group
