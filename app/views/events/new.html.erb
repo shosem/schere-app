@@ -22,28 +22,41 @@
           <%= f.text_area :description, rows: 8,  class: "w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400" %>
         </div>
 
-        <% # 候補日の入力 %>
+        <% # 候補日の追加UI %>
 
-        <div class="flex flex-col">
-          <%= f.fields_for :candidate_dates do |cd| %>
+          <div class="mt-4 w-full bg-gray-200 flex flex-col items-center">
+            <p>候補日の追加</p>
 
-            <div class="mt-4">
-              <%= cd.label :date, class: "block text-sm font-medium text-gray-700 mb-1" %>
-              <%= cd.date_field :date, class: "w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400" %>
+            <div class="flex justify-between">
+              <% # カレンダー操作ボタン %>
+              <button type="button">＜</button>
+              <span></span>
+              <button type="button">＞</button>
             </div>
 
-            <div class="mt-4">
-              <%= cd.label :start_time %>
-              <%= cd.time_field :start_time, class: "w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400" %>
+            <div>
+              <% # カレンダー %>
             </div>
 
-            <div class="mt-4">
-              <%= cd.label :end_time %>
-              <%= cd.time_field :end_time, class: "w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400" %>
+            <small>日付をタップして選択</small>
+
+            <p>選択済みの日程</p>
+            <div>
+              <input type="time" min="00:00" max="23:59">
+              <input type="time" min="00:00" max="23:59">
             </div>
 
-          <% end %>
-        </div>
+            <div>
+              <% # 選択済みの日程を追加するリスト %>
+            </div>
+
+            <div>
+              <% # 隠しフィールド。ここからデータを送信する %>
+            </div>
+            
+          </div>
+
+
 
       
         <%= f.submit t('.submit'), class: "mt-4 w-full btn btn-primary py-2" %>
