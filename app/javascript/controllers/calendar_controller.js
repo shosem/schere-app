@@ -27,6 +27,25 @@ export default class extends Controller {
 
   }
 
+  toggle(e) {
+    e.preventDefault()
+    const clickedDate = e.currentTarget.dataset.date
+
+    // 選択済みにあるかどうか
+    if (this.selected.has(clickedDate)){
+
+      // ある場合は削除
+      this.selected.delete(clickedDate)
+
+    } else {
+
+      // ない場合は追加
+      this.selected.set(clickedDate, { startTime: "", endTime: "" })
+    }
+    console.log(this.selected)
+    this.renderCalendar()
+  }
+
   // カレンダー表示関数
   renderCalendar() {
     this.monthLabelTarget.textContent = `${this.year}年${MONTHS[this.month]}`
@@ -60,20 +79,23 @@ export default class extends Controller {
       const targetDate = toDateStr(this.year, this.month, d)
 
       let cls = ""
+        // 過去
         if(targetDate < today) {
         // グレー＋押せない
           cls = "bg-gray-300"
 
-        } else if(this.selected.has(targetDate)){
         // 選択済み
+        } else if(this.selected.has(targetDate)){
+        
           cls = "bg-blue-500 text-white font-bold cursor-pointer"
 
+        // 今日
         } else if(targetDate === today){
         // アクセント
           cls = "text-blue-500 font-semibold hover:bg-blue-50 cursor-pointer"
         
+        // 通常
         } else {
-          // 通常
           cls = "text-gray-700 hover:bg-gray-100 cursor-pointer"
         }
 
