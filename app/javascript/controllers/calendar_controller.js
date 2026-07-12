@@ -48,6 +48,30 @@ export default class extends Controller {
     this.renderSelected()
   }
 
+  // 入力した時間を更新する関数
+  updateTime(e){
+
+    // 変更があった日付と値を取得
+    const { date, field } = e.currentTarget.dataset
+    const changedValue = e.currentTarget.value
+
+    // 変更があった日付のMapの要素を取得
+    const times = this.selected.get(date)
+    if (field === "start"){
+      times.startTime = changedValue
+    } else {
+      times.endTime = changedValue
+    }
+  }
+
+  // 削除機能
+  removeDate(e){
+    const date = e.currentTarget.dataset.date
+    this.selected.delete(date)
+    this.renderCalendar()
+    this.renderSelected()
+  }
+
   // カレンダー表示関数
   renderCalendar() {
     this.monthLabelTarget.textContent = `${this.year}年${MONTHS[this.month]}`
@@ -111,21 +135,31 @@ export default class extends Controller {
     this.gridTarget.innerHTML = html
   }
 
+  // 選択済みの日付を表示する関数
   renderSelected(){
 
+    // 空のhtml用意
     let html = ""
 
+    // 選択済みが空なら文章を出す
     if (this.selected.size === 0) {
       this.selectedListTarget.textContent = "候補日が選択されていません"
       return
     }
 
+    // 選択済みの日付を配列にして昇順にする
     const selectedDays = [...this.selected.keys()].sort()
-
-    console.log(`選択したのはー${selectedDays}`)
     
+    // 配列の要素を一個ずつ表示。timeの入力欄も。
     selectedDays.forEach((sd) => {
-      html += `<div>${sd}</div>`
+      const { startTime, endTime } = this.selected.get(sd)
+
+      html += `<div>
+                 ${sd}
+                 <input type="time" value="${startTime}" data-date="${sd}" data-field="start" data-action='change->calendar#updateTime'>
+                 <input type="time" value="${endTime}" data-date="${sd}" data-field="end" data-action='change->calendar#updateTime'>
+                 <button type="button" data-date="${sd}" data-action='click->calendar#removeDate' class="border px-2">x</button>
+              </div>`
     })
 
     this.selectedListTarget.innerHTML = html
