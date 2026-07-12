@@ -23,6 +23,7 @@ export default class extends Controller {
   connect() {
     console.log("calendar connected!")
     this.renderCalendar()
+    this.renderSelected()
     console.log(toDateStr(this.year, this.month, 1))
 
   }
@@ -44,6 +45,7 @@ export default class extends Controller {
     }
     console.log(this.selected)
     this.renderCalendar()
+    this.renderSelected()
   }
 
   // カレンダー表示関数
@@ -107,5 +109,25 @@ export default class extends Controller {
     html += "</div>"
   
     this.gridTarget.innerHTML = html
+  }
+
+  renderSelected(){
+
+    let html = ""
+
+    if (this.selected.size === 0) {
+      this.selectedListTarget.textContent = "候補日が選択されていません"
+      return
+    }
+
+    const selectedDays = [...this.selected.keys()].sort()
+
+    console.log(`選択したのはー${selectedDays}`)
+    
+    selectedDays.forEach((sd) => {
+      html += `<div>${sd}</div>`
+    })
+
+    this.selectedListTarget.innerHTML = html
   }
 }
