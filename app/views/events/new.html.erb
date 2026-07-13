@@ -42,8 +42,8 @@
 
             <p>選択済みの日程</p>
             <div>
-              <input type="time" min="00:00" max="23:59">
-              <input type="time" min="00:00" max="23:59">
+              <input type="time" min="00:00" max="23:59" data-field="start" data-action='change->calendar#applyCommonTime'>
+              <input type="time" min="00:00" max="23:59" data-field="end" data-action='change->calendar#applyCommonTime'>
             </div>
 
             <div data-calendar-target="selectedList">

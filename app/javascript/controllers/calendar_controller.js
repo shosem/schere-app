@@ -191,6 +191,7 @@ export default class extends Controller {
     this.selectedListTarget.innerHTML = html
   }
 
+  // 送信用のデータをセット
   syncFields(){
     const selectedDays = [...this.selected.keys()].sort()
     let html = ""
@@ -210,5 +211,27 @@ export default class extends Controller {
     })
 
     this.hiddenContainerTarget.innerHTML = html
+  }
+
+  // 共通時間を設定する関数
+  applyCommonTime(e){
+
+    // フィールド(start or end)と値(時刻)を取得
+    const field = e.currentTarget.dataset.field
+    const value = e.currentTarget.value
+
+    // 空なら早期リターン
+    if(!value) return
+
+    // 選択済みの候補日の、value(startTime, endTime)を更新
+    this.selected.forEach((times) => {
+      if(field === "start"){
+        times.startTime = value
+      } else {
+        times.endTime = value
+      }
+    })
+    this.renderSelected()
+    this.syncFields()
   }
 }
