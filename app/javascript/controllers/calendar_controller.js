@@ -76,6 +76,24 @@ export default class extends Controller {
     this.syncFields()
   }
 
+  prevMonth(){
+    this.month -= 1
+    if(this.month < 0){
+      this.month = 11
+      this.year -= 1
+    }
+    this.renderCalendar()
+  }
+
+  nextMonth(){
+    this.month += 1
+    if(this.month > 11){
+      this.month = 0
+      this.year += 1
+    }
+    this.renderCalendar()
+  }
+
   // カレンダー表示関数
   renderCalendar() {
     this.monthLabelTarget.textContent = `${this.year}年${MONTHS[this.month]}`

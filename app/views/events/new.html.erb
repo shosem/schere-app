@@ -29,9 +29,9 @@
 
             <div class="flex justify-between">
               <% # カレンダー操作ボタン %>
-              <button type="button">＜</button>
+              <button type="button" data-action='click->calendar#prevMonth'>＜</button>
               <span data-calendar-target="monthLabel"></span>
-              <button type="button">＞</button>
+              <button type="button" data-action='click->calendar#nextMonth'>＞</button>
             </div>
 
             <div data-calendar-target="grid">
