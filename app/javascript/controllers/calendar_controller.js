@@ -25,6 +25,7 @@ export default class extends Controller {
     this.renderCalendar()
     this.renderSelected()
     console.log(toDateStr(this.year, this.month, 1))
+    this.syncFields()
 
   }
 
@@ -46,6 +47,7 @@ export default class extends Controller {
     console.log(this.selected)
     this.renderCalendar()
     this.renderSelected()
+    this.syncFields()
   }
 
   // 入力した時間を更新する関数
@@ -62,6 +64,7 @@ export default class extends Controller {
     } else {
       times.endTime = changedValue
     }
+    this.syncFields()
   }
 
   // 削除機能
@@ -70,6 +73,7 @@ export default class extends Controller {
     this.selected.delete(date)
     this.renderCalendar()
     this.renderSelected()
+    this.syncFields()
   }
 
   // カレンダー表示関数
@@ -163,5 +167,26 @@ export default class extends Controller {
     })
 
     this.selectedListTarget.innerHTML = html
+  }
+
+  syncFields(){
+    const selectedDays = [...this.selected.keys()].sort()
+    let html = ""
+    let i = 0
+    selectedDays.forEach((sd) => {
+      const { startTime, endTime } = this.selected.get(sd)
+
+      html += `<input type="hidden" name="event[candidate_dates_attributes][${i}][date]" value="${sd}">`
+
+      if(startTime){
+        html += `<input type="hidden" name="event[candidate_dates_attributes][${i}][start_time]" value="${startTime}">`
+      }
+      if(endTime){
+        html += `<input type="hidden" name="event[candidate_dates_attributes][${i}][end_time]" value="${endTime}">`
+      }
+      i ++
+    })
+
+    this.hiddenContainerTarget.innerHTML = html
   }
 }
