@@ -10,6 +10,11 @@ const toDateStr = (year, month, day) => {
   return `${yyyy}-${mm}-${dd}`
 }
 
+const formatDate = (dateStr) => {
+  const d = new Date(`${dateStr}T00:00:00`)
+  return `${d.getMonth() + 1}月${d.getDate()}日（${DAYS[d.getDay()]}）`
+}
+
 // Connects to data-controller="calendar"
 export default class extends Controller {
   static targets = ["grid", "monthLabel", "selectedList", "hiddenContainer"]
@@ -26,7 +31,6 @@ export default class extends Controller {
     this.renderSelected()
     console.log(toDateStr(this.year, this.month, 1))
     this.syncFields()
-
   }
 
   toggle(e) {
@@ -177,7 +181,7 @@ export default class extends Controller {
       const { startTime, endTime } = this.selected.get(sd)
 
       html += `<div>
-                 ${sd}
+                 ${formatDate(sd)}
                  <input type="time" value="${startTime}" data-date="${sd}" data-field="start" data-action='change->calendar#updateTime'>
                  <input type="time" value="${endTime}" data-date="${sd}" data-field="end" data-action='change->calendar#updateTime'>
                  <button type="button" data-date="${sd}" data-action='click->calendar#removeDate' class="border px-2">x</button>
