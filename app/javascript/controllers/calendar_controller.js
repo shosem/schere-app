@@ -26,10 +26,8 @@ export default class extends Controller {
     this.selected = new Map()
   }
   connect() {
-    console.log("calendar connected!")
     this.renderCalendar()
     this.renderSelected()
-    console.log(toDateStr(this.year, this.month, 1))
     this.syncFields()
   }
 
@@ -48,7 +46,6 @@ export default class extends Controller {
       // ない場合は追加
       this.selected.set(clickedDate, { startTime: "", endTime: "" })
     }
-    console.log(this.selected)
     this.renderCalendar()
     this.renderSelected()
     this.syncFields()
@@ -119,7 +116,7 @@ export default class extends Controller {
     })
     
     // 曜日ラベルの枠を閉じ、日付の枠を追加
-    html += `</div><div class="grid grid-cols-7 text-center gap-y-1">`
+    html += `</div><div class="grid grid-cols-7 text-center gap-1">`
 
     // 初日の曜日まで空きマスを作る
     for(let i = 0; i < firstDay; i++) {
@@ -134,26 +131,26 @@ export default class extends Controller {
         // 過去
         if(targetDate < today) {
         // グレー＋押せない
-          cls = "bg-gray-300"
+          cls = "text-gray-300 cursor-default"
 
         // 選択済み
         } else if(this.selected.has(targetDate)){
         
-          cls = "bg-blue-500 text-white font-bold cursor-pointer"
+          cls = "bg-emerald-500 rounded-full text-white font-bold cursor-pointer"
 
         // 今日
         } else if(targetDate === today){
         // アクセント
-          cls = "text-blue-500 font-semibold hover:bg-blue-50 cursor-pointer"
+          cls = "text-blue-500 font-semibold cursor-pointer rounded-full hover:bg-emerald-100"
         
         // 通常
         } else {
-          cls = "text-gray-700 hover:bg-gray-100 cursor-pointer"
+          cls = "text-gray-700 rounded-full hover:bg-emerald-100 cursor-pointer"
         }
 
       const action = targetDate < today ? "" : `data-action='click->calendar#toggle' data-date="${targetDate}"`
      
-      html += `<button type="button" class="${cls}" ${action}>${d}</button>`
+      html += `<button type="button" class="w-9 h-9 flex items-center justify-center mx-auto ${cls}" ${action}>${d}</button>`
     }
 
     html += "</div>"
@@ -169,7 +166,7 @@ export default class extends Controller {
 
     // 選択済みが空なら文章を出す
     if (this.selected.size === 0) {
-      this.selectedListTarget.textContent = "候補日が選択されていません"
+      this.selectedListTarget.innerHTML = "<div class='mt-2 text-gray-300 font-bold text-center'>候補日が選択されていません</div>"
       return
     }
 
@@ -180,11 +177,16 @@ export default class extends Controller {
     selectedDays.forEach((sd) => {
       const { startTime, endTime } = this.selected.get(sd)
 
-      html += `<div>
-                 ${formatDate(sd)}
-                 <input type="time" value="${startTime}" data-date="${sd}" data-field="start" data-action='change->calendar#updateTime'>
-                 <input type="time" value="${endTime}" data-date="${sd}" data-field="end" data-action='change->calendar#updateTime'>
-                 <button type="button" data-date="${sd}" data-action='click->calendar#removeDate' class="border px-2">x</button>
+      html += `<div class="card bg-green-200/50 p-4 flex items-center gap-2">
+                 <div class="text-gray-800 flex-1">
+                   ${formatDate(sd)}
+                </div>
+                 <div>
+                   <input type="time" value="${startTime}" data-date="${sd}" data-field="start" data-action='change->calendar#updateTime' class="border border-gray-300 rounded-lg px-2 py-1 text-sm focus:ring-2 focus:ring-emerald-400">
+                   〜
+                   <input type="time" value="${endTime}" data-date="${sd}" data-field="end" data-action='change->calendar#updateTime' class="border border-gray-300 rounded-lg px-2 py-1 text-sm focus:ring-2 focus:ring-emerald">
+                 </div>
+                 <button type="button" data-date="${sd}" data-action='click->calendar#removeDate' class="text-gray-400 hover:text-red-500 cursor-pointer ml-auto">×</button>
               </div>`
     })
 
