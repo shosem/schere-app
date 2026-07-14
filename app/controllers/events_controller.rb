@@ -19,7 +19,7 @@ class EventsController < ApplicationController
   private
 
   def event_paramas
-    params.require(:event).permit(:title, :description, :location, candidate_dates_attributes: [:id, :date, :start_time, :end_time])
+    params.require(:event).permit(:title, :description, :location, candidate_dates_attributes: [ :id, :date, :start_time, :end_time ])
   end
 
   def set_group
