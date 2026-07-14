@@ -8,3 +8,7 @@ ja:
         name: "グループ名"
       guest:
         name: "ゲスト名"
+      event:
+        title: タイトル
+        location: 場所
+        description: 説明
