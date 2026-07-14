@@ -20,7 +20,9 @@ class GroupsController < ApplicationController
     end
   end
 
-  def show; end
+  def show
+    @events = @group.events
+  end
 
   def destroy
     @group.destroy!
