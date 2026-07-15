@@ -16,14 +16,12 @@ RSpec.describe "GuestSessions", type: :system do
         expect(Guest.count).to eq 1
       end
 
-      it "同じ名前で入室してもゲストが重複作成されないこと" do
+      it "ゲストログイン後、同一セッションであればグループ詳細画面に遷移すること" do
         fill_in "ゲスト名", with: "テストゲスト"
         click_on "参加する"
         expect(page).to have_content("#{group.name}にテストゲストさんとして入室しました")
         visit new_group_join_path(group.join_token)
-        fill_in "ゲスト名", with: "テストゲスト"
-        click_on "参加する"
-        expect(Guest.count).to eq 1
+        expect(page).to have_current_path(group_path(group))
       end
     end
 
