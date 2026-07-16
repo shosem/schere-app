@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_06_075238) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_15_080222) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -72,9 +72,22 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_06_075238) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "votes", force: :cascade do |t|
+    t.integer "answer", null: false
+    t.bigint "candidate_date_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "voter_id", null: false
+    t.string "voter_type", null: false
+    t.index ["candidate_date_id", "voter_type", "voter_id"], name: "index_votes_on_candidate_date_id_and_voter_type_and_voter_id", unique: true
+    t.index ["candidate_date_id"], name: "index_votes_on_candidate_date_id"
+    t.index ["voter_type", "voter_id"], name: "index_votes_on_voter_type_and_voter_id"
+  end
+
   add_foreign_key "candidate_dates", "events"
   add_foreign_key "events", "groups"
   add_foreign_key "events", "users"
   add_foreign_key "groups", "users"
   add_foreign_key "guests", "groups"
+  add_foreign_key "votes", "candidate_dates"
 end
