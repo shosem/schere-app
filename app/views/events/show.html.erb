@@ -1,0 +1,67 @@
+<% badge = {
+             "adjusting"  => ["調整中",   "bg-amber-100 text-amber-700"],
+             "confirmed"  => ["確定済み", "bg-green-100 text-green-700"],
+             "cancelled"  => ["キャンセル", "bg-gray-100 text-gray-500"]
+            } %>
+
+<div>
+  <span class="text-xs font-bold px-2.5 py-1 rounded-full <%= badge[@event.status][1] %>"><%= badge[@event.status][0] %></span>
+
+  <% # タイトル、場所、説明表示div %>
+  <div>
+    <h1 class="text-4xl text-gray-800 font-bold mt-4"><%= @event.title %></h1>
+    <% if @event.location.present? %>
+      <span class="text-sm text-gray-400">📍<%= @event.location %></span>
+    <% end %>
+    <% if @event.description.present? %>
+      <div class="bg-gray-50 rounded-2xl px-5 py-4 mt-3">
+        <p class="text-xs font-bold text-gray-400 mb-2">説明</p>
+        <p class="whitespace-pre-line text-sm text-gray-600 leading-relaxed"><%= @event.description %></p>
+      </div>
+    <% end %>
+   </div>
+
+  <% # 候補日の投票フォーム %>
+  <% if @event.adjusting? %>
+    <%= form_with url: group_event_vote_path(@group, @event) do |f| %>
+      <% @candidate_dates.each do |c| %>
+        <div class="flex flex-col">
+          <%= c.date.strftime("%Y年%-m月%-d日")%>
+
+          <div class="flex justify-start">
+            <% if c.start_time.present? %>
+              <span><%= c.start_time.strftime("%-H:%M") %></span>
+            <% end %>
+            <% if c.end_time.present? %>
+              <span>〜<%= c.end_time.strftime("%-H:%M") %></span>
+            <% end %>
+          </div>
+
+
+          <div>
+            <label>○
+              <%= radio_button_tag "votes[#{c.id}]", :available, @my_votes[c.id] == "available" %>
+            </label>
+          </div>
+
+          <div>
+            <label>△
+              <%= radio_button_tag "votes[#{c.id}]", :maybe, @my_votes[c.id] == "maybe" %>
+            </label>
+          </div>
+
+          <div>
+            <label>×
+              <%= radio_button_tag "votes[#{c.id}]", :unavailable, @my_votes[c.id] == "unavailable" %>
+            </label>
+          </div>
+
+        </div>
+      <% end %>
+      <%= f.submit "送信する" %>
+    <% end %>
+  <% end %>
+
+
+
+</div>
