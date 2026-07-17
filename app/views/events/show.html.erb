@@ -4,7 +4,7 @@
              "cancelled"  => ["キャンセル", "bg-gray-100 text-gray-500"]
             } %>
 
-<div>
+<div class="mb-4">
   <span class="text-xs font-bold px-2.5 py-1 rounded-full <%= badge[@event.status][1] %>"><%= badge[@event.status][0] %></span>
 
   <% # タイトル、場所、説明表示div %>
@@ -22,45 +22,68 @@
    </div>
 
   <% # 候補日の投票フォーム %>
-  <% if @event.adjusting? %>
-    <%= form_with url: group_event_vote_path(@group, @event) do |f| %>
-      <% @candidate_dates.each do |c| %>
-        <div class="flex flex-col">
-          <%= c.date.strftime("%Y年%-m月%-d日")%>
+  <div class="card flex flex-col mt-4">
+    <% if @event.adjusting? %>
+      <%= form_with url: group_event_vote_path(@group, @event), class: "flex flex-col gap-4" do |f| %>
+        <% @candidate_dates.each do |c| %>
 
-          <div class="flex justify-start">
-            <% if c.start_time.present? %>
-              <span><%= c.start_time.strftime("%-H:%M") %></span>
-            <% end %>
-            <% if c.end_time.present? %>
-              <span>〜<%= c.end_time.strftime("%-H:%M") %></span>
-            <% end %>
+          <% # 候補日ごとのカード %>
+          <div class="flex flex-col card p-4">
+            <div class="text-xl text-gray-800 font-bold">
+              <%= l(c.date, format: :long) %>
+            </div>
+
+            <div class="flex justify-start mb-2">
+              <% if c.start_time.present? %>
+                <span class="text-sm text-gray-400"><%= c.start_time.strftime("%-H:%M") %></span>
+              <% end %>
+              <% if c.end_time.present? %>
+                <span class="text-sm text-gray-400">〜<%= c.end_time.strftime("%-H:%M") %></span>
+              <% end %>
+            </div>
+            <div class="flex justify-between items-center">
+              <div class="flex items-center gap-3">
+                <label>
+                  <%= radio_button_tag "votes[#{c.id}]", :available, @my_votes[c.id] == "available", class: "sr-only peer" %>
+                  <span class="peer-checked:text-blue-500 peer-checked:border-blue-500 peer-checked:bg-blue-50
+                               text-gray-400 text-lg font-bold border-2 border-gray-200 rounded-full flex items-center justify-center w-11 h-11 hover:border-blue-300">○</span>
+               </label>
+                <label>
+                  <%= radio_button_tag "votes[#{c.id}]", :maybe, @my_votes[c.id] == "maybe", class: "sr-only peer" %>
+                  <span class="peer-checked:text-amber-500 peer-checked:border-amber-500 peer-checked:bg-amber-50
+                               text-gray-400 text-lg font-bold border-2 border-gray-200 rounded-full flex items-center justify-center w-11 h-11 hover:border-amber-300">△</span>
+                </label>
+                <label>
+                  <%= radio_button_tag "votes[#{c.id}]", :unavailable, @my_votes[c.id] == "unavailable", class: "sr-only peer" %>
+                  <span class="peer-checked:text-red-500 peer-checked:border-red-500 peer-checked:bg-red-50
+                               text-gray-400 text-lg font-bold border-2 border-gray-200 rounded-full flex items-center justify-center w-11 h-11 hover:border-red-300">×</span>
+                </label>
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="text-blue-500">
+                  <span>○</span>
+                  <%= @vote_counts[c.id]["available"] %>
+                </div>
+                <div class="text-amber-500">
+                  <span>△</span>
+                  <%= @vote_counts[c.id]["maybe"] %>
+                </div>
+                <div class="text-red-500">
+                  <span>×</span>
+                  <%= @vote_counts[c.id]["unavailable"] %>
+                </div>
+                <div class="text-gray-400">
+                  <%= c.votes.size %>人
+                </div>
+              </div>
+            </div>
+
           </div>
-
-
-          <div>
-            <label>○
-              <%= radio_button_tag "votes[#{c.id}]", :available, @my_votes[c.id] == "available" %>
-            </label>
-          </div>
-
-          <div>
-            <label>△
-              <%= radio_button_tag "votes[#{c.id}]", :maybe, @my_votes[c.id] == "maybe" %>
-            </label>
-          </div>
-
-          <div>
-            <label>×
-              <%= radio_button_tag "votes[#{c.id}]", :unavailable, @my_votes[c.id] == "unavailable" %>
-            </label>
-          </div>
-
-        </div>
+        <% end %>
+        <%= f.submit "送信する", class: "btn btn-primary" %>
       <% end %>
-      <%= f.submit "送信する" %>
     <% end %>
-  <% end %>
+  </div>
 
 
 
