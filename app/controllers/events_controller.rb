@@ -44,7 +44,6 @@ class EventsController < ApplicationController
       @vote_counts[cd.id] = { "available" => 0, "maybe" => 0, "unavailable" => 0 }
       @voter_names[cd.id]  = { "available" => [], "maybe" => [], "unavailable" => [] }
       cd.votes.each do |vote|
-
         # 候補日=>{回答=>数}に1を足す
         @vote_counts[cd.id][vote.answer] += 1
 

@@ -9,7 +9,6 @@ class VotesController < ApplicationController
 
     # paramsで受け取る、{候補日id=>回答}たちを分解
     params[:votes].each do |candidate_date_id, answer|
-
       # 候補日がちゃんとeventに属しているかを確認しつつセット
       candidate_date = @event.candidate_dates.find_by(id: candidate_date_id)
 
