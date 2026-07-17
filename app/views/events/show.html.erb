@@ -72,8 +72,8 @@
                   <span>×</span>
                   <%= @vote_counts[c.id]["unavailable"] %>
                 </div>
-                <div class="text-gray-400">
-                  <%= c.votes.size %>人
+                <div class="text-gray-400 text-sm">
+                  回答済み：<%= c.votes.size %>人
                 </div>
               </div>
             </div>
@@ -84,7 +84,6 @@
       <% end %>
     <% end %>
   </div>
-
-
-
 </div>
+
+<%= link_to "←グループに戻る", group_path(@group), class: "inline-flex items-center text-gray-500 bg-gray-50 rounded-full p-2 transition hover:bg-gray-100 hover:outline hover:text-gray-700" %>
