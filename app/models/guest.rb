@@ -1,5 +1,6 @@
 class Guest < ApplicationRecord
   belongs_to :group
+  has_many :votes, as: :voter, dependent: :destroy
   validates :name, length: { maximum: 10 }, presence: true
   before_create :generate_session_token
 

@@ -35,4 +35,26 @@ RSpec.describe "Events", type: :system do
       end
     end
   end
+
+  describe "投票機能" do
+    let(:event) { create(:event, group: group, candidate_dates_count: 3) }
+    before do
+      visit group_event_path(group, event)
+    end
+    context "投票可能" do
+      it "投票できること" do
+        event.candidate_dates.each do |c|
+           choose("votes_#{c.id}_available", allow_label_click: true)
+        end
+        click_on "送信する"
+        expect(page).to have_current_path(group_event_path(group, event))
+        expect(page).to have_content("投票しました")
+        expect(Vote.count).to eq 3
+        expect(page).to have_content("回答済み：1人")
+        event.candidate_dates.each do |c|
+          expect(page).to have_css("[data-testid='#{c.id}']", text: "1")
+        end
+      end
+    end
+  end
 end
