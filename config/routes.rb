@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   resources :groups, only: %i[ index new create show destroy ] do
     resources :events, only: %i[ new create show ] do
       resource :vote, only: %i[ create ]
+      resources :venues, only: %i[ create update destroy ]
     end
   end
 end
