@@ -2,7 +2,7 @@ class Event < ApplicationRecord
   belongs_to :user
   belongs_to :group
   has_many :candidate_dates, dependent: :destroy
-  has_many :venues
+  has_many :venues, dependent: :destroy
   belongs_to :confirmed_candidate_date,
              class_name: "CandidateDate",
              optional: true
