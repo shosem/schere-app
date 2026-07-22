@@ -11,7 +11,7 @@ RSpec.describe "Venues", type: :request do
 
     it "予約情報を作成できること" do
       expect { post group_event_venues_path(group, event), params: {
-        venue: { name: "居酒屋"}
+        venue: { name: "居酒屋" }
         }
       }.to change(Venue, :count).by(1)
       expect(response).to redirect_to(group_event_path(group, event))
