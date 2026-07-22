@@ -12,3 +12,9 @@ ja:
         title: タイトル
         location: 場所
         description: 説明
+      venue:
+        name: 施設名
+        page_url: 施設URL
+        price: 予算
+        note: 備考
+        reserved: 予約
