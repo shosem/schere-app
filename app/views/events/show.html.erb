@@ -88,8 +88,18 @@
                                     method: :patch, 
                                     data: { turbo_confirm: "日程を確定しますか？" },
                                     params: { candidate_date_id: c.id },
-                                    class: "card w-full p-4 cursor-pointer bg-green-200/50 hover:bg-green-200" do %>
-              <p class="text-xl text-gray-700 font-bold"><%= l(c.date, format: :confirm_card) %></p>
+                                    class: "card w-full p-2 md:p-4 shadow-md cursor-pointer bg-gray-100/50 hover:bg-gray-200" do %>
+              <div class="relative">                                    
+                <p class="text-xl text-gray-700 font-bold text-center"><%= l(c.date, format: :confirm_card) %></p>
+                <div class="absolute inset-y-0 right-0 flex items-center gap-1">
+                  <% if @top_available_day_ids.include?(c.id) %>
+                    <span class="text-[10px] md:text-xs font-bold text-blue-700 border rounded-full bg-blue-100 p-1">人気！</span>
+                  <% end %>
+                  <% if @fewest_unavailable_day_ids.include?(c.id) %>
+                    <span class="text-[10px] md:text-xs font-bold text-green-700 border rounded-full bg-green-100 p-1">反対少なめ！</span>
+                  <% end %>
+                </div>
+              </div>             
               <% # 時間の入力があれば表示 %>
               <div class="flex justify-center">
                 <%= render "times", c: c %>
