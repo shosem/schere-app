@@ -3,7 +3,6 @@ class EventConfirmationsController < ApplicationController
   before_action :set_group
   before_action :set_event
   def update
-
     @candidate_date = @event.candidate_dates.find(params[:candidate_date_id])
 
     @event.update!(confirmed_candidate_date_id: @candidate_date.id, status: :confirmed)
