@@ -43,6 +43,5 @@ class Event < ApplicationRecord
     min_unavailable = counts.min
 
     unavailable_counts.select { |_id, n| n == min_unavailable }.keys
-
   end
 end
