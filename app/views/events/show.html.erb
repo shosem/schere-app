@@ -36,12 +36,7 @@
             </div>
 
             <div class="flex justify-start mb-2">
-              <% if c.start_time.present? %>
-                <span class="text-sm text-gray-400"><%= c.start_time.strftime("%-H:%M") %></span>
-              <% end %>
-              <% if c.end_time.present? %>
-                <span class="text-sm text-gray-400">〜<%= c.end_time.strftime("%-H:%M") %></span>
-              <% end %>
+              <%= render "times", c: c %>
             </div>
             <div class="flex justify-between items-center">
               <div class="flex items-center gap-3">
@@ -101,17 +96,11 @@
                                     data: { turbo_confirm: "日程を確定しますか？" },
                                     params: { candidate_date_id: c.id },
                                     class: "card w-full p-4 cursor-pointer bg-green-200/50 hover:bg-green-200" do %>
-              <p class="text-gray-700 font-bold"><%= l(c.date, format: :confirm_card) %></p>
+              <p class="text-xl text-gray-700 font-bold"><%= l(c.date, format: :confirm_card) %></p>
               <% # 時間の入力があれば表示 %>
-              <% if c.start_time.present? %>
-                <span class="text-sm text-gray-400"><%= c.start_time.strftime("%-H:%M") %></span>
-              <% end %>
-              <% if c.end_time.present? %>
-                <span class="text-sm text-gray-400">〜<%= c.end_time.strftime("%-H:%M") %></span>
-              <% end %>
-
+              <%= render "times", c: c %>
               <% # 投票数を表示する %>
-              <div class="flex items-center justify-center gap-2">
+              <div class="flex items-center justify-center text-xl gap-2">
                 <div class="text-blue-500" data-testcardid='<%= c.id %>'>
                   <span>○</span>
                   <%= @vote_counts[c.id]["available"] %>

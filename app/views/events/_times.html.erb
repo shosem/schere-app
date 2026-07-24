@@ -1,0 +1,6 @@
+<% if c.start_time.present? %>
+  <span class="text-sm text-gray-400"><%= c.start_time.strftime("%-H:%M") %></span>
+<% end %>
+<% if c.end_time.present? %>
+  <span class="text-sm text-gray-400">〜<%= c.end_time.strftime("%-H:%M") %></span>
+<% end %>
