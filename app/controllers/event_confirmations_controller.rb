@@ -1,0 +1,2 @@
+class EventConfirmationsController < ApplicationController
+end
