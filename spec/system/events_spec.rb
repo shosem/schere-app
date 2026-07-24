@@ -51,8 +51,10 @@ RSpec.describe "Events", type: :system do
         expect(page).to have_content("投票しました")
         expect(Vote.count).to eq 3
         expect(page).to have_content("回答済み：1人")
-        event.candidate_dates.each do |c|
-          expect(page).to have_css("[data-testid='#{c.id}']", text: "1")
+        within("[data-testid='answer-status']") do
+          event.candidate_dates.each do |c|
+            expect(page).to have_css("[data-testid='#{c.id}']", text: "1")
+          end
         end
       end
     end

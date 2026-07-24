@@ -23,7 +23,7 @@
 
   <% # 候補日の投票フォーム全体 %>
   <% if @event.adjusting? %>
-    <div class="card flex flex-col mt-4">
+    <div class="card flex flex-col mt-4" data-testid="answer-status">
     
       <h2 class="text-xl text-gray-800 font-bold">回答状況</h2>
       <%= form_with url: group_event_vote_path(@group, @event), class: "flex flex-col gap-4 mt-4" do |f| %>
@@ -34,10 +34,12 @@
             <div class="text-xl text-gray-800 font-bold">
               <%= l(c.date, format: :long) %>
             </div>
-
+            
+            <% # 候補日ごとの時間 %>
             <div class="flex justify-start mb-2">
               <%= render "times", c: c %>
             </div>
+
             <div class="flex justify-between items-center">
               <div class="flex items-center gap-3">
                 <label>
@@ -56,19 +58,10 @@
                                text-gray-400 text-lg font-bold border-2 border-gray-200 rounded-full flex items-center justify-center w-11 h-11 hover:border-red-300">×</span>
                 </label>
               </div>
+
+              <% # 候補日ごとの投票数 %>
               <div class="flex items-center gap-2">
-                <div class="text-blue-500" data-testid='<%= c.id %>'>
-                  <span>○</span>
-                  <%= @vote_counts[c.id]["available"] %>
-                </div>
-                <div class="text-amber-500">
-                  <span>△</span>
-                  <%= @vote_counts[c.id]["maybe"] %>
-                </div>
-                <div class="text-red-500">
-                  <span>×</span>
-                  <%= @vote_counts[c.id]["unavailable"] %>
-                </div>
+                <%= render "vote_counts", counts: @vote_counts[c.id], id: c.id %>
                 <div class="text-gray-400 text-sm">
                   回答済み：<%= c.votes.size %>人
                 </div>
@@ -85,7 +78,7 @@
 
     <% # 日程確定のセクション。閲覧者 = 管理者の場合のみ表示 %>
     <% if current_user && current_user.id == @group.user_id %>
-      <div class="card mt-4">
+      <div class="card mt-4" data-testid="confirm-section">
         <h2 class="text-xl text-gray-800 font-bold">日程を確定する</h2>
 
         <% # 日程ごとのカード %>
@@ -103,18 +96,7 @@
               </div>
               <% # 投票数を表示する %>
               <div class="flex items-center justify-center text-xl gap-2">
-                <div class="text-blue-500" data-testcardid='<%= c.id %>'>
-                  <span>○</span>
-                  <%= @vote_counts[c.id]["available"] %>
-                </div>
-                <div class="text-amber-500">
-                  <span>△</span>
-                  <%= @vote_counts[c.id]["maybe"] %>
-                </div>
-                <div class="text-red-500">
-                  <span>×</span>
-                  <%= @vote_counts[c.id]["unavailable"] %>
-                </div>
+                <%= render "vote_counts", counts: @vote_counts[c.id], id: c.id  %>
               </div>
             <% end%>
           <% end %>
