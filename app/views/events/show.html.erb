@@ -21,10 +21,12 @@
     <% end %>
    </div>
 
-  <% # 候補日の投票フォーム %>
-  <div class="card flex flex-col mt-4">
-    <% if @event.adjusting? %>
-      <%= form_with url: group_event_vote_path(@group, @event), class: "flex flex-col gap-4" do |f| %>
+  <% # 候補日の投票フォーム全体 %>
+  <% if @event.adjusting? %>
+    <div class="card flex flex-col mt-4">
+    
+      <h2 class="text-xl text-gray-800 font-bold">回答状況</h2>
+      <%= form_with url: group_event_vote_path(@group, @event), class: "flex flex-col gap-4 mt-4" do |f| %>
         <% @candidate_dates.each do |c| %>
 
           <% # 候補日ごとのカード %>
@@ -84,8 +86,51 @@
         <% end %>
         <%= f.submit "送信する", class: "btn btn-primary" %>
       <% end %>
+    </div>
+
+    <% # 日程確定のセクション。閲覧者 = 管理者の場合のみ表示 %>
+    <% if current_user && current_user.id == @group.user_id %>
+      <div class="card mt-4">
+        <h2 class="text-xl text-gray-800 font-bold">日程を確定する</h2>
+
+        <% # 日程ごとのカード %>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4">
+          <% @candidate_dates.each do |c| %>
+           <%= button_to group_event_confirmation_path(@group, @event), 
+                                    method: :patch, 
+                                    data: { turbo_confirm: "日程を確定しますか？" },
+                                    params: { candidate_date_id: c.id },
+                                    class: "card w-full p-4 cursor-pointer bg-green-200/50 hover:bg-green-200" do %>
+              <p class="text-gray-700 font-bold"><%= l(c.date, format: :confirm_card) %></p>
+              <% # 時間の入力があれば表示 %>
+              <% if c.start_time.present? %>
+                <span class="text-sm text-gray-400"><%= c.start_time.strftime("%-H:%M") %></span>
+              <% end %>
+              <% if c.end_time.present? %>
+                <span class="text-sm text-gray-400">〜<%= c.end_time.strftime("%-H:%M") %></span>
+              <% end %>
+
+              <% # 投票数を表示する %>
+              <div class="flex items-center justify-center gap-2">
+                <div class="text-blue-500" data-testcardid='<%= c.id %>'>
+                  <span>○</span>
+                  <%= @vote_counts[c.id]["available"] %>
+                </div>
+                <div class="text-amber-500">
+                  <span>△</span>
+                  <%= @vote_counts[c.id]["maybe"] %>
+                </div>
+                <div class="text-red-500">
+                  <span>×</span>
+                  <%= @vote_counts[c.id]["unavailable"] %>
+                </div>
+              </div>
+            <% end%>
+          <% end %>
+        </div>
+      </div>
     <% end %>
-  </div>
+  <% end %>
 </div>
 
 <%= link_to "←グループに戻る", group_path(@group), class: "inline-flex items-center text-gray-500 bg-gray-50 rounded-full p-2 transition hover:bg-gray-100 hover:outline hover:text-gray-700" %>
