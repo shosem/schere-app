@@ -38,6 +38,12 @@ class EventsController < ApplicationController
     # 自分の投票の入れ物。{候補日=>回答}となる
     @my_votes = {}
 
+    # 丸の投票が一番多い候補日のidの配列
+    @top_available_day_ids = @event.top_available_candidate_date_ids
+
+    # ×の投票が一番少ない候補日のidの配列
+    @fewest_unavailable_day_ids = @event.fewest_unavailable_candidate_date_ids
+
     # 候補日たちを分解し、候補日ごとの回答を見ていく
     # また、候補日ごとの入れ物を作っておく。初期値を入れておかないと、nilになってしまう
     @candidate_dates.each do |cd|

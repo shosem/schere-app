@@ -1,0 +1,4 @@
+ja:
+  date:
+    formats:
+      confirm_card: "%m/%d(%a)"
