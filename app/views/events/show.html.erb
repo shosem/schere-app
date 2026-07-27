@@ -86,7 +86,7 @@
           <% @candidate_dates.each do |c| %>
            <%= button_to group_event_confirmation_path(@group, @event), 
                                     method: :patch, 
-                                    data: { turbo_confirm: "日程を確定しますか？" },
+                                    data: { turbo_confirm: "日程を確定しますか？", testid: "confirm-#{c.id}" },
                                     params: { candidate_date_id: c.id },
                                     class: "card w-full p-2 md:p-4 shadow-md cursor-pointer bg-gray-100/50 hover:bg-gray-200" do %>
               <div class="relative">                                    
