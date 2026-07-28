@@ -23,6 +23,8 @@
 
   <% if @event.adjusting? %>
     <%= render "adjusting_event" %>
+  <% elsif @event.confirmed? %>
+    <%= render "confirmed_event" %>
   <% end %>
 </div>
 

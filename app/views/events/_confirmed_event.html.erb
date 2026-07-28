@@ -1,0 +1,75 @@
+<div class="card flex flex-col mt-4 min-h-40 bg-gradient-to-br from-green-400 to-emerald-600 shadow-lg" data-testid="confirmed-date">
+    
+  <div class="flex justify-between items-center">
+   <h2 class="text-xl text-white font-bold">確定日程</h2>
+   <%= link_to "調整中に戻す", group_event_confirmation_path(@group, @event), data: { turbo_method: :delete, turbo_confirm: "調整中に戻しますか？" }, class: "text-white font-medium bg-emerald-700 hover:bg-emerald-800 transition rounded-lg px-2.5 py-2" %>
+  </div>
+  
+  <div class="flex justify-center items-center gap-4">
+    <p class="text-white text-4xl font-bold"><%= l(@event.confirmed_candidate_date.date, format: :long) %></p>
+    <div class="flex items-center">
+      <%= render "times", c: @event.confirmed_candidate_date, color: "text-white", size: "text-4xl font-bold" %>
+    </div>
+  </div>
+</div>
+
+<% # 予約情報のセクション %>
+<% badge = {
+             "reserved"  => ["予約済み", "bg-green-100 text-green-700"],
+             "unreserved"  => ["未予約", "bg-red-100 text-red-700"]
+            } %>
+<% if @event.venues.present? %>
+  <div class="card flex flex-col mt-4">
+    <div class="flex justify-between items-center">
+      <h2 class="text-xl text-gray-800 font-bold">予約情報</h2>
+      <%= link_to "＋追加", "#", class: "btn btn-primary py-1.5" %>
+    </div>
+    <% @event.venues.each do |venue| %>
+      <div class="card mt-4 flex justify-between items-start border-l-4 border-blue-400 shadow-lg">
+        <div class="flex flex-col gap-2">
+          <% if venue.reserved? %>
+            <span class="text-xs font-bold px-2.5 py-1 rounded-full self-start <%= badge["reserved"][1] %>"><%= badge["reserved"][0] %></span>
+          <% else %>
+            <span class="text-xs font-bold px-2.5 py-1 rounded-full self-start <%= badge["unreserved"][1] %>"><%= badge["unreserved"][0] %></span>
+          <% end%>
+         
+          <p><span class="text-gray-500 mr-2">場所</span><span class="text-gray-800"><%= venue.name %></span></p>
+
+          <% if venue.price.present? %>
+            <p><span class="text-gray-500 mr-2">費用</span><span class="font-semibold text-gray-800"><%= number_to_currency(venue.price, unit: "¥", format: "%u%n") %></span></p>
+          <% end %>
+
+          <% if venue.note.present? %>
+            <p><span class="text-gray-500 mr-2">備考</span><span class="text-gray-800"><%= venue.note %></span></p>
+          <% end %>
+
+          <% if venue.page_url.present? %>
+            <p><%= link_to "施設ページを開く→", venue.page_url, target: "_blank", class: "text-blue-500 underline hover:text-blue-600" %></p>
+          <% end %>
+        </div>
+        <%= link_to "編集", "#", class: "btn btn-primary py-1.5" %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
+<div class="card flex flex-col mt-4 gap-2">
+  <h2 class="text-xl text-gray-800 font-bold">集計結果</h2>
+  <div class="flex justify-center gap-4">
+    <div class="card h-40 bg-blue-500/20 flex flex-1 flex-col items-center justify-center">
+      <p class="text-4xl font-bold text-blue-500"><%= @vote_counts[@event.confirmed_candidate_date_id]["available"] %></p>
+      <p class="text-4xl text-blue-500">○</p>
+    </div>
+
+    <div class="card h-40 bg-amber-500/20 flex flex-1 flex-col items-center justify-center">
+      <p class="text-4xl font-bold text-amber-500"><%= @vote_counts[@event.confirmed_candidate_date_id]["maybe"] %></p>
+      <p class="text-4xl text-amber-500">△</p>
+    </div>
+
+    <div class="card h-40 bg-red-500/20 flex flex-1 flex-col items-center justify-center">
+      <p class="text-4xl font-bold text-red-500"><%= @vote_counts[@event.confirmed_candidate_date_id]["unavailable"] %></p>
+      <p class="text-4xl text-red-500">×</p>
+    </div>
+  </div>
+  <%= render "voter_names", names: @voter_names[@event.confirmed_candidate_date_id] %>
+</div>
