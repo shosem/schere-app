@@ -1,16 +1,16 @@
 module VenuesHelper
   def safe_url(url)
     return unless url
-    begin    
+    begin
       scheme = URI.parse(url).scheme
     rescue URI::InvalidURIError
       return nil
     end
 
-    if ["http", "https"].include?(scheme)
-      return url
+    if [ "http", "https" ].include?(scheme)
+      url
     else
-      return nil
+      nil
     end
   end
 end
