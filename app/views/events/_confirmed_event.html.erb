@@ -44,8 +44,8 @@
             <p><span class="text-gray-500 mr-2">備考</span><span class="text-gray-800"><%= venue.note %></span></p>
           <% end %>
 
-          <% if venue.page_url.present? %>
-            <p><%= link_to "施設ページを開く→", venue.page_url, target: "_blank", class: "text-blue-500 underline hover:text-blue-600" %></p>
+          <% if (url = safe_url(venue.page_url)).present? %>
+            <p><%= link_to "施設ページを開く→", url, target: "_blank", class: "text-blue-500 underline hover:text-blue-600" %></p>
           <% end %>
         </div>
         <%= link_to "編集", "#", class: "btn btn-primary py-1.5" %>
