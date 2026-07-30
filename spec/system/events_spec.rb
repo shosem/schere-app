@@ -77,5 +77,80 @@ RSpec.describe "Events", type: :system do
       expect(event.confirmed_candidate_date_id).to eq c.id
       expect(page).to have_content("確定済み")
     end
+
+    context "確定済みのイベント詳細画面で調整中に戻すボタンを押したとき" do
+      before do
+        c = event.candidate_dates.last
+        page.accept_confirm do
+          find("[data-testid='confirm-#{c.id}']").click
+        end
+      end
+      it "調整中になり、確定の候補日IDがなくなること" do
+        expect(page).to have_content("確定済み")
+        page.accept_confirm do
+          click_on "調整中に戻す"
+        end
+        expect(page).to have_content("調整中")
+        event.reload
+        expect(event).to be_adjusting
+        expect(event.confirmed_candidate_date_id).to eq nil
+        expect(page).to have_content("調整中")
+      end
+    end
+  end
+
+  describe "ステータスによる詳細画面の出し分け" do
+    context "調整中の場合" do
+      let(:event) { create(:event, group: group, candidate_dates_count: 3, status: "adjusting") }
+      before do
+        visit group_event_path(group, event)
+      end
+      it "投票フォーム、日程確定ボタンが表示され、確定された日程のバナーは表示されないこと" do
+        expect(page).to have_content("調整中")
+        expect(page).to have_content("回答状況")
+        expect(page).to have_content("日程を確定する")
+        expect(page).to have_no_content("確定日程")
+      end
+    end
+
+    context "確定済みの場合" do
+      let(:event) { create(:event, group: group, candidate_dates_count: 3, status: "confirmed") }
+      before do
+        event.update(confirmed_candidate_date_id: event.candidate_dates.last.id)
+        visit group_event_path(group, event)
+      end
+      it "確定日程バナー、予約情報が表示され、投票フォーム、日程確定ボタンは表示されないこと" do
+        expect(page).to have_current_path(group_event_path(group, event))
+        expect(page).to have_content("確定済み")
+        expect(page).to have_content("施設情報")
+        expect(page).to have_content("確定日程")
+        expect(page).to have_no_content("回答状況")
+        expect(page).to have_no_content("日程を確定する")
+      end
+
+      it "予約済みの施設情報が正常に表示されること" do
+        create(:venue, event: event,  name: "居酒屋テスト", price: 3000, reserved: true)
+        visit group_event_path(group, event)
+        expect(page).to have_content("居酒屋テスト")
+        expect(page).to have_content("予約済み")
+        expect(page).to have_content("3,000")
+      end
+
+      it "未予約の施設情報が正常に表示されること" do
+        create(:venue, event: event,  name: "カフェテスト", reserved: false)
+        visit group_event_path(group, event)
+        expect(page).to have_content("カフェテスト")
+        expect(page).to have_content("未予約")
+      end
+
+      it "集計結果が正しく表示されること" do
+        create(:guest_vote, candidate_date: event.candidate_dates.last, answer: "available")
+        visit group_event_path(group, event)
+        expect(page).to have_content("集計結果")
+        within("[data-testid='available']") do
+          expect(page).to have_content("1")
+        end
+      end
+    end
   end
 end

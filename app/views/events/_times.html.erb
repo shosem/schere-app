@@ -1,6 +1,8 @@
+<% color = local_assigns.fetch(:color, "text-gray-400") %>
+<% size = local_assigns.fetch(:size, "text-sm") %>
 <% if c.start_time.present? %>
-  <span class="text-sm text-gray-400"><%= c.start_time.strftime("%-H:%M") %></span>
+  <span class="<%= size %> <%= color %>"><%= c.start_time.strftime("%-H:%M") %></span>
 <% end %>
 <% if c.end_time.present? %>
-  <span class="text-sm text-gray-400">〜<%= c.end_time.strftime("%-H:%M") %></span>
+  <span class="<%= size %> <%= color %>">〜<%= c.end_time.strftime("%-H:%M") %></span>
 <% end %>
