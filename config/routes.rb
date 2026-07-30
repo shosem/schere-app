@@ -22,7 +22,7 @@ Rails.application.routes.draw do
   resources :groups, only: %i[ index new create show destroy ] do
     resources :events, only: %i[ new create show ] do
       resource :vote, only: %i[ create ]
-      resources :venues, only: %i[ create update destroy ]
+      resources :venues, only: %i[ new create edit update destroy ]
       resource :confirmation, only: %i[ update destroy], controller: "event_confirmations"
     end
   end
