@@ -3,6 +3,10 @@ class VenuesController < ApplicationController
   before_action :set_group
   before_action :set_event
 
+  def new
+    @venue = @event.venues.build
+  end
+
   def create
     @venue = @event.venues.build(venue_params)
     if @venue.save
@@ -10,6 +14,10 @@ class VenuesController < ApplicationController
     else
       redirect_back fallback_location: group_event_path(@group, @event), alert: "予約情報を登録できませんでした"
     end
+  end
+
+  def edit
+    @venue = @event.venues.find(params[:id])
   end
 
   def update
