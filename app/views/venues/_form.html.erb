@@ -1,0 +1,33 @@
+<%= form_with model: [ group, event, venue ] do |f| %>
+  <div class="w-full max-w-sm mx-auto card">
+    <%= render "shared/error_messages", resource: venue %>
+    <div>
+      <%= f.label :name,  class: "inline-block text-sm font-medium text-gray-700 mb-1" %><span class="text-red-700">*</span>
+      <%= f.text_field :name, class: "w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400" %>
+    </div>
+
+    <div class="mt-4">
+      <%= f.label :page_url,  class: "inline-block text-sm font-medium text-gray-700 mb-1" %>
+      <%= f.text_field :page_url, class: "w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400" %>
+    </div>
+
+    <div class="mt-4">
+      <%= f.label :price,  class: "inline-block text-sm font-medium text-gray-700 mb-1" %>
+      <%= f.number_field :price, class: "w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400" %>
+    </div>
+
+    <div class="mt-4">
+      <%= f.label :note,  class: "inline-block text-sm font-medium text-gray-700 mb-1" %>
+      <%= f.text_area :note,  class: "w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400" %>
+    </div>
+
+    <div class="flex items-center gap-2 mb-2">
+      <%= f.label :reserved,  class: "w-10 h-5 px-0.5 rounded-lg bg-gray-300 flex items-center hover:cursor-pointer has-[:checked]:bg-blue-500/80 has-[:checked]:border-none" do %>
+        <%= f.check_box :reserved, class: "peer sr-only" %>
+        <span class="inline-block bg-white rounded-full w-4 h-4 transition peer-checked:translate-x-5"></span>
+      <% end %>
+      <span class="font-medium text-gray-700">予約した？</span>
+    </div>
+      <%= f.submit (venue.persisted? ? "保存" : "登録"), class: "btn btn-primary max-w-sm w-full mx-auto" %>
+  </div>
+<% end %>
