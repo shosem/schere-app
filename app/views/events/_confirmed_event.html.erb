@@ -58,7 +58,7 @@
 <div class="card flex flex-col mt-4 gap-2">
   <h2 class="text-xl text-gray-800 font-bold">集計結果</h2>
   <div class="flex justify-center gap-4">
-    <div class="card h-40 bg-blue-500/20 flex flex-1 flex-col items-center justify-center">
+    <div class="card h-40 bg-blue-500/20 flex flex-1 flex-col items-center justify-center" data-testid="available">
       <p class="text-4xl font-bold text-blue-500"><%= @vote_counts[@event.confirmed_candidate_date_id]["available"] %></p>
       <p class="text-4xl text-blue-500">○</p>
     </div>
