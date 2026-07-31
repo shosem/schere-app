@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
 
     # ログイン中のユーザー、もしくはゲストが、そのグループに紐づいているか
     def authorized?(group)
-      current_user&.id == group.user_id || current_guest&.group_id == group.id
+      group.owned_by?(current_user) || current_guest&.group_id == group.id
     end
 
     # アクセス拒否の行き先
