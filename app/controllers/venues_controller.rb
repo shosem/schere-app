@@ -32,7 +32,7 @@ class VenuesController < ApplicationController
   def destroy
     @venue = @event.venues.find(params[:id])
     @venue.destroy!
-    redirect_to group_event_path(@group, @event)
+    render turbo_stream: turbo_stream.remove(@venue)
   end
 
   private
