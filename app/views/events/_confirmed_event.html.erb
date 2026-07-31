@@ -51,4 +51,4 @@
   <%= render "voter_names", names: @voter_names[@event.confirmed_candidate_date_id] %>
 </div>
 
-<%= turbo_frame_tag "modal" %>
+<%= turbo_frame_tag "modal", data: { controller: "modal", modal_target: "modal" } %>

@@ -1,6 +1,6 @@
-<div class="fixed inset-0 z-50 bg-black/50 flex items-center justify-center">
+<div class="fixed inset-0 z-50 bg-black/50 flex items-center justify-center" data-action="click->modal#closeModal">
   <%= form_with model: [ group, event, venue ], class: "w-[90%] max-w-md" do |f| %>
-    <div class="card">
+    <div class="card" data-modal-target="card">
       <%= render "shared/error_messages", resource: venue %>
       <div>
         <%= f.label :name,  class: "inline-block text-sm font-medium text-gray-700 mb-1" %><span class="text-red-700">*</span>
