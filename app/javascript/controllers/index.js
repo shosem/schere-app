@@ -13,5 +13,8 @@ application.register("dropdown", DropdownController)
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
 
+import ModalController from "./modal_controller"
+application.register("modal", ModalController)
+
 import ShareController from "./share_controller"
 application.register("share", ShareController)
