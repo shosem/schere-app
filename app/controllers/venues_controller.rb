@@ -12,7 +12,7 @@ class VenuesController < ApplicationController
     if @venue.save
       # turbo_streamがよばれる
     else
-      flash.now[alert] = "予約情報を登録できませんでした"
+      flash.now[alert] = "施設情報を登録できませんでした"
       render :new, status: :unprocessable_entity
     end
   end
@@ -24,9 +24,10 @@ class VenuesController < ApplicationController
   def update
     @venue = @event.venues.find(params[:id])
     if @venue.update(venue_params)
-      redirect_to group_event_path(@group, @event)
+      # turbo_streamがよばれる
     else
-      redirect_back fallback_location: group_event_path(@group, @event), alert: "予約情報を更新できませんでした"
+      flash.now[alert] = "施設情報を更新できませんでした"
+      render :edit, status: :unprocessable_entity
     end
   end
 
