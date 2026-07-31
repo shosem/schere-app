@@ -13,45 +13,20 @@
   </div>
 </div>
 
-<% # 予約情報のセクション %>
-<% badge = {
-             "reserved"  => ["予約済み", "bg-green-100 text-green-700"],
-             "unreserved"  => ["未予約", "bg-red-100 text-red-700"]
-            } %>
+<% # 施設情報のセクション %>
 
 <div class="card flex flex-col mt-4">
   <div class="flex justify-between items-center">
     <h2 class="text-xl text-gray-800 font-bold">施設情報</h2>
     <%= link_to "＋追加", new_group_event_venue_path(@group, @event), data: { turbo_frame: "modal" }, class: "btn btn-primary py-1.5" %>
   </div>
-  <% if @event.venues.present? %>
-    <% @event.venues.each do |venue| %>
-      <div class="card mt-4 flex justify-between items-start border-l-4 border-blue-400 shadow-lg">
-        <div class="flex flex-col gap-2">
-          <% if venue.reserved? %>
-            <span class="text-xs font-bold px-2.5 py-1 rounded-full self-start <%= badge["reserved"][1] %>"><%= badge["reserved"][0] %></span>
-          <% else %>
-            <span class="text-xs font-bold px-2.5 py-1 rounded-full self-start <%= badge["unreserved"][1] %>"><%= badge["unreserved"][0] %></span>
-          <% end%>
-         
-          <p><span class="text-gray-500 mr-2">場所</span><span class="text-gray-800"><%= venue.name %></span></p>
 
-          <% if venue.price.present? %>
-            <p><span class="text-gray-500 mr-2">費用</span><span class="font-semibold text-gray-800"><%= number_to_currency(venue.price, unit: "¥", format: "%u%n") %></span></p>
-          <% end %>
-
-          <% if venue.note.present? %>
-            <p><span class="text-gray-500 mr-2">備考</span><span class="text-gray-800"><%= venue.note %></span></p>
-          <% end %>
-
-          <% if (url = safe_url(venue.page_url)).present? %>
-            <p><%= link_to "施設ページを開く→", url, target: "_blank", class: "text-blue-500 underline hover:text-blue-600" %></p>
-          <% end %>
-        </div>
-        <%= link_to "編集", "#", class: "btn btn-primary py-1.5" %>
-      </div>
+  <% # 施設情報リスト %>
+  <div id="venues_list">
+    <% if @event.venues.present? %>
+      <%= render @event.venues %>
     <% end %>
-  <% end %>
+  </div>
 </div>
 
 

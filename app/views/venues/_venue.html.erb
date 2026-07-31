@@ -1,0 +1,29 @@
+<% badge = {
+             "reserved"  => ["予約済み", "bg-green-100 text-green-700"],
+             "unreserved"  => ["未予約", "bg-red-100 text-red-700"]
+            } %>
+
+<div id="<%= dom_id(venue) %>" class="card mt-4 flex justify-between items-start border-l-4 border-blue-400 shadow-lg">
+  <div class="flex flex-col gap-2">
+    <% if venue.reserved? %>
+      <span class="text-xs font-bold px-2.5 py-1 rounded-full self-start <%= badge["reserved"][1] %>"><%= badge["reserved"][0] %></span>
+    <% else %>
+      <span class="text-xs font-bold px-2.5 py-1 rounded-full self-start <%= badge["unreserved"][1] %>"><%= badge["unreserved"][0] %></span>
+    <% end%>
+         
+    <p><span class="text-gray-500 mr-2">場所</span><span class="text-gray-800"><%= venue.name %></span></p>
+
+    <% if venue.price.present? %>
+      <p><span class="text-gray-500 mr-2">費用</span><span class="font-semibold text-gray-800"><%= number_to_currency(venue.price, unit: "¥", format: "%u%n") %></span></p>
+    <% end %>
+
+    <% if venue.note.present? %>
+      <p><span class="text-gray-500 mr-2">備考</span><span class="text-gray-800"><%= venue.note %></span></p>
+    <% end %>
+
+    <% if (url = safe_url(venue.page_url)).present? %>
+      <p><%= link_to "施設ページを開く→", url, target: "_blank", class: "text-blue-500 underline hover:text-blue-600" %></p>
+    <% end %>
+  </div>
+  <%= link_to "編集", "#", class: "btn btn-primary py-1.5" %>
+</div>
