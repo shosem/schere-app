@@ -18,7 +18,9 @@
 <div class="card flex flex-col mt-4">
   <div class="flex justify-between items-center">
     <h2 class="text-xl text-gray-800 font-bold">施設情報</h2>
-    <%= link_to "＋追加", new_group_event_venue_path(@group, @event), data: { turbo_frame: "modal" }, class: "btn btn-primary py-1.5" %>
+    <% if @group.owned_by?(current_user) %>
+      <%= link_to "＋追加", new_group_event_venue_path(@group, @event), data: { turbo_frame: "modal" }, class: "btn btn-primary py-1.5" %>
+    <% end %>
   </div>
 
   <% # 施設情報リスト %>
