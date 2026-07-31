@@ -10,9 +10,10 @@ class VenuesController < ApplicationController
   def create
     @venue = @event.venues.build(venue_params)
     if @venue.save
-      redirect_to group_event_path(@group, @event)
+      # turbo_streamがよばれる
     else
-      redirect_back fallback_location: group_event_path(@group, @event), alert: "予約情報を登録できませんでした"
+      flash.now[alert] = "予約情報を登録できませんでした"
+      render :new, status: :unprocessable_entity
     end
   end
 
