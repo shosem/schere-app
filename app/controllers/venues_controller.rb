@@ -12,7 +12,6 @@ class VenuesController < ApplicationController
     if @venue.save
       # turbo_streamがよばれる
     else
-      flash.now[alert] = "施設情報を登録できませんでした"
       render :new, status: :unprocessable_entity
     end
   end
@@ -26,7 +25,6 @@ class VenuesController < ApplicationController
     if @venue.update(venue_params)
       # turbo_streamがよばれる
     else
-      flash.now[alert] = "施設情報を更新できませんでした"
       render :edit, status: :unprocessable_entity
     end
   end
