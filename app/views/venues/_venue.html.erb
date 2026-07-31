@@ -25,5 +25,5 @@
       <p><%= link_to "施設ページを開く→", url, target: "_blank", class: "text-blue-500 underline hover:text-blue-600" %></p>
     <% end %>
   </div>
-  <%= link_to "編集", "#", class: "btn btn-primary py-1.5" %>
+  <%= link_to "編集", edit_group_event_venue_path(@group, @event, venue), data: { turbo_frame: "modal" }, class: "btn btn-primary py-1.5" %>
 </div>
