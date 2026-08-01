@@ -6,6 +6,10 @@ class Group < ApplicationRecord
   validates :name, presence: true
   before_create :generate_join_token
 
+  def owned_by?(user)
+    user_id == user&.id
+  end
+
   private
   def generate_join_token
     token = SecureRandom.urlsafe_base64(16)

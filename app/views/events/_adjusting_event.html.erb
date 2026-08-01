@@ -52,7 +52,7 @@
 </div>
 
 <% # 日程確定のセクション。閲覧者 = 管理者の場合のみ表示 %>
-<% if current_user && current_user.id == @group.user_id %>
+<% if @group.owned_by?(current_user) %>
   <div class="card mt-4" data-testid="confirm-section">
     <h2 class="text-xl text-gray-800 font-bold">日程を確定する</h2>
 

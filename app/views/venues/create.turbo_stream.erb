@@ -1,0 +1,5 @@
+<%= turbo_stream.append "venues-list" do %>
+  <%= render @venue %>
+<% end %>
+
+<%= turbo_stream.update "modal", "" %>
