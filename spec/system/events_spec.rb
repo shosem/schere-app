@@ -153,4 +153,68 @@ RSpec.describe "Events", type: :system do
       end
     end
   end
+  describe "施設情報機能" do
+    let(:event) { create(:event, group: group, candidate_dates_count: 3, status: "confirmed") }
+      before do
+        event.update(confirmed_candidate_date_id: event.candidate_dates.last.id)
+        visit group_event_path(group, event)
+      end
+
+    context "グループ作成者のアカウントでログインしている場合" do
+      it "施設情報の作成ができること" do
+        expect(page).to have_content("＋追加")
+        click_on "＋追加"
+        fill_in "施設名", with: "スポーツセンター"
+        click_on "登録"
+        expect(page).to have_content("スポーツセンター")
+        within("[id='venue_#{event.venues.last.id}']") do
+          expect(page).to have_content("スポーツセンター")
+        end
+        expect(event.venues.count).to eq 1
+      end
+
+      it "施設情報の編集ができること" do
+        venue = create(:venue, event: event)
+        visit current_path
+        within("[id='venue_#{venue.id}']") do
+          click_on "編集"
+        end
+        fill_in "施設名", with: "変更テストセンター"
+        check('venue[reserved]', allow_label_click: true)
+        click_on "保存"
+        expect(page).to have_content("変更テストセンター")
+        expect(page).to have_content("予約済み")
+      end
+
+      it "施設情報の削除ができること" do
+        venue = create(:venue, event: event)
+        visit current_path
+        within("[id='venue_#{venue.id}']") do
+          page.accept_confirm do
+            click_on "削除"
+          end
+        end
+        expect(page).to have_no_content(venue.name)
+        expect(event.venues.count).to eq 0
+      end
+    end
+
+    context "ゲストでログインしている場合" do
+      let!(:venue) { create(:venue, event: event) }
+
+      it "施設情報の作成・編集・削除ボタンが表示されないこと" do
+        click_button(user.name.first)
+        click_on("ログアウト")
+        expect(page).to have_content("ログアウトしました")
+        visit new_group_join_path(group.join_token)
+        fill_in "ゲスト名", with: "テストゲスト"
+        click_on "参加する"
+        expect(page).to have_current_path(group_path(group))
+        visit group_event_path(group, event)
+        expect(page).to have_no_content("＋追加")
+        expect(page).to have_no_content("編集")
+        expect(page).to have_no_content("削除")
+      end
+    end
+  end
 end
