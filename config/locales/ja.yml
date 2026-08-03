@@ -2,3 +2,7 @@ ja:
   date:
     formats:
       confirm_card: "%m/%d(%a)"
+  helpers:
+    submit:
+      create: 作成 # newメソッド時に参照される
+      update: 保存
