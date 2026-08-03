@@ -1,0 +1,74 @@
+<%= form_with model: [ group, event ], class: "flex flex-col flex-grow justify-center gap-4" do |f| %>
+  <div class="w-full max-w-3xl mx-auto card">
+    <%= render "shared/error_messages", resource: event %>
+    <div>
+      <%= f.label :title,  class: "block text-sm font-medium text-gray-700 mb-1" %>
+      <%= f.text_field :title, class: "w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400" %>
+    </div>
+
+    <div class="mt-4">
+      <%= f.label :location,  class: "block text-sm font-medium text-gray-700 mb-1" %>
+      <%= f.text_field :location, class: "w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400" %>
+    </div>
+
+    <div class="mt-4">
+      <%= f.label :description,  class: "block text-sm font-medium text-gray-700 mb-1" %>
+      <%= f.text_area :description, rows: 5, class: "w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400" %>
+    </div>
+  </div>
+
+  <div class="w-full max-w-3xl mx-auto card">
+    <% # 候補日の追加UI %>
+    <div class="flex items-center gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-6 text-blue-500">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
+      </svg>
+      <p class="font-bold text-gray-700 mb-1">候補日の追加</p>
+    </div>
+
+    <div data-controller="calendar" class="max-w-3xl mt-4 w-full flex flex-col mx-auto border border-gray-300 rounded-xl overflow-hidden">
+
+      <div class="flex justify-between w-full text-center text-gray-500 font-bold p-2">
+      <% # カレンダー操作ボタン %>
+        <button type="button" data-action='click->calendar#prevMonth' class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-200 cursor-pointer">＜</button>
+        <span data-calendar-target="monthLabel" class="self-center"></span>
+        <button type="button" data-action='click->calendar#nextMonth' class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-200 cursor-pointer">＞</button>
+      </div>
+
+      <div class="p-4 flex flex-col gap-y-4">
+
+        <div data-calendar-target="grid">
+          <% # カレンダー %>
+        </div>
+
+        <small class="text-gray-500 self-center">日付をタップして選択 / もう一度タップで解除</small>
+
+        <hr class="border-gray-200">
+
+        <div class="flex justify-between items-center">
+
+          <p class="text-gray-500 font-bold">選択済みの候補日</p>
+          <div class="flex flex-col gap-1">
+            <p class="text-sm text-gray-500">共通の時間を設定</p>
+            <div class="flex items-center gap-1">
+              <input type="time" min="00:00" max="23:59" data-field="start" data-action='change->calendar#applyCommonTime' class="border border-gray-300 rounded-lg px-2 py-1 text-sm focus:ring-2 focus:ring-emerald-400">
+              〜
+              <input type="time" min="00:00" max="23:59" data-field="end" data-action='change->calendar#applyCommonTime' class="border border-gray-300 rounded-lg px-2 py-1 text-sm focus:ring-2 focus:ring-emerald-400">
+            </div>
+          </div>
+        </div>
+
+        <hr class="border-gray-200">
+
+        <div class="flex flex-col gap-2" data-calendar-target="selectedList">
+          <% # 選択済みの日程を追加するリスト %>
+        </div>
+
+        <div data-calendar-target="hiddenContainer">
+          <% # 隠しフィールド。ここからデータを送信する %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <%= f.submit class: "max-w-3xl mb-4 mx-auto w-full btn btn-primary py-2" %>
+<% end %>
