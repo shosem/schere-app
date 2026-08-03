@@ -68,7 +68,12 @@ class EventsController < ApplicationController
 
   def edit
     @event = @group.events.find(params[:id])
-    @candidate_dates = @event.candidate_dates
+
+    @selected_days = {}
+
+    @event.candidate_dates.each do |cd|
+      @selected_days[cd.date.to_s] = { "id" => cd.id, "startTime" => cd.start_time.present? ? cd.start_time.strftime("%H:%M:00") : "", "endTime" => cd.end_time.present? ? cd.end_time.strftime("%H:%M:00") : "" }
+    end
   end  
 
   def update
