@@ -9,7 +9,7 @@ class EventsController < ApplicationController
   end
 
   def create
-    @event = @group.events.build(event_paramas)
+    @event = @group.events.build(event_params)
     @event.user = current_user
     if @event.save
       redirect_to group_path(@group), notice: "イベントを作成しました"
@@ -66,9 +66,24 @@ class EventsController < ApplicationController
     end
   end
 
+  def edit
+    @event = @group.events.find(params[:id])
+    @candidate_dates = @event.candidate_dates
+  end  
+
+  def update
+    @event = @group.events.find(params[:id])
+    if @event.update(event_params)
+      redirect_to group_event_path(@group, @event)
+    else
+      flash.now[:alert] = "編集内容を保存できませんでした"
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
   private
 
-  def event_paramas
+  def event_params
     params.require(:event).permit(:title, :description, :location, candidate_dates_attributes: [ :id, :date, :start_time, :end_time ])
   end
 
