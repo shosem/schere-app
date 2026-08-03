@@ -74,12 +74,12 @@ class EventsController < ApplicationController
     @event.candidate_dates.each do |cd|
       @selected_days[cd.date.to_s] = { "id" => cd.id, "startTime" => cd.start_time.present? ? cd.start_time.strftime("%H:%M:00") : "", "endTime" => cd.end_time.present? ? cd.end_time.strftime("%H:%M:00") : "" }
     end
-  end  
+  end
 
   def update
     @event = @group.events.find(params[:id])
     if @event.update(event_params)
-      redirect_to group_event_path(@group, @event)
+      redirect_to group_event_path(@group, @event), notice: "編集内容を保存しました"
     else
       flash.now[:alert] = "編集内容を保存できませんでした"
       render :edit, status: :unprocessable_entity
@@ -89,7 +89,7 @@ class EventsController < ApplicationController
   private
 
   def event_params
-    params.require(:event).permit(:title, :description, :location, candidate_dates_attributes: [ :id, :date, :start_time, :end_time ])
+    params.require(:event).permit(:title, :description, :location, candidate_dates_attributes: [ :id, :date, :start_time, :end_time, :_destroy ])
   end
 
   def set_group

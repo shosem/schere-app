@@ -25,6 +25,7 @@ export default class extends Controller {
     this.year = now.getFullYear()
     this.month = now.getMonth()
     this.selected = new Map()
+    this.removed = []
     // 編集画面で、選択済みの候補日をセットしておく
     for (const [key, value] of Object.entries(this.selectedValue)) {
      this.selected.set(key, value)
@@ -43,7 +44,11 @@ export default class extends Controller {
     // 選択済みにあるかどうか
     if (this.selected.has(clickedDate)){
 
-      // ある場合は削除
+      // 選択済みにある場合、idがあれば削除リストに追加してからリストから削除
+      const id = this.selected.get(clickedDate).id
+      if(id) {
+        this.removed.push(id)
+      }
       this.selected.delete(clickedDate)
 
     } else {
@@ -76,6 +81,10 @@ export default class extends Controller {
   // 削除機能
   removeDate(e){
     const date = e.currentTarget.dataset.date
+    const id = this.selected.get(date).id
+    if(id){
+      this.removed.push(id)
+    }
     this.selected.delete(date)
     this.renderCalendar()
     this.renderSelected()
@@ -218,6 +227,11 @@ export default class extends Controller {
       if(endTime){
         html += `<input type="hidden" name="event[candidate_dates_attributes][${i}][end_time]" value="${endTime}">`
       }
+      i ++
+    })
+    this.removed.forEach((rm) => {
+      html += `<input type="hidden" name="event[candidate_dates_attributes][${i}][id]" value="${rm}">`
+      html += `<input type="hidden" name="event[candidate_dates_attributes][${i}][_destroy]" value="1">`
       i ++
     })
 
