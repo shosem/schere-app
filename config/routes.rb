@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   post "join/:join_token", to: "guest_sessions#create_by_token", as: :group_join
 
   resources :groups, only: %i[ index new create show destroy ] do
-    resources :events, only: %i[ new create show ] do
+    resources :events, only: %i[ new create show edit update destroy ] do
       resource :vote, only: %i[ create ]
       resources :venues, only: %i[ new create edit update destroy ]
       resource :confirmation, only: %i[ update destroy], controller: "event_confirmations"
