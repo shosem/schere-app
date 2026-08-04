@@ -26,7 +26,7 @@ RSpec.describe "Venues", type: :request do
         venue: { name: "修正後" }
       }, as: :turbo_stream
       expect(response).to have_http_status(200)
-      expect(response.media_type).to eq Mime[:turbo_stream] 
+      expect(response.media_type).to eq Mime[:turbo_stream]
       expect(response.body).to include('action="replace"')
       expect(response.body).to include(`target="venue_#{venue.id}"`)
       expect(venue.reload.name).to eq "修正後"
