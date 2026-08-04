@@ -12,17 +12,23 @@ RSpec.describe "Venues", type: :request do
     it "予約情報を作成できること" do
       expect { post group_event_venues_path(group, event), params: {
         venue: { name: "居酒屋" }
-        }
+        }, as: :turbo_stream
       }.to change(Venue, :count).by(1)
-      expect(response).to redirect_to(group_event_path(group, event))
+      expect(response).to have_http_status(200)
+      expect(response.media_type).to eq Mime[:turbo_stream]
+      expect(response.body).to include('action="append"')
+      expect(response.body).to include('target="venues-list"')
     end
 
     it "予約情報を更新できること" do
       venue = create(:venue, event: event)
       patch group_event_venue_path(group, event, venue), params: {
         venue: { name: "修正後" }
-      }
-      expect(response).to redirect_to(group_event_path(group, event))
+      }, as: :turbo_stream
+      expect(response).to have_http_status(200)
+      expect(response.media_type).to eq Mime[:turbo_stream] 
+      expect(response.body).to include('action="replace"')
+      expect(response.body).to include(`target="venue_#{venue.id}"`)
       expect(venue.reload.name).to eq "修正後"
     end
 
