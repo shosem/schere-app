@@ -18,12 +18,18 @@ const formatDate = (dateStr) => {
 // Connects to data-controller="calendar"
 export default class extends Controller {
   static targets = ["grid", "monthLabel", "selectedList", "hiddenContainer"]
+  static values = { selected: Object }
 
   initialize() {
     const now = new Date()
     this.year = now.getFullYear()
     this.month = now.getMonth()
     this.selected = new Map()
+    this.removed = []
+    // 編集画面で、選択済みの候補日をセットしておく
+    for (const [key, value] of Object.entries(this.selectedValue)) {
+     this.selected.set(key, value)
+    }
   }
   connect() {
     this.renderCalendar()
@@ -38,13 +44,17 @@ export default class extends Controller {
     // 選択済みにあるかどうか
     if (this.selected.has(clickedDate)){
 
-      // ある場合は削除
+      // 選択済みにある場合、idがあれば削除リストに追加してからリストから削除
+      const id = this.selected.get(clickedDate).id
+      if(id) {
+        this.removed.push(id)
+      }
       this.selected.delete(clickedDate)
 
     } else {
 
       // ない場合は追加
-      this.selected.set(clickedDate, { startTime: "", endTime: "" })
+      this.selected.set(clickedDate, { id: "", startTime: "", endTime: "" })
     }
     this.renderCalendar()
     this.renderSelected()
@@ -71,6 +81,10 @@ export default class extends Controller {
   // 削除機能
   removeDate(e){
     const date = e.currentTarget.dataset.date
+    const id = this.selected.get(date).id
+    if(id){
+      this.removed.push(id)
+    }
     this.selected.delete(date)
     this.renderCalendar()
     this.renderSelected()
@@ -199,9 +213,13 @@ export default class extends Controller {
     let html = ""
     let i = 0
     selectedDays.forEach((sd) => {
-      const { startTime, endTime } = this.selected.get(sd)
+      const { id, startTime, endTime } = this.selected.get(sd)
 
       html += `<input type="hidden" name="event[candidate_dates_attributes][${i}][date]" value="${sd}">`
+
+      if(id){
+        html += `<input type="hidden" name="event[candidate_dates_attributes][${i}][id]" value="${id}">`
+      }
 
       if(startTime){
         html += `<input type="hidden" name="event[candidate_dates_attributes][${i}][start_time]" value="${startTime}">`
@@ -209,6 +227,11 @@ export default class extends Controller {
       if(endTime){
         html += `<input type="hidden" name="event[candidate_dates_attributes][${i}][end_time]" value="${endTime}">`
       }
+      i ++
+    })
+    this.removed.forEach((rm) => {
+      html += `<input type="hidden" name="event[candidate_dates_attributes][${i}][id]" value="${rm}">`
+      html += `<input type="hidden" name="event[candidate_dates_attributes][${i}][_destroy]" value="1">`
       i ++
     })
 

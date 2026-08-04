@@ -8,22 +8,25 @@ class VotesController < ApplicationController
     voter = current_user || current_guest
 
     # paramsで受け取る、{候補日id=>回答}たちを分解
-    params[:votes].each do |candidate_date_id, answer|
-      # 候補日がちゃんとeventに属しているかを確認しつつセット
-      candidate_date = @event.candidate_dates.find_by(id: candidate_date_id)
+    if params[:votes].present?
+      params[:votes].each do |candidate_date_id, answer|
+        # 候補日がちゃんとeventに属しているかを確認しつつセット
+        candidate_date = @event.candidate_dates.find_by(id: candidate_date_id)
 
-      # 候補日がイベントにないなら次のループに（スキップ）
-      next unless candidate_date
+        # 候補日がイベントにないなら次のループに（スキップ）
+        next unless candidate_date
 
-      # voteに、存在するならvoter: voterをセット。なければビルド
-      vote = candidate_date.votes.find_or_initialize_by(voter: voter)
+        # voteに、存在するならvoter: voterをセット。なければビルド
+        vote = candidate_date.votes.find_or_initialize_by(voter: voter)
 
-      # voteのアンサーに、paramsのアンサーをセット
-      vote.answer = answer
-      vote.save
+        # voteのアンサーに、paramsのアンサーをセット
+        vote.answer = answer
+        vote.save
+      end
+      redirect_to group_event_path(@group, @event), notice: "投票しました"
+    else
+      redirect_to group_event_path(@group, @event), alert: "投票してから送信してください"
     end
-
-    redirect_to group_event_path(@group, @event), notice: "投票しました"
   end
 
 

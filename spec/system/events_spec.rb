@@ -36,6 +36,67 @@ RSpec.describe "Events", type: :system do
     end
   end
 
+  describe "編集機能" do
+    let(:event) { create(:event, group: group) }
+    before do
+      visit group_event_path(group, event)
+    end
+    context "編集可能" do
+      it "イベントを編集できること" do
+        click_on "編集"
+        fill_in "タイトル", with: "テストイベントだよ"
+        click_on "保存"
+        expect(page).to have_content("編集内容を保存しました")
+        expect(page).to have_content("テストイベントだよ")
+        expect(Event.count).to eq 1
+      end
+    end
+
+    context "編集不可" do
+      it "ゲスト入室の場合編集ボタンが表示されないこと" do
+        click_button(user.name.first)
+        click_on("ログアウト")
+        expect(page).to have_content("ログアウトしました")
+        visit new_group_join_path(group.join_token)
+        fill_in "ゲスト名", with: "ゲスト"
+        click_on "参加する"
+        expect(page).to have_content("入室しました")
+        visit group_event_path(group, event)
+        expect(page).to have_no_link("編集")
+      end
+    end
+  end
+
+  describe "削除機能" do
+    let(:event) { create(:event, group: group) }
+    before do
+      visit group_event_path(group, event)
+    end
+    context "削除可能" do
+      it "イベントを削除できること" do
+        page.accept_confirm do
+          click_on "削除"
+        end
+        expect(page).to have_content("イベントを削除しました")
+        expect(Event.count).to eq 0
+      end
+    end
+
+    context "削除不可" do
+      it "ゲスト入室の場合削除ボタンが表示されないこと" do
+        click_button(user.name.first)
+        click_on("ログアウト")
+        expect(page).to have_content("ログアウトしました")
+        visit new_group_join_path(group.join_token)
+        fill_in "ゲスト名", with: "ゲスト"
+        click_on "参加する"
+        expect(page).to have_content("入室しました")
+        visit group_event_path(group, event)
+        expect(page).to have_no_link("削除")
+      end
+    end
+  end
+
   describe "投票機能" do
     let(:event) { create(:event, group: group, candidate_dates_count: 3) }
     before do

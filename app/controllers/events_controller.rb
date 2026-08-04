@@ -2,6 +2,7 @@ class EventsController < ApplicationController
   before_action :authenticate_user!, except: :show
   before_action :signed_in!, only: :show
   before_action :set_group
+  before_action :set_event, only: %i[ show edit update destroy ]
 
   def new
     @event = @group.events.build
@@ -9,7 +10,7 @@ class EventsController < ApplicationController
   end
 
   def create
-    @event = @group.events.build(event_paramas)
+    @event = @group.events.build(event_params)
     @event.user = current_user
     if @event.save
       redirect_to group_path(@group), notice: "イベントを作成しました"
@@ -21,8 +22,6 @@ class EventsController < ApplicationController
 
   def show
     # イベントをセット
-    @event = @group.events.find(params[:id])
-
     # イベントの候補日たちを、投票データとともにセット
     @candidate_dates = @event.candidate_dates.includes(:votes).order(:date, :start_time)
 
@@ -66,14 +65,40 @@ class EventsController < ApplicationController
     end
   end
 
+  def edit
+    @selected_days = {}
+
+    @event.candidate_dates.each do |cd|
+      @selected_days[cd.date.to_s] = { "id" => cd.id, "startTime" => cd.start_time.present? ? cd.start_time.strftime("%H:%M:00") : "", "endTime" => cd.end_time.present? ? cd.end_time.strftime("%H:%M:00") : "" }
+    end
+  end
+
+  def update
+    if @event.update(event_params)
+      redirect_to group_event_path(@group, @event), notice: "編集内容を保存しました"
+    else
+      flash.now[:alert] = "編集内容を保存できませんでした"
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @event.destroy!
+    redirect_to group_path(@group), notice: "イベントを削除しました", status: :see_other
+  end
+
   private
 
-  def event_paramas
-    params.require(:event).permit(:title, :description, :location, candidate_dates_attributes: [ :id, :date, :start_time, :end_time ])
+  def event_params
+    params.require(:event).permit(:title, :description, :location, candidate_dates_attributes: [ :id, :date, :start_time, :end_time, :_destroy ])
   end
 
   def set_group
     @group = Group.find(params[:group_id])
     deny_access unless authorized?(@group)
+  end
+
+  def set_event
+    @event = @group.events.find(params[:id])
   end
 end
