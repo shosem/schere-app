@@ -10,4 +10,8 @@ export default class extends Controller {
     if(!this.cardTarget.contains(e.target))
       this.modalTarget.innerHTML = ""
   }
+
+  close() {
+    this.modalTarget.innerHTML = ""
+  }
 }

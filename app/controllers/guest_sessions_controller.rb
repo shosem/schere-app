@@ -9,7 +9,13 @@ class GuestSessionsController < ApplicationController
   def create_by_token
     @guest = Guest.find_or_initialize_by(group_id: @group.id, name: params[:guest][:name])
 
-    if @guest.persisted? || @guest.save
+    confirmed = params[:confirmed]
+
+    if @guest.persisted? && !confirmed
+      render turbo_stream: turbo_stream.update("confirmation-modal", partial: "guest_sessions/confirmation_modal",
+                                                                     locals: { guest: @guest, group: @group })
+
+    elsif @guest.persisted? || @guest.save
       session[:guest_token] = @guest.session_token
       redirect_to group_path(@group), notice: "#{@group.name}に#{@guest.name}さんとして入室しました"
     else
