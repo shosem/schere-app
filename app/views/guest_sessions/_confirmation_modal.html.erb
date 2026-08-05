@@ -1,0 +1,18 @@
+<div class="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4" data-action="click->modal#closeModal">
+  <%= form_with url: group_join_path(group.join_token), class: "w-full max-w-sm" do |f| %>
+    <div class="card" data-modal-target="card">
+      <p class="text-lg font-bold text-gray-800">同じ名前の方がいます</p>
+      <p class="mt-2 text-sm text-gray-600 leading-relaxed">
+        このグループには既に<span class="font-bold text-gray-900"><%= guest.name %></span>さんがいます。
+        ご本人ならそのまま入室し、別の方の場合は違う名前で入室してください。
+      </p>
+      <%= hidden_field_tag 'guest[name]', guest.name %>
+      <%= hidden_field_tag 'confirmed', 1 %>
+
+      <div class="mt-5 flex gap-2">
+        <button type="button" class="btn bg-white text-gray-700 border border-gray-300 hover:bg-gray-50 flex-1" data-action="click->modal#close">違う名前にする</button>
+        <%= f.submit "本人です", class: "btn btn-primary flex-1" %>
+      </div>
+    </div>
+  <% end %>
+</div>
