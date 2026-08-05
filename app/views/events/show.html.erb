@@ -9,14 +9,22 @@
 
   <% # タイトル、場所、説明表示div %>
   <div>
-    <div class="flex justify-between items-center">
+    <div class="flex justify-between items-center"
+         data-controller="share"
+         data-share-url-value="<%= new_group_join_url(@group.join_token, event_id: @event.id) %>" 
+         data-share-title-value="イベント共有"
+         data-share-text-value="イベント「<%= @event.title %>」に参加しませんか？">
       <h1 class="text-4xl text-gray-800 font-bold mt-4"><%= @event.title %></h1>
-      <% if @group.owned_by?(current_user) %>
+      <div class="flex flex-col">
         <div class="flex gap-2 items-center">
-          <%= link_to "編集", edit_group_event_path(@group, @event), class: "btn btn-primary py-1.5" %>
-          <%= link_to "削除", group_event_path(@group, @event), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, class: "btn btn-danger py-1.5" %>
+          <button data-action="click->share#share" class="btn text-gray-800 border border-gray-800 hover:bg-gray-200 py-1.5">共有</button>
+          <% if @group.owned_by?(current_user) %>
+            <%= link_to "編集", edit_group_event_path(@group, @event), class: "btn btn-primary py-1.5" %>
+            <%= link_to "削除", group_event_path(@group, @event), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, class: "btn btn-danger py-1.5" %>
+          <% end %>
         </div>
-      <% end %>
+        <p data-share-target="sharedMessage" class="px-2 rounded-xl"></p>
+      </div>
     </div>
     <% if @event.location.present? %>
       <span class="text-sm text-gray-400">📍<%= @event.location %></span>
@@ -27,7 +35,7 @@
         <p class="whitespace-pre-line text-sm text-gray-600 leading-relaxed"><%= @event.description %></p>
       </div>
     <% end %>
-   </div>
+  </div>
 
   <% if @event.adjusting? %>
     <%= render "adjusting_event" %>
