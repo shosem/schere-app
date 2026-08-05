@@ -37,7 +37,6 @@ RSpec.describe "Headers", type: :system do
           expect(page).to have_current_path(new_group_path)
           expect(page).to have_content("グループを作成する")
         end
-
       end
     end
 
