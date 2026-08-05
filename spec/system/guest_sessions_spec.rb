@@ -36,6 +36,33 @@ RSpec.describe "GuestSessions", type: :system do
       end
     end
 
+    context "すでに入室したことのあるゲスト名で入室しようとしたとき" do
+      let!(:guest) { create(:guest, name: "ゲストくん", group: group) }
+      before do
+        fill_in "ゲスト名", with: "ゲストくん"
+        click_on "参加する"
+      end
+
+      it "確認用のモーダルが開くこと" do
+        expect(page).to have_content("このグループには既に#{ guest.name }さんがいます。")
+        expect(page).to have_button("本人です")
+        expect(page).to have_button("違う名前にする")
+      end
+
+      it "本人の場合そのまま入室できること" do
+        click_on "本人です"
+        expect(page).to have_content("#{group.name}に#{guest.name}さんとして入室しました")
+        expect(Guest.count).to eq 1
+      end
+
+      it "違う名前にするを選択するとモーダルが閉じること" do
+        click_on "違う名前にする"
+        expect(page).to have_no_content("このグループには既に#{ guest.name }さんがいます。")
+        expect(page).to have_current_path(new_group_join_path(group.join_token))
+      end
+
+    end
+
   describe "アクセス制御" do
       it "グループ入室後、違うグループの詳細画面にアクセスできず、元のグループ詳細ページに戻ること" do
         other_group = create(:group)
