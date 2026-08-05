@@ -12,7 +12,7 @@ class GuestSessionsController < ApplicationController
     confirmed = params[:confirmed]
 
     if @guest.persisted? && !confirmed
-      render turbo_stream: turbo_stream.update("confirmation-modal", partial: "guest_sessions/confirmation_modal", 
+      render turbo_stream: turbo_stream.update("confirmation-modal", partial: "guest_sessions/confirmation_modal",
                                                                      locals: { guest: @guest, group: @group })
 
     elsif @guest.persisted? || @guest.save

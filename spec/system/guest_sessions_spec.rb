@@ -60,7 +60,6 @@ RSpec.describe "GuestSessions", type: :system do
         expect(page).to have_no_content("このグループには既に#{ guest.name }さんがいます。")
         expect(page).to have_current_path(new_group_join_path(group.join_token))
       end
-
     end
 
   describe "アクセス制御" do
