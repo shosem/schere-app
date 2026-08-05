@@ -15,11 +15,29 @@ RSpec.describe "Headers", type: :system do
         expect(page).to have_no_link("ログイン")
       end
 
-      it "名前の頭文字のアイコンをクリックし、開いたドロップダウンメニューからログアウトできること" do
-        click_button(user.name.first)
-        click_on("ログアウト")
-        expect(page).to have_current_path(new_user_session_path)
-        expect(page).to have_content("ログアウトしました")
+      context "名前の頭文字アイコンをクリックし、ドロップダウンを開いた状態" do
+        before do
+          click_button(user.name.first)
+        end
+
+        it "ログアウトできること" do
+          click_on("ログアウト")
+          expect(page).to have_current_path(new_user_session_path)
+          expect(page).to have_content("ログアウトしました")
+        end
+
+        it "アカウント設定ページに遷移できること" do
+          click_on("アカウント設定")
+          expect(page).to have_current_path(edit_user_registration_path)
+          expect(page).to have_content("アカウント情報の変更")
+        end
+
+        it "グループ作成ページに遷移できること" do
+          click_on("グループ作成")
+          expect(page).to have_current_path(new_group_path)
+          expect(page).to have_content("グループを作成する")
+        end
+
       end
     end
 
