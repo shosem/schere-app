@@ -7,7 +7,9 @@
                                  data-share-name-value="<%= @group.name %>"
                                  class="flex flex-col items-end">
       <div>
-        <%= link_to "＋ イベント作成", new_group_event_path(@group), class: "btn btn-primary" %>
+        <% if @group.owned_by?(current_user) %>
+          <%= link_to "＋ イベント作成", new_group_event_path(@group), class: "btn btn-primary" %>
+        <% end %>
         <button data-action="click->share#share" class="btn text-gray-800 border border-gray-800 hover:bg-gray-200">共有</button>
       </div>
       <p data-share-target="sharedMessage" class="px-2 rounded-xl"></p>
@@ -29,5 +31,7 @@
       <p class="mt-4 flex-grow flex items-center justify-center text-gray-400">まだイベントはありません</p>
     <% end %>
   </div>
-  <%= link_to "グループを削除", group_path(@group), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, class: "mt-4 self-end btn btn-danger" %>
+  <% if @group.owned_by?(current_user) %>
+    <%= link_to "グループを削除", group_path(@group), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, class: "mt-4 self-end btn btn-danger" %>
+  <% end %>
 </div>
