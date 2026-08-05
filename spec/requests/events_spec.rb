@@ -11,7 +11,7 @@ RSpec.describe "Events", type: :request do
     end
     context "確定済みイベントに、確定日程を削除するリクエストを送る場合" do
       it "削除されないこと" do
-        patch group_event_path(event.group, event), params: { 
+        patch group_event_path(event.group, event), params: {
           event: { candidate_dates_attributes: [ id: event.confirmed_candidate_date_id, _destroy: 1 ] } }
         expect(response).to redirect_to group_event_path(group, event)
         expect(event.reload.confirmed_candidate_date_id).to eq event.candidate_dates.first.id

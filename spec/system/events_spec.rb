@@ -219,7 +219,7 @@ RSpec.describe "Events", type: :system do
       end
     end
   end
-  
+
   describe "施設情報機能" do
     let(:event) { create(:event, group: group, candidate_dates_count: 3, status: "confirmed") }
       before do
