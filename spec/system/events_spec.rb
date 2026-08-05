@@ -225,7 +225,7 @@ RSpec.describe "Events", type: :system do
     before do
       visit group_event_path(group, event)
     end
-  
+
     it "event_idを含む入室用urlが、erbからstimulusへ渡されていること" do
       element = find("[data-controller='share']")
       expect(element["data-share-url-value"]).to end_with(new_group_join_path(group.join_token, event_id: event.id))

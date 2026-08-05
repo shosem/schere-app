@@ -83,14 +83,14 @@ describe "イベント共有リンクからの入室" do
         before do
           visit new_group_join_path(group.join_token, event_id: event.id)
         end
-  
+
         it "名前を入力するとイベント詳細画面に着地すること" do
           fill_in "ゲスト名", with: "テストゲスト"
           click_on "参加する"
           expect(page).to have_current_path(group_event_path(group, event))
           expect(page).to have_content(event.title)
         end
-  
+
         it "確認モーダルの「本人です」を経由してもイベント詳細画面に着地すること" do
           create(:guest, name: "ゲストくん", group: group)
           fill_in "ゲスト名", with: "ゲストくん"
