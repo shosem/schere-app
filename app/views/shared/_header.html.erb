@@ -10,11 +10,10 @@
           <%= current_user.name.first %>                                                                                                                                                   
         </button>
         <div data-dropdown-target="menu" class="absolute hidden top-full right-0 w-44 bg-white border border-gray-200 rounded-lg shadow-lg py-1">
-          <%= link_to t('.create_group'), "#", class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" %>
-          <div>
-            <%= button_to t('.logout'), destroy_user_session_path, method: :delete,                                                                                                            
+          <%= link_to t('.create_group'), new_group_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" %>
+          <%= link_to t('.edit_user'), edit_user_registration_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" %>
+          <%= button_to t('.logout'), destroy_user_session_path, method: :delete,                                                                                                            
                 class: "px-4 py-2 text-sm font-medium text-red-500 hover:bg-gray-50" %>
-          </div>
         </div>
       </div>
     <% elsif current_guest %>

@@ -5,6 +5,7 @@ ja:
       login: ログイン
       logout: ログアウト
       create_user: 新規登録
+      edit_user: アカウント設定
     footer:
       dashboard: ダッシュボード
       edit: 設定

@@ -16,7 +16,7 @@ RSpec.describe "Events", type: :request do
         expect(response).to redirect_to group_event_path(group, event)
         expect(event.reload.confirmed_candidate_date_id).to eq event.candidate_dates.first.id
         expect(event.candidate_dates.count).to eq 3
-        expect(event.status).to be_confirmed
+        expect(event).to be_confirmed
       end
     end
   end
