@@ -74,7 +74,7 @@ RSpec.describe "Groups", type: :system do
   end
 
   describe "詳細(show)" do
-    let(:group) { create(:group, user: user) }
+    let!(:group) { create(:group, user: user) }
 
     describe "共有ボタン" do
       context "共有成功" do
@@ -109,6 +109,40 @@ RSpec.describe "Groups", type: :system do
           expect(page).to have_no_content("成功しました", wait: 0)
           expect(page).to have_no_content("失敗しました", wait: 0)
           expect(evaluate_script("window.__shared")).to eq true
+        end
+      end
+    end
+
+    describe "幹事とゲストの表示" do
+      before do
+        visit group_path(group)
+      end
+      context "幹事でログインしている場合" do
+        it "イベント作成ボタンが表示されること" do
+          expect(page).to have_link("＋ イベント作成")
+        end
+
+        it "グループ削除ボタンが表示されること" do
+          expect(page).to have_link("グループを削除")
+        end
+      end
+
+      context "ゲストで入室している場合" do
+        before do
+          click_button(user.name.first)
+          click_on("ログアウト")
+          expect(page).to have_content("ログアウトしました")
+          visit new_group_join_path(group.join_token)
+          fill_in "ゲスト名", with: "テストゲスト"
+          click_on "参加する"
+        end
+
+        it "イベント作成ボタンが表示されないこと" do
+          expect(page).to have_no_link("＋ イベント作成")
+        end
+
+        it "グループ削除ボタンが表示されないこと" do
+          expect(page).to have_no_link("グループを削除")
         end
       end
     end
