@@ -90,7 +90,15 @@ class EventsController < ApplicationController
   private
 
   def event_params
-    params.require(:event).permit(:title, :description, :location, candidate_dates_attributes: [ :id, :date, :start_time, :end_time, :_destroy ])
+    permit_params = [ :title, :description, :location ]
+
+    unless @event&.confirmed?
+      permit_params.push({ candidate_dates_attributes: [ :id, :date, :start_time, :end_time, :_destroy ] })
+    end
+
+    Rails.logger.debug permit_params.inspect
+
+    params.require(:event).permit(permit_params)
   end
 
   def set_group

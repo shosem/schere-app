@@ -212,8 +212,14 @@ RSpec.describe "Events", type: :system do
           expect(page).to have_content("1")
         end
       end
+
+      it "編集画面にてカレンダーUIが表示されないこと" do
+        visit edit_group_event_path(group, event)
+        expect(page).to have_no_css("[data-testid='calendar-card']")
+      end
     end
   end
+
   describe "施設情報機能" do
     let(:event) { create(:event, group: group, candidate_dates_count: 3, status: "confirmed") }
       before do
