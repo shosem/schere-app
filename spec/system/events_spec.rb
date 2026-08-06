@@ -301,4 +301,53 @@ RSpec.describe "Events", type: :system do
       end
     end
   end
+
+  describe "選択した候補日のフォーム表示" do
+    let(:date) { Date.today }
+    context "作成失敗時" do
+      before do
+        visit new_group_event_path(group)
+        find("[data-date='#{date}']").click
+        click_on "作成"
+        expect(page).to have_content("イベントを作成できませんでした")
+      end
+
+      it "選択していた候補日がerbからstimulusへ渡されていること" do
+        element = find("[data-controller='calendar']")
+        expect(element["data-calendar-selected-value"]).to include(date.to_s)
+      end
+
+      it "選択していた候補日が、選択済みリストに残っていること" do
+        within("[data-calendar-target='selectedList']") do
+          expect(page).to have_css("[data-date='#{date}']")
+        end
+      end
+    end
+
+    context "更新失敗時" do
+      let!(:event) { create(:event, group: group, candidate_dates_count: 1) }
+      before do
+        event.candidate_dates.first.update!(date: Date.today + 3)
+        visit edit_group_event_path(group, event)
+        fill_in "タイトル", with: ""
+        find("[data-date='#{date}']").click
+        click_on "保存"
+        expect(page).to have_content("編集内容を保存できませんでした")
+      end
+      it "選択していた候補日と既存の候補日が、選択済みリストに残っていること" do
+        cd = event.candidate_dates.first
+        within("[data-calendar-target='selectedList']") do
+          expect(page).to have_css("[data-date='#{date}']")
+          expect(page).to have_css("[data-date='#{cd.date}']")
+        end
+      end
+
+      it "選択していた候補日がerbからstimulusへ渡されていること" do
+        cd = event.candidate_dates.first
+        element = find("[data-controller='calendar']")
+        expect(element["data-calendar-selected-value"]).to include(date.to_s)
+        expect(element["data-calendar-selected-value"]).to include(cd.date.to_s)
+      end
+    end
+  end
 end
