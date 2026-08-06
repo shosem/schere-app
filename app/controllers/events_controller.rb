@@ -7,6 +7,7 @@ class EventsController < ApplicationController
   def new
     @event = @group.events.build
     @event.candidate_dates.build
+    set_selected_days
   end
 
   def create
@@ -15,6 +16,7 @@ class EventsController < ApplicationController
     if @event.save
       redirect_to group_path(@group), notice: "イベントを作成しました"
     else
+      set_selected_days
       flash.now[:alert] = "イベントを作成できませんでした"
       render :new, status: :unprocessable_entity
     end
@@ -73,6 +75,7 @@ class EventsController < ApplicationController
     if @event.update(event_params)
       redirect_to group_event_path(@group, @event), notice: "編集内容を保存しました"
     else
+      set_selected_days
       flash.now[:alert] = "編集内容を保存できませんでした"
       render :edit, status: :unprocessable_entity
     end
