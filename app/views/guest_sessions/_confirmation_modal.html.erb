@@ -7,6 +7,7 @@
         ご本人ならそのまま入室し、別の方の場合は違う名前で入室してください。
       </p>
       <%= hidden_field_tag 'guest[name]', guest.name %>
+      <%= hidden_field_tag 'event_id', event_id %>
       <%= hidden_field_tag 'confirmed', 1 %>
 
       <div class="mt-5 flex gap-2">

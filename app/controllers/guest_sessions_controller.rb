@@ -13,11 +13,11 @@ class GuestSessionsController < ApplicationController
 
     if @guest.persisted? && !confirmed
       render turbo_stream: turbo_stream.update("confirmation-modal", partial: "guest_sessions/confirmation_modal",
-                                                                     locals: { guest: @guest, group: @group })
+                                                                     locals: { guest: @guest, group: @group, event_id: params[:event_id] })
 
     elsif @guest.persisted? || @guest.save
       session[:guest_token] = @guest.session_token
-      redirect_to group_path(@group), notice: "#{@group.name}に#{@guest.name}さんとして入室しました"
+      redirect_to after_join_path, notice: "#{@group.name}に#{@guest.name}さんとして入室しました"
     else
       flash.now[:danger] = "入室できませんでした"
       render :new_by_token, status: :unprocessable_entity
@@ -31,8 +31,16 @@ class GuestSessionsController < ApplicationController
   end
 
   def redirect_if_joined
-    if current_guest && current_guest&.group_id == @group.id
-      redirect_to group_path(@group)
+    if current_user || current_guest&.group_id == @group.id
+      redirect_to after_join_path
+    end
+  end
+
+  def after_join_path
+    if (event = @group.events.find_by(id: params[:event_id]))
+      group_event_path(@group, event)
+    else
+      group_path(@group)
     end
   end
 end

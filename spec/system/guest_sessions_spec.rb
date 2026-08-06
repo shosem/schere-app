@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "GuestSessions", type: :system do
+  include LoginMacros
   describe "ゲスト入室機能" do
     let(:group) { create(:group) }
     before do
@@ -62,7 +63,7 @@ RSpec.describe "GuestSessions", type: :system do
       end
     end
 
-  describe "アクセス制御" do
+    describe "アクセス制御" do
       it "グループ入室後、違うグループの詳細画面にアクセスできず、元のグループ詳細ページに戻ること" do
         other_group = create(:group)
         fill_in "ゲスト名", with: "テストゲスト"
@@ -74,4 +75,67 @@ RSpec.describe "GuestSessions", type: :system do
       end
     end
   end
+describe "イベント共有リンクからの入室" do
+      let(:group) { create(:group) }
+      let!(:event) { create(:event, group: group) }
+
+      context "まだ入室していないゲストの場合" do
+        before do
+          visit new_group_join_path(group.join_token, event_id: event.id)
+        end
+
+        it "名前を入力するとイベント詳細画面に着地すること" do
+          fill_in "ゲスト名", with: "テストゲスト"
+          click_on "参加する"
+          expect(page).to have_current_path(group_event_path(group, event))
+          expect(page).to have_content(event.title)
+        end
+
+        it "確認モーダルの「本人です」を経由してもイベント詳細画面に着地すること" do
+          create(:guest, name: "ゲストくん", group: group)
+          fill_in "ゲスト名", with: "ゲストくん"
+          click_on "参加する"
+          click_on "本人です"
+          expect(page).to have_current_path(group_event_path(group, event))
+        end
+      end
+
+      context "すでに入室しているゲストの場合" do
+        it "名前の入力なしでイベント詳細画面に遷移すること" do
+          visit new_group_join_path(group.join_token)
+          fill_in "ゲスト名", with: "テストゲスト"
+          click_on "参加する"
+          expect(page).to have_content("入室しました")
+          visit new_group_join_path(group.join_token, event_id: event.id)
+          expect(page).to have_current_path(group_event_path(group, event))
+          expect(Guest.count).to eq 1
+        end
+      end
+
+      context "ログイン済みユーザーの場合" do
+        it "ゲストを作らずにイベント詳細画面に遷移すること" do
+          login(group.user)
+          visit new_group_join_path(group.join_token, event_id: event.id)
+          expect(page).to have_current_path(group_event_path(group, event))
+          expect(Guest.count).to eq 0
+        end
+      end
+
+      context "不正なevent_idを渡された場合" do
+        it "存在しないidのときはグループ詳細画面に着地すること" do
+          visit new_group_join_path(group.join_token, event_id: 0)
+          fill_in "ゲスト名", with: "テストゲスト"
+          click_on "参加する"
+          expect(page).to have_current_path(group_path(group))
+        end
+
+        it "他グループのイベントidのときはグループ詳細画面に着地すること" do
+          other_event = create(:event)
+          visit new_group_join_path(group.join_token, event_id: other_event.id)
+          fill_in "ゲスト名", with: "テストゲスト"
+          click_on "参加する"
+          expect(page).to have_current_path(group_path(group))
+        end
+      end
+    end
 end
