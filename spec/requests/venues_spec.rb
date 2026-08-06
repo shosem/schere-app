@@ -47,7 +47,6 @@ RSpec.describe "Venues", type: :request do
     end
 
     context "調整中イベントの場合" do
-
       it "施設情報を作成できないこと" do
         post group_event_venues_path(group, event), params: {
           venue: { name: "居酒屋" }
