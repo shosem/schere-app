@@ -6,7 +6,6 @@ class EventsController < ApplicationController
 
   def new
     @event = @group.events.build
-    @event.candidate_dates.build
     set_selected_days
   end
 
@@ -116,7 +115,7 @@ class EventsController < ApplicationController
     # 既存の候補日を箱に入れていく。"2020-01-01"=>{id: 4, startTime: ...}の形
     @event.candidate_dates.each do |cd|
       # 削除予定（removed）ならスルー
-      next if cd.marked_for_destruction? || cd.date.blank?
+      next if cd.marked_for_destruction?
       @selected_days[cd.date.to_s] = { "id" => cd.id, "startTime" => cd.start_time.present? ? cd.start_time.strftime("%H:%M:00") : "", "endTime" => cd.end_time.present? ? cd.end_time.strftime("%H:%M:00") : "" }
     end
   end
