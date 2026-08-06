@@ -220,6 +220,23 @@ RSpec.describe "Events", type: :system do
     end
   end
 
+  describe "共有ボタン" do
+    let(:event) { create(:event, group: group) }
+    before do
+      visit group_event_path(group, event)
+    end
+
+    it "event_idを含む入室用urlが、erbからstimulusへ渡されていること" do
+      element = find("[data-controller='share']")
+      expect(element["data-share-url-value"]).to end_with(new_group_join_path(group.join_token, event_id: event.id))
+    end
+
+    it "共有する文言にイベント名が含まれていること" do
+      element = find("[data-controller='share']")
+      expect(element["data-share-text-value"]).to include(event.title)
+    end
+  end
+
   describe "施設情報機能" do
     let(:event) { create(:event, group: group, candidate_dates_count: 3, status: "confirmed") }
       before do

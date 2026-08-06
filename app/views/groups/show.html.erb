@@ -4,7 +4,8 @@
       <h2 class="text-xl md:text-4xl text-gray-800 font-bold"><%= @group.name %></h2>
     </div>
     <div data-controller="share" data-share-url-value="<%= new_group_join_url(@group.join_token) %>" 
-                                 data-share-name-value="<%= @group.name %>"
+                                 data-share-title-value="グループ共有"
+                                 data-share-text-value="グループ「<%= @group.name %>」に参加しませんか？"
                                  class="flex flex-col items-end">
       <div>
         <% if @group.owned_by?(current_user) %>

@@ -4,7 +4,7 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
 
   static targets = [ "sharedMessage" ]
-  static values = { url: String, name: String }
+  static values = { url: String, title: String, text: String }
 
   connect() {
     this.isSharing = false
@@ -23,8 +23,8 @@ export default class extends Controller {
       try {
       
         await navigator.share({
-          title: "グループ共有",
-          text: `グループ「${this.nameValue}」に参加しませんか？`,
+          title: this.titleValue,
+          text: this.textValue,
           url: this.urlValue
         });
         this.showMessage("成功しました！", successClasses)
