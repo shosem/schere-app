@@ -2,6 +2,7 @@ class VenuesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_group
   before_action :set_event
+  before_action :event_confirmed!
 
   def new
     @venue = @event.venues.build
@@ -48,5 +49,11 @@ class VenuesController < ApplicationController
 
   def set_event
     @event = @group.events.find(params[:event_id])
+  end
+
+  def event_confirmed!
+    unless @event.confirmed?
+      redirect_to group_event_path(@group, @event), alert: "施設情報は確定済みのイベントのみ操作できます"
+    end
   end
 end

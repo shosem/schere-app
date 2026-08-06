@@ -15,21 +15,23 @@
 
 <% # 施設情報のセクション %>
 
-<div class="card flex flex-col mt-4">
-  <div class="flex justify-between items-center">
-    <h2 class="text-xl text-gray-800 font-bold">施設情報</h2>
-    <% if @group.owned_by?(current_user) %>
-      <%= link_to "＋追加", new_group_event_venue_path(@group, @event), data: { turbo_frame: "modal" }, class: "btn btn-primary py-1.5" %>
-    <% end %>
-  </div>
+<% unless current_guest && @event.venues.empty? %>
+  <div class="card flex flex-col mt-4">
+    <div class="flex justify-between items-center">
+      <h2 class="text-xl text-gray-800 font-bold">施設情報</h2>
+      <% if @group.owned_by?(current_user) %>
+        <%= link_to "＋追加", new_group_event_venue_path(@group, @event), data: { turbo_frame: "modal" }, class: "btn btn-primary py-1.5" %>
+      <% end %>
+    </div>
 
-  <% # 施設情報リスト %>
-  <div id="venues-list">
-    <% if @event.venues.present? %>
-      <%= render @event.venues %>
-    <% end %>
+    <% # 施設情報リスト %>
+    <div id="venues-list">
+      <% if @event.venues.present? %>
+        <%= render @event.venues %>
+      <% end %>
+    </div>
   </div>
-</div>
+<% end %>
 
 
 <div class="card flex flex-col mt-4 gap-2">
