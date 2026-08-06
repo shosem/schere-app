@@ -3,5 +3,5 @@
     <h2 class="text-4xl text-gray-800 font-bold"><%= t('.create') %></h2>
     <p class="mt-2 text-sm text-gray-400">イベントを作成しましょう！楽しみだね~~</p>
   </div>
-  <%= render "form", group: @group, event: @event %>
+  <%= render "form", group: @group, event: @event, selected_days: @selected_days %>
 </div>
