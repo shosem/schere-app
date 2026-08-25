@@ -4,5 +4,4 @@ class EventGroupSelectionsController < ApplicationController
   def new
     @groups = current_user.groups
   end
-
 end
