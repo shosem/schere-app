@@ -1,0 +1,24 @@
+<%= turbo_frame_tag "modal" do %>
+  <div
+    class="fixed inset-0 z-50 bg-black/50 flex items-center justify-center"
+    data-action="click->modal#closeModal"
+  >
+    <div class="w-[90%] max-w-md">
+      <div class="card p-5" data-modal-target="card">
+        <% if @groups.present? %>
+           <p class="font-semibold text-gray-800">どのグループのイベントを作成しますか？</p>
+          <div class="flex flex-col mt-2 gap-2 items-center justify-center">
+            <% @groups.each do |group| %>
+              <%= link_to group.name, new_group_event_path(group), data: { turbo_frame: "_top" }, class: "w-[70%] card text-center p-2" %>
+            <% end %>
+          </div>
+        <% else %>
+          <div class="flex flex-col justify-center gap-2">
+            <p class="text-lg font-bold text-gray-500 text-center">グループがまだありません</p>
+            <%= link_to "グループ作成へ", new_group_path, data: { turbo_frame: "_top" }, class: "btn btn-primary" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

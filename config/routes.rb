@@ -26,4 +26,5 @@ Rails.application.routes.draw do
       resource :confirmation, only: %i[ update destroy], controller: "event_confirmations"
     end
   end
+  resource :event_group_selection, only: :new
 end
