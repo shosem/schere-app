@@ -32,6 +32,6 @@
     </main> 
 
     <%= render 'shared/footer' %>
-    <%= turbo_frame_tag "modal", data: { controller: "modal", modal_target: "modal" } %>
+    <%= turbo_frame_tag "modal", data: { controller: "modal", modal_target: "modal", action: "turbo:before-cache@document->modal#close" } %>
   </body>
 </html>
