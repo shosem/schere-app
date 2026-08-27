@@ -3,8 +3,8 @@
     class="fixed inset-0 z-50 bg-black/50 flex items-center justify-center"
     data-action="click->modal#closeModal"
   >
-    <div class="w-[90%] max-w-md max-h-[80dvh] overflow-y-auto">
-      <div class="card" data-modal-target="card">
+    <div class="w-[90%] max-w-md">
+      <div class="card max-h-[80dvh] overflow-y-auto" data-modal-target="card">
         <% if @groups.present? %>
            <p class="font-semibold text-gray-800">どのグループのイベントを作成しますか？</p>
           <div class="flex flex-col mt-2 gap-2 items-center justify-center">
