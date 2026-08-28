@@ -1,10 +1,10 @@
 <div class="card flex flex-col mt-4 min-h-40 bg-gradient-to-br from-green-400 to-emerald-600 shadow-lg" data-testid="confirmed-date">
-    
+
   <div class="flex justify-between items-center">
    <h2 class="text-xl text-white font-bold">確定日程</h2>
    <%= link_to "調整中に戻す", group_event_confirmation_path(@group, @event), data: { turbo_method: :delete, turbo_confirm: "調整中に戻しますか？" }, class: "text-white font-medium bg-emerald-700 hover:bg-emerald-800 transition rounded-lg px-2.5 py-2" %>
   </div>
-  
+
   <div class="flex justify-center items-center gap-4">
     <p class="text-white text-4xl font-bold"><%= l(@event.confirmed_candidate_date.date, format: :long) %></p>
     <div class="flex items-center">
@@ -13,7 +13,7 @@
   </div>
 </div>
 
-<% # 施設情報のセクション %>
+<%# 施設情報のセクション %>
 
 <% unless current_guest && @event.venues.empty? %>
   <div class="card flex flex-col mt-4">
@@ -24,7 +24,7 @@
       <% end %>
     </div>
 
-    <% # 施設情報リスト %>
+    <%# 施設情報リスト %>
     <div id="venues-list">
       <% if @event.venues.present? %>
         <%= render @event.venues %>
@@ -54,5 +54,3 @@
   </div>
   <%= render "voter_names", names: @voter_names[@event.confirmed_candidate_date_id] %>
 </div>
-
-<%= turbo_frame_tag "modal", data: { controller: "modal", modal_target: "modal" } %>
