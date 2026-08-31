@@ -10,7 +10,11 @@ RSpec.describe "Events", type: :system do
 
   describe "作成機能" do
     context "作成可能" do
-      date = Date.tomorrow.to_s
+      # 候補日のため未来が好ましいが、カレンダー（ブラウザ）は当月を描画するため、月末にテストを行うと落ちる。そのため当日にした
+      # アプリ内ではDate.currentを使用するよう統一しているが、
+      # Date.currentはRailsのTZを追いかける。ブラウザはそれを見ない。
+      # だからRailsのTZを変えた瞬間にズレる。Date.today はブラウザと同じくコンテナのOSのTZを見るので揃ったままになる
+      let(:date) { Date.today}
       it "タイトル入力、候補日選択でイベントを作成できること" do
         visit new_group_event_path(group)
         fill_in "タイトル", with: "テストタイトル"
