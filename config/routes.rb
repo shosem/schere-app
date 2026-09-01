@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  constraints host: 'schere-app.onrender.com' do
-    get '/(*path)', to: redirect { |_params, req| "https://schere.shosem.com#{req.fullpath}" }
+  constraints host: "schere-app.onrender.com" do
+    get "/(*path)", to: redirect { |_params, req| "https://schere.shosem.com#{req.fullpath}" }
   end
   devise_for :users, controllers:
     { registrations: "users/registrations"
