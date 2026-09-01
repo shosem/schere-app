@@ -14,7 +14,7 @@ RSpec.describe "Events", type: :system do
       # アプリ内ではDate.currentを使用するよう統一しているが、
       # Date.currentはRailsのTZを追いかける。ブラウザはそれを見ない。
       # だからRailsのTZを変えた瞬間にズレる。Date.today はブラウザと同じくコンテナのOSのTZを見るので揃ったままになる
-      let(:date) { Date.today}
+      let(:date) { Date.today }
       it "タイトル入力、候補日選択でイベントを作成できること" do
         visit new_group_event_path(group)
         fill_in "タイトル", with: "テストタイトル"
