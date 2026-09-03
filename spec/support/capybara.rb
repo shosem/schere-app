@@ -9,12 +9,12 @@ end
 
 # ローカル開発環境でRSpecを行う（webコンテナからchromeコンテナを参照するリモートブラウザ。ブラウザが違うマシンにあるとき用）
 Capybara.register_driver :remote_chrome do |app|
-  Capybara::Selenium::Driver.new(app, browser: :remote, url: ENV['SELENIUM_DRIVER_URL'], capabilities: chrome_options)
+  Capybara::Selenium::Driver.new(app, browser: :remote, url: ENV['SELENIUM_DRIVER_URL'], options: chrome_options)
 end
 
 # CI環境でRSpecを行う（CI上のubuntuでrailsもRSpecも動くため、ローカルとなる。ブラウザが同じマシンにあるとき用）
 Capybara.register_driver :local_chrome do |app|
-  Capybara::Selenium::Driver.new(app, browser: :chrome, capabilities: chrome_options)
+  Capybara::Selenium::Driver.new(app, browser: :chrome, options: chrome_options)
 end
 
 IS_REMOTE = ENV['SELENIUM_DRIVER_URL'].present?
