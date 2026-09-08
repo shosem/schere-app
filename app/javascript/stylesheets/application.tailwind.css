@@ -64,4 +64,10 @@
   .badge-done {
     @apply bg-ok-subtle text-ok
   }
+  .form-label {
+    @apply block text-caption font-medium text-ink mb-1
+  }
+  .form-input {
+    @apply w-full border border-line rounded-control px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand
+  }
 }
