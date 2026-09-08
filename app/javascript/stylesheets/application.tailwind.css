@@ -35,8 +35,8 @@
   --text-page: 32px;
 
   /* 角丸 */
-  --radius-control: 6px;
-  --radius-surface: 10px;
+  --radius-control: 8px;
+  --radius-surface: 12px;
 
   /* 影 */
   --shadow-card: 0 1px 2px rgb(17 20 24 / 0.06);
