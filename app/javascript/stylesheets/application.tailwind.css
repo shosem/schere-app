@@ -1,15 +1,58 @@
 @import "tailwindcss";
+
+@theme {
+  /* ブランドテーマ */
+  --color-brand: #3D5F92;
+  --color-brand-strong: #2F4A75;
+  --color-brand-subtle: #E4EBF4;
+
+  /* 意味 */
+  --color-ok: #2D7852;
+  --color-ok-subtle: #E1F0E7;
+  --color-warn: #8A6212;
+  --color-warn-subtle: #F6EDD8;
+  --color-danger: #B8382D;
+  --color-danger-subtle: #FAEDEB;
+  --color-danger-strong: #912C23;
+
+  /* テキスト */
+  --color-ink-strong: #111418; /* 見出し */
+  --color-ink: #3A4149; /* 本文 */
+  --color-ink-muted: #67707A; /* 説明 */
+
+  /* 役割 */
+  --color-line: #C9D0D9; /* 境界枠線 */
+  --color-surface: #FFFFFF; /* カード面 */
+  --color-sunken: #F1F4F7; /* カード内のセクション */
+  --color-ground: #F7F9FA; /* 最奥 */
+
+  /* テキストサイズ */
+  --text-badge: 12px;
+  --text-caption: 14px;
+  --text-body: 16px;
+  --text-lead: 18px;
+  --text-section: 24px;
+  --text-page: 32px;
+
+  /* 角丸 */
+  --radius-control: 6px;
+  --radius-surface: 10px;
+
+  /* 影 */
+  --shadow-card: 0 1px 2px rgb(17 20 24 / 0.06);
+}
+
 @layer components {
   .btn {
-    @apply text-center text-white font-semibold p-2 md:p-3 rounded-xl transition inline-flex items-center justify-center hover:cursor-pointer
+    @apply text-center font-semibold p-2 md:p-3 rounded-control transition inline-flex items-center justify-center hover:cursor-pointer
   }
   .btn-primary {
-    @apply bg-blue-500 hover:bg-blue-600
+    @apply text-white bg-brand hover:bg-brand-strong
   }
   .btn-danger {
-    @apply bg-red-500 hover:bg-red-600
+    @apply text-white bg-danger hover:bg-danger-strong
   }
   .card {
-    @apply bg-white rounded-2xl shadow-md p-5 border border-gray-300
+    @apply bg-surface rounded-surface shadow-card p-5 border border-line
   }
-};
+}
