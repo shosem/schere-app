@@ -1,10 +1,10 @@
 <% badge = {
-             "adjusting"  => ["調整中",   "bg-amber-100 text-amber-700"],
-             "confirmed"  => ["確定済み", "bg-green-100 text-green-700"]
+             "adjusting"  => ["調整中",   "badge-pending"],
+             "confirmed"  => ["確定済み", "badge-done"]
             } %>
 
 <div class="mb-4">
-  <span class="text-xs font-bold px-2.5 py-1 rounded-full <%= badge[@event.status][1] %>"><%= badge[@event.status][0] %></span>
+  <span class="badge <%= badge[@event.status][1] %>"><%= badge[@event.status][0] %></span>
 
   <% # タイトル、場所、説明表示div %>
   <div>
