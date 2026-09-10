@@ -1,7 +1,7 @@
 <%# locals: (group:, event:, selected_days: {}) %>
 
 <%= form_with model: [ group, event ], class: "flex flex-col flex-grow justify-center gap-4" do |f| %>
-  <div class="w-full max-w-3xl mx-auto card">
+  <div class="w-full max-w-3xl mx-auto">
     <%= render "shared/error_messages", resource: event %>
     <div>
       <%= f.label :title,  class: "form-label" %>
@@ -20,26 +20,28 @@
   </div>
 
   <% if event.confirmed? %>
-    <div class="card w-full max-w-3xl mx-auto mt-4 flex flex-col items-center justify-center bg-gradient-to-br from-green-400 to-emerald-600 shadow-lg">
-      <p class="text-2xl text-white font-bold">確定日：<%= l(event.confirmed_candidate_date.date, format: :long) %></p>
-      <p class="text-white text-sm mt-2">
+    <div class="flex flex-col justify-center items-center">
+      <div class="card bg-ok-subtle w-full max-w-3xl mx-auto mt-4 flex flex-col items-center justify-center">
+        <p class="text-section">確定日：<%= l(event.confirmed_candidate_date.date, format: :long) %></p>
+      </div>
+      <p class="text-ink-muted text-caption mt-2">
         ※候補日を変更したい場合は、調整中に戻してから編集してください。
         <%= link_to "調整中に戻す", group_event_confirmation_path(group, event), 
                                   data: { turbo_method: :delete, turbo_confirm: "調整中に戻しますか？" },
-                                  class: "text-white font-medium bg-emerald-700 hover:bg-emerald-800 transition rounded-lg px-2.5 py-2" %>
+                                  class: "text-danger border-b hover:text-danger-strong hover:border-none" %>
       </p>
     </div>
   <% else %>
-    <div class="w-full max-w-3xl mx-auto card" data-testid="calendar-card">
+    <div class="w-full max-w-3xl mx-auto" data-testid="calendar-card">
       <% # 候補日の追加UI %>
       <div class="flex items-center gap-2">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-6 text-blue-500">
           <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
         </svg>
-        <p class="font-bold text-gray-700 mb-1">候補日の追加</p>
+        <p class="page-section">候補日の追加</p>
       </div>
 
-      <div data-controller="calendar" data-calendar-selected-value='<%= selected_days.to_json %>' class="max-w-3xl mt-4 w-full flex flex-col mx-auto border border-gray-300 rounded-xl overflow-hidden">
+      <div data-controller="calendar" data-calendar-selected-value='<%= selected_days.to_json %>' class="card card-surface max-w-3xl mt-4 w-full flex flex-col mx-auto border border-gray-300 rounded-xl overflow-hidden">
 
         <div class="flex justify-between w-full text-center text-gray-500 font-bold p-2">
         <% # カレンダー操作ボタン %>

@@ -1,9 +1,9 @@
 <% badge = {
-             "reserved"  => ["予約済み", "badge-done"],
-             "unreserved"  => ["未予約", "badge-pending"]
+             "reserved"  => ["予約済み", "badge-done", "border-ok"],
+             "unreserved"  => ["未予約", "badge-pending", "border-warn"]
             } %>
 
-<div id="<%= dom_id(venue) %>" class="card mt-4 flex justify-between items-start border-l-4 border-blue-400 shadow-lg">
+<div id="<%= dom_id(venue) %>" class="card card-surface mt-4 flex justify-between items-start border-l-4 shadow-lg <%= venue.reserved? ? badge["reserved"][2] : badge["unreserved"][2] %>">
   <div class="flex flex-col gap-2">
     <% if venue.reserved? %>
       <span class="badge self-start <%= badge["reserved"][1] %>"><%= badge["reserved"][0] %></span>

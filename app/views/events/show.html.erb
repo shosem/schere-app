@@ -10,11 +10,11 @@
          data-share-url-value="<%= new_group_join_url(@group.join_token, event_id: @event.id) %>" 
          data-share-title-value="イベント共有"
          data-share-text-value="イベント「<%= @event.title %>」に参加しませんか？">
-      <div class="flex items-center">
-        <h1 class="page-header"><%= @event.title %></h1>
+      <div class="flex flex-col items-start">
         <div class="flex flex-col items-center justify-center">
           <span class="badge <%= badge[@event.status][1] %>"><%= badge[@event.status][0] %></span>
         </div>
+        <h1 class="page-header"><%= @event.title %></h1>
       </div>
       <div class="flex flex-col">
         <div class="flex gap-2 items-center">

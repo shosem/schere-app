@@ -1,11 +1,11 @@
-<div class="card flex flex-col mt-4" data-testid="answer-status">
+<div class="card card-sunken flex flex-col mt-4" data-testid="answer-status">
     
-  <h2 class="text-xl text-gray-800 font-bold">回答状況</h2>
+  <h2 class="page-section">回答状況</h2>
   <%= form_with url: group_event_vote_path(@group, @event), class: "flex flex-col gap-4 mt-4" do |f| %>
     <% @candidate_dates.each do |c| %>
 
       <% # 候補日ごとのカード %>
-      <div class="flex flex-col card p-4">
+      <div class="flex flex-col card card-surface p-4">
         <div class="text-xl text-gray-800 font-bold">
           <%= l(c.date, format: :long) %>
         </div>
@@ -53,7 +53,7 @@
 
 <% # 日程確定のセクション。閲覧者 = 管理者の場合のみ表示 %>
 <% if @group.owned_by?(current_user) %>
-  <div class="card mt-4" data-testid="confirm-section">
+  <div class="card card-sunken mt-4" data-testid="confirm-section">
     <h2 class="text-xl text-gray-800 font-bold">日程を確定する</h2>
 
     <% # 日程ごとのカード %>
@@ -63,7 +63,7 @@
                                 method: :patch, 
                                 data: { turbo_confirm: "日程を確定しますか？", testid: "confirm-#{c.id}" },
                                 params: { candidate_date_id: c.id },
-                                class: "card w-full p-2 md:p-4 shadow-md cursor-pointer bg-gray-100/50 hover:bg-gray-200" do %>
+                                class: "card card-clickable w-full p-2 md:p-4" do %>
           <div class="relative">                                    
             <p class="text-xl text-gray-700 font-bold text-center"><%= l(c.date, format: :confirm_card) %></p>
             <div class="absolute inset-y-0 right-0 flex items-center gap-1">
