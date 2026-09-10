@@ -1,10 +1,7 @@
 <% badge = {
              "adjusting"  => ["調整中",   "badge-pending"],
              "confirmed"  => ["確定済み", "badge-done"]
-            } %>
-
-<div class="mb-4">
-  <span class="badge <%= badge[@event.status][1] %>"><%= badge[@event.status][0] %></span>
+            } %>  
 
   <% # タイトル、場所、説明表示div %>
   <div>
@@ -13,7 +10,12 @@
          data-share-url-value="<%= new_group_join_url(@group.join_token, event_id: @event.id) %>" 
          data-share-title-value="イベント共有"
          data-share-text-value="イベント「<%= @event.title %>」に参加しませんか？">
-      <h1 class="text-4xl text-gray-800 font-bold mt-4"><%= @event.title %></h1>
+      <div class="flex items-center">
+        <h1 class="page-header"><%= @event.title %></h1>
+        <div class="flex flex-col items-center justify-center">
+          <span class="badge <%= badge[@event.status][1] %>"><%= badge[@event.status][0] %></span>
+        </div>
+      </div>
       <div class="flex flex-col">
         <div class="flex gap-2 items-center">
           <button data-action="click->share#share" class="btn text-gray-800 border border-gray-800 hover:bg-gray-200 py-1.5">共有</button>
@@ -41,6 +43,5 @@
   <% elsif @event.confirmed? %>
     <%= render "confirmed_event" %>
   <% end %>
-</div>
 
 <%= link_to "←グループに戻る", group_path(@group), class: "inline-flex items-center text-gray-500 bg-gray-50 rounded-full p-2 transition hover:bg-gray-100 hover:outline hover:text-gray-700" %>

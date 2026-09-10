@@ -79,4 +79,10 @@
     @apply flex flex-col items-center justify-center grow gap-4;
     & p { @apply text-ink text-lead }
   }
+  .page-header {
+    @apply text-section md:text-page text-ink-strong font-bold
+  }
+  .page-caption {
+    @apply text-caption text-ink-muted
+  }
 }

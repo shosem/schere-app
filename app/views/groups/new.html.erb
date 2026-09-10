@@ -1,9 +1,9 @@
-<div class="min-h-[80vh] flex flex-col">
+<div class="grow flex flex-col">
   <div>
-    <h2 class="text-4xl text-gray-800 font-bold"><%= t('.create') %></h2>
-    <p class="mt-2 text-sm text-gray-400">グループ名を設定しましょう！招待リンクはグループ作成後に共有できます。</p>
+    <h1 class="page-header"><%= t('.create') %></h1>
+    <p class="page-caption">グループ名を設定しましょう！招待リンクはグループ作成後に共有できます。</p>
   </div>
-  <div class="flex-grow flex flex-col justify-center">
+  <div class="grow flex flex-col justify-center">
     <div class="w-full max-w-3xl mx-auto card">
       <%= form_with model: @group do |f| %>
       <div>

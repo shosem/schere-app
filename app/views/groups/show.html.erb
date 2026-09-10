@@ -1,7 +1,7 @@
-<div class="min-h-[80vh] flex flex-col">
+<div class="grow flex flex-col">
   <div class="flex justify-between items-center">
     <div>
-      <h2 class="text-xl md:text-4xl text-gray-800 font-bold"><%= @group.name %></h2>
+      <h1 class="page-header"><%= @group.name %></h1>
     </div>
     <div data-controller="share" data-share-url-value="<%= new_group_join_url(@group.join_token) %>" 
                                  data-share-title-value="グループ共有"

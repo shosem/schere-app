@@ -1,9 +1,9 @@
 <div class="grow flex flex-col">
   <div class="flex justify-between items-center">
-    <h2 class="text-xl md:text-4xl text-gray-800 font-bold">こんにちは、<%= current_user.name %>さん！</h2>
+    <h1 class="page-header">こんにちは、<%= current_user.name %>さん！</h1>
     <%= link_to "＋ グループ作成", new_group_path, class: "btn btn-primary" %>
   </div>
-  <p class="text-sm text-gray-400">予定を管理しましょう！</p>
+  <p class="page-caption">予定を管理しましょう！</p>
 
   <div class="index mt-4">
     <% if @groups.present? %>
