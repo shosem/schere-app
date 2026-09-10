@@ -70,4 +70,13 @@
   .form-input {
     @apply w-full border border-line rounded-control px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand
   }
+  /* 一覧画面の背景。growがあるため親はflex強制 */
+  .index {
+    @apply grow flex flex-col p-4
+  }
+  /* 一覧画面の空状態 */
+  .empty-state {
+    @apply flex flex-col items-center justify-center grow gap-4;
+    & p { @apply text-ink text-lead }
+  }
 }

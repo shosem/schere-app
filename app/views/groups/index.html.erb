@@ -1,13 +1,13 @@
-<div>
+<div class="grow flex flex-col">
   <div class="flex justify-between items-center">
     <h2 class="text-xl md:text-4xl text-gray-800 font-bold">こんにちは、<%= current_user.name %>さん！</h2>
     <%= link_to "＋ グループ作成", new_group_path, class: "btn btn-primary" %>
   </div>
   <p class="text-sm text-gray-400">予定を管理しましょう！</p>
 
-  <% if @groups.present? %>
-
-    <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+  <div class="index mt-4">
+    <% if @groups.present? %>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       <% @groups.each do |group| %>
         <%= link_to group_path(group) do %>
           <div class="card">
@@ -15,8 +15,11 @@
           </div>
         <% end %>
       <% end %>
-    </div>
-  <% else %>
-    <p>まだグループはありません</p>
-  <% end %>
+      </div>
+    <% else %>
+      <div class="empty-state">
+        <p>まだグループはありません</p>
+      </div>
+    <% end %>
+  </div>
 </div>
