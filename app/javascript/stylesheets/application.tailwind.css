@@ -35,8 +35,8 @@
   --text-page: 32px;
 
   /* 角丸 */
-  --radius-control: 6px;
-  --radius-surface: 10px;
+  --radius-control: 8px;
+  --radius-surface: 12px;
 
   /* 影 */
   --shadow-card: 0 1px 2px rgb(17 20 24 / 0.06);
@@ -52,7 +52,58 @@
   .btn-danger {
     @apply text-white bg-danger hover:bg-danger-strong
   }
+
+  /* カード */
   .card {
-    @apply bg-surface rounded-surface shadow-card p-5 border border-line
+    @apply rounded-surface p-5 border border-line
+  }
+  .card-clickable {
+    @apply bg-surface shadow-card hover:cursor-pointer hover:bg-sunken
+  }
+  .card-surface {
+    @apply bg-surface
+  }
+  .card-sunken {
+    @apply bg-sunken
+  }
+
+  .badge {
+    @apply text-badge font-bold px-2.5 py-1 rounded-full
+  }
+  .badge-pending {
+    @apply bg-warn-subtle text-warn
+  }
+  .badge-done {
+    @apply bg-ok-subtle text-ok
+  }
+  .form-label {
+    @apply block text-caption font-medium text-ink mb-1
+  }
+  .form-input {
+    @apply w-full border border-line bg-surface rounded-control px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand
+  }
+  /* 一覧画面の背景。growがあるため親はflex強制 */
+  .index {
+    @apply grow flex flex-col p-4
+  }
+  /* 一覧画面の空状態 */
+  .empty-state {
+    @apply flex flex-col items-center justify-center grow gap-4;
+    & p { @apply text-ink text-lead }
+  }
+
+  /* 見出し */
+  .page-header {
+    @apply text-section md:text-page text-ink-strong font-bold
+  }
+  .page-section {
+    @apply text-lead md:text-section text-ink font-bold
+  }
+  .page-caption {
+    @apply text-caption text-ink-muted
+  }
+    /* 集計結果表示 */
+  .page-count {
+    @apply text-page font-bold
   }
 }

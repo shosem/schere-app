@@ -1,7 +1,7 @@
 <%# ゲストログイン時はフッターナビを出さない。ヘッダーのグループ名リンクが担う %>
 <% if user_signed_in? %>
   <div class="h-20 md:hidden"></div>
-  <nav class="md:hidden fixed bottom-0 inset-x-0 h-20 bg-white border-t border-gray-200 py-4" aria-label="モバイルナビ">
+  <nav class="md:hidden fixed bottom-0 inset-x-0 h-20 border-t border-line py-4" aria-label="モバイルナビ">
     <div class="grid grid-cols-3 max-w-full mx-auto">
       <%# ダッシュボード %>
       <%= link_to root_path, class: "flex flex-col justify-center items-center" do %>
@@ -27,6 +27,6 @@
   </nav>
 <% end %>
 
-<footer class="hidden md:block border-t border-gray-200 py-6 text-center text-sm text-gray-400">
+<footer class="hidden md:block border-t border-line py-6 text-center text-sm text-gray-400">
   © 2026 Schere
 </footer>

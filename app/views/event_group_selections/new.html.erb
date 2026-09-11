@@ -4,12 +4,12 @@
     data-action="click->modal#closeModal"
   >
     <div class="w-[90%] max-w-md">
-      <div class="card max-h-[80dvh] overflow-y-auto" data-modal-target="card">
+      <div class="card card-surface max-h-[80dvh] overflow-y-auto" data-modal-target="card">
         <% if @groups.present? %>
            <p class="font-semibold text-gray-800">どのグループのイベントを作成しますか？</p>
           <div class="flex flex-col mt-2 gap-2 items-center justify-center">
             <% @groups.each do |group| %>
-              <%= link_to group.name, new_group_event_path(group), data: { turbo_frame: "_top" }, class: "w-[70%] card text-center p-2" %>
+              <%= link_to group.name, new_group_event_path(group), data: { turbo_frame: "_top" }, class: "w-[70%] card card-clickable text-center p-2" %>
             <% end %>
           </div>
         <% else %>

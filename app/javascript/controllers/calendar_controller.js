@@ -126,7 +126,7 @@ export default class extends Controller {
 
     // 日〜土まで並べる。カレンダーの曜日ラベル
     DAYS.forEach((d) => {
-      html += `<div class="text-xs font-medium text-gray-400 py-1">${d}</div>`
+      html += `<div class="text-badge font-medium text-ink py-1">${d}</div>`
     })
     
     // 曜日ラベルの枠を閉じ、日付の枠を追加
@@ -145,21 +145,21 @@ export default class extends Controller {
         // 過去
         if(targetDate < today) {
         // グレー＋押せない
-          cls = "text-gray-300 cursor-default"
+          cls = "text-gray-400 cursor-default"
 
         // 選択済み
         } else if(this.selected.has(targetDate)){
         
-          cls = "bg-emerald-500 rounded-full text-white font-bold cursor-pointer"
+          cls = "bg-ok-subtle rounded-full text-ok font-bold cursor-pointer"
 
         // 今日
         } else if(targetDate === today){
         // アクセント
-          cls = "text-blue-500 font-semibold cursor-pointer rounded-full hover:bg-emerald-100"
+          cls = "text-blue-500 font-semibold cursor-pointer rounded-full hover:bg-ok-subtle"
         
         // 通常
         } else {
-          cls = "text-gray-700 rounded-full hover:bg-emerald-100 cursor-pointer"
+          cls = "text-ink rounded-full hover:bg-ok-subtle cursor-pointer"
         }
 
       const action = targetDate < today ? "" : `data-action='click->calendar#toggle' data-date="${targetDate}"`
@@ -180,7 +180,7 @@ export default class extends Controller {
 
     // 選択済みが空なら文章を出す
     if (this.selected.size === 0) {
-      this.selectedListTarget.innerHTML = "<div class='mt-2 text-gray-300 font-bold text-center'>候補日が選択されていません</div>"
+      this.selectedListTarget.innerHTML = "<p class='mt-2 text-ink-muted font-bold text-center'>候補日が選択されていません</p>"
       return
     }
 
@@ -191,16 +191,16 @@ export default class extends Controller {
     selectedDays.forEach((sd) => {
       const { startTime, endTime } = this.selected.get(sd)
 
-      html += `<div class="card bg-green-200/50 p-4 flex items-center gap-2">
-                 <div class="text-gray-800 flex-1">
+      html += `<div class="card border-ok p-4 flex items-center gap-2">
+                 <div class="text-ok font-bold flex-1">
                    ${formatDate(sd)}
                 </div>
                  <div>
-                   <input type="time" value="${startTime}" data-date="${sd}" data-field="start" data-action='change->calendar#updateTime' class="border border-gray-300 rounded-lg px-2 py-1 text-sm focus:ring-2 focus:ring-emerald-400">
+                   <input type="time" value="${startTime}" data-date="${sd}" data-field="start" data-action='change->calendar#updateTime' class="form-input w-auto px-2 py-1">
                    〜
-                   <input type="time" value="${endTime}" data-date="${sd}" data-field="end" data-action='change->calendar#updateTime' class="border border-gray-300 rounded-lg px-2 py-1 text-sm focus:ring-2 focus:ring-emerald">
+                   <input type="time" value="${endTime}" data-date="${sd}" data-field="end" data-action='change->calendar#updateTime' class="form-input w-auto px-2 py-1">
                  </div>
-                 <button type="button" data-date="${sd}" data-action='click->calendar#removeDate' class="text-gray-400 hover:text-red-500 cursor-pointer ml-auto">×</button>
+                 <button type="button" data-date="${sd}" data-action='click->calendar#removeDate' class="text-ink-muted hover:text-danger cursor-pointer ml-auto">×</button>
               </div>`
     })
 

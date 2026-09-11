@@ -1,25 +1,25 @@
 <div class="fixed inset-0 z-50 bg-black/50 flex items-center justify-center" data-action="click->modal#closeModal">
   <%= form_with model: [ group, event, venue ], class: "w-[90%] max-w-md" do |f| %>
-    <div class="card" data-modal-target="card">
+    <div class="card card-surface" data-modal-target="card">
       <%= render "shared/error_messages", resource: venue %>
       <div>
-        <%= f.label :name,  class: "inline-block text-sm font-medium text-gray-700 mb-1" %><span class="text-red-700">*</span>
-        <%= f.text_field :name, class: "w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400" %>
+        <%= f.label :name,  class: "form-label inline-block" %><span class="text-red-700">*</span>
+        <%= f.text_field :name, class: "form-input" %>
       </div>
 
       <div class="mt-4">
-        <%= f.label :page_url,  class: "inline-block text-sm font-medium text-gray-700 mb-1" %>
-        <%= f.text_field :page_url, class: "w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400" %>
+        <%= f.label :page_url,  class: "form-label" %>
+        <%= f.text_field :page_url, class: "form-input" %>
       </div>
 
       <div class="mt-4">
-        <%= f.label :price,  class: "inline-block text-sm font-medium text-gray-700 mb-1" %>
-        <%= f.number_field :price, class: "w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400" %>
+        <%= f.label :price,  class: "form-label" %>
+        <%= f.number_field :price, class: "form-input" %>
       </div>
 
       <div class="mt-4">
-        <%= f.label :note,  class: "inline-block text-sm font-medium text-gray-700 mb-1" %>
-        <%= f.text_area :note,  class: "w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400" %>
+        <%= f.label :note,  class: "form-label" %>
+        <%= f.text_area :note,  class: "form-input" %>
       </div>
 
       <div class="flex items-center gap-2 mb-2">
@@ -29,7 +29,7 @@
         <% end %>
         <span class="font-medium text-gray-700">予約した？</span>
       </div>
-        <%= f.submit (venue.persisted? ? "保存" : "登録"), class: "btn btn-primary max-w-sm w-full mx-auto" %>
+        <%= f.submit (venue.persisted? ? "保存" : "登録"), class: "btn btn-primary w-full" %>
     </div>
   <% end %>
 </div>
