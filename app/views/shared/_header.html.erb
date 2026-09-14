@@ -31,7 +31,7 @@
           <hr class="border-line">
           <%= link_to "ユーザー登録", new_user_registration_path, class: "dropdown" %>
           <%= link_to "ログイン", new_user_session_path, class: "dropdown" %>
-          <%= button_to "ゲストログアウト", destroy_guest_session_path, method: :delete,
+          <%= button_to "退室する", destroy_guest_session_path, method: :delete,
                   class: "dropdown text-danger" %>
         </div>
       </div>

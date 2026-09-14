@@ -25,8 +25,9 @@ class GuestSessionsController < ApplicationController
   end
 
   def destroy
+    token = current_guest.group.join_token
     session[:guest_token] = nil
-    redirect_to new_user_registration_path, notice: "退室しました"
+    redirect_to new_group_join_path(token), notice: "退室しました"
   end
 
   private
