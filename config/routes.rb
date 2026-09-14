@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   # join_tokenによるゲストログイン
   get "join/:join_token", to: "guest_sessions#new_by_token", as: :new_group_join
   post "join/:join_token", to: "guest_sessions#create_by_token", as: :group_join
+  delete "guest_sessions/sign_out", to: "guest_sessions#destroy", as: :destroy_guest_session
 
   resources :groups, only: %i[ index new create show destroy ] do
     resources :events, only: %i[ new create show edit update destroy ] do

@@ -1,5 +1,5 @@
 class GuestSessionsController < ApplicationController
-  before_action :set_group
+  before_action :set_group, only: %i[ new_by_token create_by_token ]
   before_action :redirect_if_joined, only: :new_by_token
 
   def new_by_token
@@ -22,6 +22,12 @@ class GuestSessionsController < ApplicationController
       flash.now[:danger] = "入室できませんでした"
       render :new_by_token, status: :unprocessable_entity
     end
+  end
+
+  def destroy
+    token = current_guest.group.join_token
+    session[:guest_token] = nil
+    redirect_to new_group_join_path(token), notice: "退室しました"
   end
 
   private

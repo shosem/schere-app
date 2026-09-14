@@ -106,4 +106,7 @@
   .page-count {
     @apply text-page font-bold
   }
+  .dropdown {
+    @apply block px-2 md:px-4 py-1 md:py-2 text-badge md:text-caption text-ink hover:bg-sunken
+  }
 }
