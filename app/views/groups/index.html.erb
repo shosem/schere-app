@@ -1,23 +1,25 @@
 <div class="grow flex flex-col">
   <div class="flex justify-between items-center">
     <h1 class="page-header">こんにちは、<%= current_user.name %>さん！</h1>
-    <%# @groupsが空の場合は重複しないように右上のボタンを隠す%>
+
+    <%# @groupsが空の場合は重複しないように右上のボタンを隠す %>
     <% if @groups.present? %>
       <%= link_to "＋ グループ作成", new_group_path, class: "btn btn-primary" %>
     <% end %>
   </div>
+
   <p class="page-caption">予定を管理しましょう！</p>
 
   <div class="index mt-4">
     <% if @groups.present? %>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-      <% @groups.each do |group| %>
-        <%= link_to group_path(group) do %>
-          <div class="card card-clickable">
-            <%= group.name %>
-          </div>
+        <% @groups.each do |group| %>
+          <%= link_to group_path(group) do %>
+            <div class="card card-clickable">
+              <%= group.name %>
+            </div>
+          <% end %>
         <% end %>
-      <% end %>
       </div>
     <% else %>
       <div class="empty-state">
