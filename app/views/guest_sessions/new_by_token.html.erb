@@ -1,10 +1,11 @@
-<div class="grow flex flex-col">
-  <div>
-    <h2 class="text-4xl text-gray-800 font-bold"><%= t('.title') %></h2>
-    <p class="mt-2 text-sm text-gray-400">ゲスト名を入力して、グループに参加しましょう！</p>
-  </div>
-  <div class="flex-grow flex flex-col justify-center items-center">
-    <div class="w-full max-w-3xl mx-auto card">
+
+  
+  <div class="grow flex flex-col justify-center items-center">
+    <div class="text-center">
+      <h1 class="page-header"><%= t('.title') %></h1>
+      <p class="page-caption">ゲスト名を入力して、グループに参加しましょう！</p>
+    </div>
+    <div class="w-full max-w-3xl mx-auto">
       <%= form_with model: @guest, url: group_join_path(@group.join_token, event_id: params[:event_id]) do |f| %>
         <%= render "shared/error_messages", resource: @guest %>
       <div>
@@ -20,7 +21,7 @@
       <p>※一度入室したことのある方は、そのときの名前で入室してください</p>
     </div>
   </div>
-</div>
+
 
 <div id="confirmation-modal" data-controller="modal" data-modal-target="modal">
 </div>

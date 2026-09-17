@@ -1,7 +1,7 @@
-<div class="grow flex flex-col gap-y-4">
-  <div>
+<div class="flex flex-col gap-y-4">
+  <div class="text-center">
     <h1 class="page-header"><%= t('.create') %></h1>
-    <p class="page-caption">イベントを作成しましょう！楽しみだね~~</p>
+    <p class="page-caption">イベント内容と候補日を追加しましょう！</p>
   </div>
   <%= render "form", group: @group, event: @event, selected_days: @selected_days %>
 </div>
