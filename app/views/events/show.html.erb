@@ -56,9 +56,22 @@
 </div>
 
 <% if @event.adjusting? %>
-  <%= render "adjusting_event" %>
+  <%= render "adjusting_event",
+              group: @group,
+              event: @event,
+              vote_counts: @vote_counts,
+              voter_names: @voter_names,
+              candidate_dates: @candidate_dates,
+              top_available_day_ids: @top_available_day_ids,
+              fewest_unavailable_day_ids: @fewest_unavailable_day_ids,
+              my_votes: @my_votes
+               %>
 <% elsif @event.confirmed? %>
-  <%= render "confirmed_event" %>
+  <%= render "confirmed_event",
+              group: @group,
+              event: @event,
+              vote_counts: @vote_counts,
+              voter_names: @voter_names %>
 <% end %>
 
 <%= link_to "←グループに戻る", group_path(@group), class: "inline-flex items-center text-gray-500 bg-gray-50 rounded-full p-2 transition hover:bg-gray-100 hover:outline hover:text-gray-700" %>
