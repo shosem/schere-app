@@ -1,49 +1,104 @@
-<header class="sticky top-0 z-50 bg-ground border-b border-line">                                                                                                                       
-  <div class="max-w-full mx-auto px-4 md:px-6 flex items-center relative justify-between h-16">                                                                                                                                
-    <%# ロゴ（共通） %>                                                                                                                                                                    
-    <%= header_logo %>                                                                                                           
-                                                                                                                                                                                           
-    <% if user_signed_in? %>                                                                                                                                                               
-      <%# ログイン時 %>                                                                                                                                                                    
-      <div data-controller="dropdown" data-action="click@window->dropdown#hide" class="flex items-center gap-3">                                                                                                                                                                                                                                                            
-        <button type="button" data-action="click->dropdown#toggle" class="w-9 h-9 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-sm font-bold">                                                                    
-          <%= current_user.name.first %>                                                                                                                                                   
+<header class="sticky top-0 z-50 bg-ground border-b border-line">
+  <div
+    class="
+      max-w-full mx-auto px-4 md:px-6 flex items-center relative
+      justify-between h-16
+    "
+  >
+    <%# ロゴ（共通） %>
+    <%= header_logo %>
+
+    <% if user_signed_in? %>
+      <%# ログイン時 %>
+      <div
+        data-controller="dropdown"
+        data-action="click@window->dropdown#hide"
+        class="flex items-center gap-3"
+      >
+        <button
+          type="button"
+          data-action="click->dropdown#toggle"
+          class="
+            w-9 h-9 rounded-full bg-blue-100 text-blue-600 flex items-center
+            justify-center text-sm font-bold
+          "
+        >
+          <%= current_user.name.first %>
         </button>
-        <div data-dropdown-target="menu" class="absolute hidden top-full right-0 w-44 bg-white border border-gray-200 rounded-lg shadow-lg py-1">
+
+        <div
+          data-dropdown-target="menu"
+          class="
+            absolute hidden top-full right-0 w-44 bg-white border
+            border-gray-200 rounded-lg shadow-lg py-1
+          "
+        >
           <%= link_to t('.create_group'), new_group_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" %>
           <%= link_to t('.edit_user'), edit_user_registration_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" %>
+
           <%= button_to t('.logout'), destroy_user_session_path, method: :delete,                                                                                                            
                 class: "px-4 py-2 text-sm font-medium text-red-500 hover:bg-gray-50" %>
         </div>
       </div>
     <% elsif current_guest %>
-        <%# ゲスト入室時 %>
+      <%# ゲスト入室時 %>
       <%= link_to truncate(current_guest.group.name, length: 10), group_path(current_guest.group),
                     class: "btn bg-brand-subtle text-brand absolute left-1/2 -translate-x-1/2" %>
-      <div data-controller="dropdown" data-action="click@window->dropdown#hide" class="flex items-center gap-3">
+      <div
+        data-controller="dropdown"
+        data-action="click@window->dropdown#hide"
+        class="flex items-center gap-3"
+      >
         <button type="button" data-action="click->dropdown#toggle">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="size-6"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+            />
           </svg>
         </button>
-        <div data-dropdown-target="menu" class="absolute hidden top-full right-0 w-36 md:w-44 card card-surface shadow-lg p-1">
-          <p class="text-center px-2 md:px-4 py-1 md:py-2 text-badge md:text-caption text-ink"><%= current_guest.name %></p>
+
+        <div
+          data-dropdown-target="menu"
+          class="
+            absolute hidden top-full right-0 w-36 md:w-44 card card-surface
+            shadow-lg p-1
+          "
+        >
+          <p
+            class="
+              text-center px-2 md:px-4 py-1 md:py-2 text-badge
+              md:text-caption text-ink
+            "
+          >
+            <%= current_guest.name %>
+          </p>
+
           <hr class="border-line">
           <%= link_to "ユーザー登録", new_user_registration_path, class: "dropdown" %>
           <%= link_to "ログイン", new_user_session_path, class: "dropdown" %>
+
           <%= button_to "退室する", destroy_guest_session_path, method: :delete,
                   class: "dropdown text-danger" %>
         </div>
       </div>
-                                                                                                                                                                                     
-    <% else %>                                                                                                                                                                             
-      <%# 非ログイン時 %>                                                                                                                                                                  
-      <nav class="flex items-center gap-4">                                                                                                                                                
+    <% else %>
+      <%# 非ログイン時 %>
+      <nav class="flex items-center gap-4">
         <%= link_to t('.login'), new_user_session_path,                                                                                                                                     
-              class: "text-sm font-medium text-gray-600 hover:text-gray-900" %>                                                                                                            
+              class: "text-sm font-medium text-gray-600 hover:text-gray-900" %>
+
         <%= link_to t('.create_user'), new_user_registration_path,                                                                                                                                
-              class: "text-sm font-medium px-4 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600" %>                                                                                
-      </nav>                                                                                                                                                                               
-   <% end %>                                                                                                                                                                              
-  </div>                                                                                                                                                                                   
-</header> 
+              class: "text-sm font-medium px-4 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600" %>
+      </nav>
+    <% end %>
+  </div>
+</header>

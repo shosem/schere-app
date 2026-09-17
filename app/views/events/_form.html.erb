@@ -3,6 +3,7 @@
 <%= form_with model: [ group, event ], class: "flex flex-col flex-grow justify-center gap-4" do |f| %>
   <div class="w-full max-w-3xl mx-auto">
     <%= render "shared/error_messages", resource: event %>
+
     <div>
       <%= f.label :title,  class: "form-label" %>
       <%= f.text_field :title, class: "form-input" %>
@@ -21,9 +22,17 @@
 
   <% if event.confirmed? %>
     <div class="flex flex-col justify-center items-center">
-      <div class="card bg-ok-subtle w-full max-w-3xl mx-auto mt-4 flex flex-col items-center justify-center">
-        <p class="text-section">確定日：<%= l(event.confirmed_candidate_date.date, format: :long) %></p>
+      <div
+        class="
+          card bg-ok-subtle w-full max-w-3xl mx-auto mt-4 flex flex-col
+          items-center justify-center
+        "
+      >
+        <p class="text-section">
+          確定日：<%= l(event.confirmed_candidate_date.date, format: :long) %>
+        </p>
       </div>
+
       <p class="text-ink-muted text-caption mt-2">
         ※候補日を変更したい場合は、調整中に戻してから編集してください。
         <%= link_to "調整中に戻す", group_event_confirmation_path(group, event), 
@@ -33,27 +42,69 @@
     </div>
   <% else %>
     <div class="w-full max-w-3xl mx-auto" data-testid="calendar-card">
-      <% # 候補日の追加UI %>
+      <%# 候補日の追加UI %>
       <div class="flex items-center gap-2">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-6 text-blue-500">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="2"
+          stroke="currentColor"
+          class="size-6 text-blue-500"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"
+          />
         </svg>
+
         <p class="page-section">候補日の追加</p>
       </div>
 
-      <div data-controller="calendar" data-calendar-selected-value='<%= selected_days.to_json %>' class="card card-surface max-w-3xl mt-4 w-full flex flex-col mx-auto border border-gray-300 rounded-xl overflow-hidden">
+      <div
+        data-controller="calendar"
+        data-calendar-selected-value="<%= selected_days.to_json %>"
+        class="
+          card card-surface max-w-3xl mt-4 w-full flex flex-col mx-auto
+          border border-gray-300 rounded-xl overflow-hidden
+        "
+      >
+        <div
+          class="
+            flex justify-between w-full text-center text-gray-500 font-bold
+            p-2
+          "
+        >
+          <%# カレンダー操作ボタン %>
+          <button
+            type="button"
+            data-action="click->calendar#prevMonth"
+            class="
+              w-8 h-8 flex items-center justify-center rounded-full
+              hover:bg-gray-200 cursor-pointer
+            "
+          >
+            ＜
+          </button>
 
-        <div class="flex justify-between w-full text-center text-gray-500 font-bold p-2">
-        <% # カレンダー操作ボタン %>
-          <button type="button" data-action='click->calendar#prevMonth' class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-200 cursor-pointer">＜</button>
           <span data-calendar-target="monthLabel" class="self-center"></span>
-          <button type="button" data-action='click->calendar#nextMonth' class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-200 cursor-pointer">＞</button>
+
+          <button
+            type="button"
+            data-action="click->calendar#nextMonth"
+            class="
+              w-8 h-8 flex items-center justify-center rounded-full
+              hover:bg-gray-200 cursor-pointer
+            "
+          >
+            ＞
+          </button>
         </div>
 
         <div class="p-4 flex flex-col gap-y-4">
-
           <div data-calendar-target="grid">
-            <% # カレンダー %>
+            <%# カレンダー %>
           </div>
 
           <small class="text-gray-500 self-center">日付をタップして選択 / もう一度タップで解除</small>
@@ -61,14 +112,31 @@
           <hr class="border-gray-200">
 
           <div class="flex justify-between items-center">
-
             <p class="text-gray-500 font-bold">選択済みの候補日</p>
+
             <div class="flex flex-col gap-1">
               <p class="text-sm text-gray-500">共通の時間を設定</p>
+
               <div class="flex items-center gap-1">
-                <input type="time" min="00:00" max="23:59" data-field="start" data-action='change->calendar#applyCommonTime' class="form-input w-auto px-2 py-1">
+                <input
+                  type="time"
+                  min="00:00"
+                  max="23:59"
+                  autocomplete="off"
+                  data-field="start"
+                  data-action="change->calendar#applyCommonTime"
+                  class="form-input w-auto px-2 py-1"
+                >
                 〜
-                <input type="time" min="00:00" max="23:59" data-field="end" data-action='change->calendar#applyCommonTime' class="form-input w-auto px-2 py-1">
+                <input
+                  type="time"
+                  min="00:00"
+                  max="23:59"
+                  autocomplete="off"
+                  data-field="end"
+                  data-action="change->calendar#applyCommonTime"
+                  class="form-input w-auto px-2 py-1"
+                >
               </div>
             </div>
           </div>
@@ -76,15 +144,16 @@
           <hr class="border-gray-200">
 
           <div class="flex flex-col gap-2" data-calendar-target="selectedList">
-            <% # 選択済みの日程を追加するリスト %>
+            <%# 選択済みの日程を追加するリスト %>
           </div>
 
           <div data-calendar-target="hiddenContainer">
-            <% # 隠しフィールド。ここからデータを送信する %>
+            <%# 隠しフィールド。ここからデータを送信する %>
           </div>
-       </div>
+        </div>
       </div>
     </div>
   <% end %>
+
   <%= f.submit class: "max-w-3xl mb-4 mx-auto w-full btn btn-primary py-2" %>
 <% end %>
