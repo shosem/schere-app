@@ -12,7 +12,7 @@ RSpec.describe "Registrations", type: :system do
         fill_in "Eメール", with: "test@example.com"
         fill_in "パスワード", with: "password"
         fill_in "パスワード（確認用）", with: "password"
-        click_on "保存する"
+        click_on "登録"
         expect(page).to have_current_path(root_path)
         expect(page).to have_content("アカウント登録が完了しました")
       end
@@ -23,7 +23,7 @@ RSpec.describe "Registrations", type: :system do
         fill_in "Eメール", with: "test@example.com"
         fill_in "パスワード", with: "password"
         fill_in "パスワード（確認用）", with: "password"
-        click_on "保存する"
+        click_on "登録"
         expect(page).to have_current_path(new_user_registration_path)
         expect(page).to have_content("アカウント登録")
         expect(page).to have_content("名前を入力してください")
@@ -33,7 +33,7 @@ RSpec.describe "Registrations", type: :system do
         fill_in "名前", with: "テストくん"
         fill_in "パスワード", with: "password"
         fill_in "パスワード（確認用）", with: "password"
-        click_on "保存する"
+        click_on "登録"
         expect(page).to have_current_path(new_user_registration_path)
         expect(page).to have_content("アカウント登録")
         expect(page).to have_content("Eメールを入力してください")
@@ -42,7 +42,7 @@ RSpec.describe "Registrations", type: :system do
       it "パスワードの入力欄が空白だと保存できないこと" do
         fill_in "名前", with: "テストくん"
         fill_in "Eメール", with: "test@example.com"
-        click_on "保存する"
+        click_on "登録"
         expect(page).to have_current_path(new_user_registration_path)
         expect(page).to have_content("アカウント登録")
         expect(page).to have_content("パスワードを入力してください")
@@ -53,7 +53,7 @@ RSpec.describe "Registrations", type: :system do
         fill_in "Eメール", with: "test@example.com"
         fill_in "パスワード", with: "password"
         fill_in "パスワード（確認用）", with: "password2"
-        click_on "保存する"
+        click_on "登録"
         expect(page).to have_current_path(new_user_registration_path)
         expect(page).to have_content("アカウント登録")
         expect(page).to have_content("パスワード（確認用）とパスワードの入力が一致しません")
