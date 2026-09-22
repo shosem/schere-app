@@ -145,7 +145,7 @@ export default class extends Controller {
         // 過去
         if(targetDate < today) {
         // グレー＋押せない
-          cls = "text-gray-400 cursor-default"
+          cls = "text-ink-muted/50 cursor-default"
 
         // 選択済み
         } else if(this.selected.has(targetDate)){
@@ -155,6 +155,7 @@ export default class extends Controller {
         // 今日
         } else if(targetDate === today){
         // アクセント
+        // brandでは黒と見分けがつかないのであえてblueで実装
           cls = "text-blue-500 font-semibold cursor-pointer rounded-full hover:bg-ok-subtle"
         
         // 通常

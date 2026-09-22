@@ -1,9 +1,13 @@
-<div class="fixed inset-0 z-50 bg-black/50 flex items-center justify-center" data-action="click->modal#closeModal">
+<div
+  class="fixed inset-0 z-50 bg-black/50 flex items-center justify-center"
+  data-action="click->modal#closeModal"
+>
   <%= form_with model: [ group, event, venue ], class: "w-[90%] max-w-md" do |f| %>
     <div class="card card-surface" data-modal-target="card">
       <%= render "shared/error_messages", resource: venue %>
+
       <div>
-        <%= f.label :name,  class: "form-label inline-block" %><span class="text-red-700">*</span>
+        <%= f.label :name,  class: "form-label inline-block" %><span class="text-danger">*</span>
         <%= f.text_field :name, class: "form-input" %>
       </div>
 
@@ -23,13 +27,21 @@
       </div>
 
       <div class="flex items-center gap-2 mb-2">
-        <%= f.label :reserved,  class: "w-10 h-5 px-0.5 rounded-lg bg-gray-300 flex items-center hover:cursor-pointer has-[:checked]:bg-blue-500/80" do %>
+        <%= f.label :reserved,  class: "w-10 h-5 px-0.5 rounded-lg bg-ink-muted/50 flex items-center hover:cursor-pointer has-[:checked]:bg-brand" do %>
           <%= f.check_box :reserved, class: "peer sr-only" %>
-          <span class="inline-block bg-white rounded-full w-4 h-4 transition peer-checked:translate-x-5"></span>
+
+          <span
+            class="
+              inline-block bg-white rounded-full w-4 h-4 transition
+              peer-checked:translate-x-5
+            "
+          ></span>
         <% end %>
-        <span class="font-medium text-gray-700">予約した？</span>
+
+        <span class="text-ink">予約した？</span>
       </div>
-        <%= f.submit (venue.persisted? ? "保存" : "登録"), class: "btn btn-primary w-full" %>
+
+      <%= f.submit (venue.persisted? ? "保存" : "登録"), class: "btn btn-primary w-full" %>
     </div>
   <% end %>
 </div>

@@ -1,4 +1,5 @@
 <%= turbo_stream.replace dom_id(@venue) do %>
   <%= render @venue %>
 <% end %>
+
 <%= turbo_stream.update "modal", "" %>

@@ -1,14 +1,19 @@
 <div class="min-h-screen flex">
-  <% # 左のロゴ %>
-  <div class="hidden md:w-1/2 md:bg-blue-500 md:flex md:flex-col md:items-center md:justify-center md:text-white md:p-12">
-    <h1 class="text-4xl font-bold mb-4">Schere</h1>
-    <p class="text-lg">このアプリは予定を共有するアプリ</p>
+  <%# 左のロゴ %>
+  <div
+    class="
+      hidden md:w-1/2 md:bg-brand md:flex md:flex-col md:items-center
+      md:justify-center md:text-white md:p-12
+    "
+  >
+    <h1 class="page-header text-white mb-4">Schere</h1>
+    <p class="text-lg">予定を共有しましょう！</p>
   </div>
 
-  <% # 右のフォーム %>
-  <div class="w-full md:w-1/2 flex items-center justify-center bg-white p-6 md:p-12">
-    <div class="w-full max-w-sm">
-      <h2 class="text-2xl font-bold text-gray-800 mb-6">アカウント登録</h2>
+  <%# 右のフォーム %>
+  <div class="w-full md:w-1/2 flex items-center justify-center bg-ground p-6 md:p-12">
+    <div class="w-full max-w-sm flex flex-col">
+      <h2 class="text-center page-lead mb-4">アカウント登録</h2>
 
       <%= form_with(model: resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
         <%= render "users/shared/error_messages", resource: resource %>
@@ -23,7 +28,7 @@
           <%= f.email_field :email, class: "form-input" %>
         </div>
 
-         <div class="mb-4">
+        <div class="mb-4">
           <%= f.label :password, class: "form-label" %>
           <%= f.password_field :password, class: "form-input" %>
         </div>
@@ -33,8 +38,17 @@
           <%= f.password_field :password_confirmation, class: "form-input" %>
         </div>
 
-        <%= f.submit '保存する', class: "w-full btn btn-primary font-medium" %>
+        <%= f.submit '登録', class: "w-full btn btn-primary font-medium" %>
       <% end %>
+
+      <div class="my-6 flex items-center">
+        <div class="grow border-t border-line"></div>
+        <span class="mx-3 text-caption text-ink-muted">または</span>
+        <div class="grow border-t border-line"></div>
+      </div>
+
+      <%= link_to "ログインする！", new_user_session_path,
+           class: "btn btn-secondary" %>
     </div>
   </div>
 </div>

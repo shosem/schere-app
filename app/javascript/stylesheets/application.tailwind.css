@@ -52,6 +52,9 @@
   .btn-danger {
     @apply text-white bg-danger hover:bg-danger-strong
   }
+  .btn-secondary {
+    @apply text-ink border border-line hover:border-ink hover:bg-surface
+  }
 
   /* カード */
   .card {
@@ -91,6 +94,18 @@
     @apply flex flex-col items-center justify-center grow gap-4;
     & p { @apply text-ink text-lead }
   }
+  .vote-btn {
+    @apply text-ink-muted text-lead font-bold border-2 border-line rounded-full flex items-center justify-center w-11 h-11
+  }
+  .vote-available {
+    @apply peer-checked:text-brand peer-checked:border-brand peer-checked:bg-brand-subtle/50 hover:border-brand
+  }
+  .vote-maybe {
+    @apply peer-checked:text-warn peer-checked:border-warn peer-checked:bg-warn-subtle/50 hover:border-warn
+  }
+  .vote-unavailable {
+    @apply peer-checked:text-danger peer-checked:border-danger peer-checked:bg-danger-subtle/50 hover:border-danger
+  }
 
   /* 見出し */
   .page-header {
@@ -98,6 +113,9 @@
   }
   .page-section {
     @apply text-lead md:text-section text-ink font-bold
+  }
+  .page-lead {
+    @apply text-body md:text-lead text-ink font-bold
   }
   .page-caption {
     @apply text-caption text-ink-muted

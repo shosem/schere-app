@@ -1,5 +1,5 @@
-<% color = local_assigns.fetch(:color, "text-gray-400") %>
-<% size = local_assigns.fetch(:size, "text-sm") %>
+<% color = local_assigns.fetch(:color, "text-ink-muted") %>
+<% size = local_assigns.fetch(:size, "text-caption") %>
 
 <% if c.start_time.present? %>
   <span class="<%= size %> <%= color %>"><%= c.start_time.strftime("%-H:%M") %></span>

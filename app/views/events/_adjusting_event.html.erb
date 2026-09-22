@@ -5,7 +5,7 @@
     <% candidate_dates.each do |c| %>
       <%# 候補日ごとのカード %>
       <div class="flex flex-col card card-surface p-4">
-        <div class="text-xl text-gray-800 font-bold">
+        <div class="page-lead text-ink-strong font-bold">
           <%= l(c.date, format: :long) %>
         </div>
 
@@ -19,40 +19,19 @@
             <label>
               <%= radio_button_tag "votes[#{c.id}]", :available, my_votes[c.id] == "available", class: "sr-only peer" %>
 
-              <span
-                class="
-                  peer-checked:text-blue-500 peer-checked:border-blue-500 peer-checked:bg-blue-50
-                  text-gray-400 text-lg font-bold border-2 border-gray-200 rounded-full flex items-center justify-center w-11 h-11 hover:border-blue-300
-                "
-              >
-                ○
-              </span>
+              <span class="vote-btn vote-available"> ○ </span>
             </label>
 
             <label>
               <%= radio_button_tag "votes[#{c.id}]", :maybe, my_votes[c.id] == "maybe", class: "sr-only peer" %>
 
-              <span
-                class="
-                  peer-checked:text-amber-500 peer-checked:border-amber-500 peer-checked:bg-amber-50
-                  text-gray-400 text-lg font-bold border-2 border-gray-200 rounded-full flex items-center justify-center w-11 h-11 hover:border-amber-300
-                "
-              >
-                △
-              </span>
+              <span class="vote-btn vote-maybe"> △ </span>
             </label>
 
             <label>
               <%= radio_button_tag "votes[#{c.id}]", :unavailable, my_votes[c.id] == "unavailable", class: "sr-only peer" %>
 
-              <span
-                class="
-                  peer-checked:text-red-500 peer-checked:border-red-500 peer-checked:bg-red-50
-                  text-gray-400 text-lg font-bold border-2 border-gray-200 rounded-full flex items-center justify-center w-11 h-11 hover:border-red-300
-                "
-              >
-                ×
-              </span>
+              <span class="vote-btn vote-unavailable"> × </span>
             </label>
           </div>
 
@@ -60,7 +39,7 @@
           <div class="flex items-center gap-2">
             <%= render "vote_counts", counts: vote_counts[c.id], id: c.id %>
 
-            <div class="text-gray-400 text-sm">
+            <div class="text-ink-muted text-caption">
               回答済み：<%= c.votes.size %>人
             </div>
           </div>
@@ -79,7 +58,7 @@
 <%# 日程確定のセクション。閲覧者 = 管理者の場合のみ表示 %>
 <% if group.owned_by?(current_user) %>
   <div class="card card-sunken mt-4" data-testid="confirm-section">
-    <h2 class="text-xl text-gray-800 font-bold">日程を確定する</h2>
+    <h2 class="page-section">日程を確定する</h2>
 
     <%# 日程ごとのカード %>
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4">
@@ -90,30 +69,20 @@
                                 params: { candidate_date_id: c.id },
                                 class: "card card-clickable w-full p-2 md:p-4" do %>
           <div class="relative">
-            <p class="text-xl text-gray-700 font-bold text-center">
+            <p class="page-lead text-center">
               <%= l(c.date, format: :confirm_card) %>
             </p>
 
             <div class="absolute inset-y-0 right-0 flex items-center gap-1">
               <% if top_available_day_ids.include?(c.id) %>
-                <span
-                  class="
-                    text-[10px] md:text-xs font-bold text-blue-700 border
-                    rounded-full bg-blue-100 p-1
-                  "
-                >
-                  人気！
+                <span class="badge text-brand border bg-brand-subtle p-1">
+                  人気
                 </span>
               <% end %>
 
               <% if fewest_unavailable_day_ids.include?(c.id) %>
-                <span
-                  class="
-                    text-[10px] md:text-xs font-bold text-green-700 border
-                    rounded-full bg-green-100 p-1
-                  "
-                >
-                  反対少なめ！
+                <span class="badge text-ok border bg-ok-subtle p-1">
+                  反対少なめ
                 </span>
               <% end %>
             </div>
@@ -125,7 +94,7 @@
           </div>
 
           <%# 投票数を表示する %>
-          <div class="flex items-center justify-center text-xl gap-2">
+          <div class="flex items-center justify-center text-lead gap-2">
             <%= render "vote_counts", counts: vote_counts[c.id], id: c.id %>
           </div>
         <% end %>
