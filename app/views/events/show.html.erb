@@ -24,33 +24,30 @@
       <div class="flex gap-2 items-center">
         <button
           data-action="click->share#share"
-          class="
-            btn text-gray-800 border border-gray-800 hover:bg-gray-200
-            py-1.5
-          "
+          class="btn btn-secondary py-1.5"
         >
           共有
         </button>
 
         <% if @group.owned_by?(current_user) %>
-          <%= link_to "編集", edit_group_event_path(@group, @event), class: "btn btn-primary py-1.5" %>
+          <%= link_to "編集", edit_group_event_path(@group, @event), class: "btn btn-secondary py-1.5" %>
           <%= link_to "削除", group_event_path(@group, @event), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, class: "btn btn-danger py-1.5" %>
         <% end %>
       </div>
 
-      <p data-share-target="sharedMessage" class="px-2 rounded-xl"></p>
+      <p data-share-target="sharedMessage" class="px-2 rounded-control"></p>
     </div>
   </div>
 
   <% if @event.location.present? %>
-    <span class="text-sm text-gray-400">📍<%= @event.location %></span>
+    <span class="text-caption text-ink-muted font-bold">📍<%= @event.location %></span>
   <% end %>
 
   <% if @event.description.present? %>
-    <div class="bg-gray-50 rounded-2xl px-5 py-4 mt-3">
-      <p class="text-xs font-bold text-gray-400 mb-2">説明</p>
+    <div class="card card-sunken mt-2 flex flex-col gap-2">
+      <p class="page-lead text-ink-muted">説明</p>
 
-      <p class="whitespace-pre-line text-sm text-gray-600 leading-relaxed"><%= @event.description %></p>
+      <p class="whitespace-pre-line text-body text-ink leading-relaxed"><%= @event.description %></p>
     </div>
   <% end %>
 </div>
@@ -64,8 +61,7 @@
               candidate_dates: @candidate_dates,
               top_available_day_ids: @top_available_day_ids,
               fewest_unavailable_day_ids: @fewest_unavailable_day_ids,
-              my_votes: @my_votes
-               %>
+              my_votes: @my_votes %>
 <% elsif @event.confirmed? %>
   <%= render "confirmed_event",
               group: @group,
@@ -74,4 +70,4 @@
               voter_names: @voter_names %>
 <% end %>
 
-<%= link_to "←グループに戻る", group_path(@group), class: "inline-flex items-center text-gray-500 bg-gray-50 rounded-full p-2 transition hover:bg-gray-100 hover:outline hover:text-gray-700" %>
+<%= link_to "←グループに戻る", group_path(@group), class: "mt-2 w-fit text-ink-muted transition hover:text-ink-strong hover:border-b border-ink-muted" %>

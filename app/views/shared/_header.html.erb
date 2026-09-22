@@ -19,8 +19,8 @@
           type="button"
           data-action="click->dropdown#toggle"
           class="
-            w-9 h-9 rounded-full bg-blue-100 text-blue-600 flex items-center
-            justify-center text-sm font-bold
+            w-9 h-9 rounded-full bg-brand-subtle text-brand hover:border hover:cursor-pointer border-brand flex items-center
+            justify-center text-caption font-bold
           "
         >
           <%= current_user.name.first %>
@@ -29,15 +29,15 @@
         <div
           data-dropdown-target="menu"
           class="
-            absolute hidden top-full right-0 w-44 bg-white border
-            border-gray-200 rounded-lg shadow-lg py-1
+            absolute hidden top-full right-0 w-36 md:w-44 card card-surface
+            shadow-lg p-1
           "
         >
-          <%= link_to t('.create_group'), new_group_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" %>
-          <%= link_to t('.edit_user'), edit_user_registration_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" %>
+          <%= link_to t('.create_group'), new_group_path, class: "dropdown" %>
+          <%= link_to t('.edit_user'), edit_user_registration_path, class: "dropdown" %>
 
           <%= button_to t('.logout'), destroy_user_session_path, method: :delete,                                                                                                            
-                class: "px-4 py-2 text-sm font-medium text-red-500 hover:bg-gray-50" %>
+                class: "dropdown w-full text-start text-danger" %>
         </div>
       </div>
     <% elsif current_guest %>
@@ -94,10 +94,10 @@
       <%# 非ログイン時 %>
       <nav class="flex items-center gap-4">
         <%= link_to t('.login'), new_user_session_path,                                                                                                                                     
-              class: "text-sm font-medium text-gray-600 hover:text-gray-900" %>
+              class: "text-badge md:text-caption font-medium text-ink hover:text-ink-strong hover:border-b" %>
 
         <%= link_to t('.create_user'), new_user_registration_path,                                                                                                                                
-              class: "text-sm font-medium px-4 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600" %>
+              class: "btn btn-primary text-badge md:text-caption p-2" %>
       </nav>
     <% end %>
   </div>

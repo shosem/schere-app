@@ -28,7 +28,7 @@
     <%# 施設情報リスト %>
     <div id="venues-list">
       <% if event.venues.present? %>
-        <%= render event.venues %>
+        <%= render event.venues, group: group, event: event %>
       <% end %>
     </div>
   </div>

@@ -10,7 +10,7 @@
   >
     <div class="grid grid-cols-3 max-w-full mx-auto">
       <%# ダッシュボード %>
-      <%= link_to root_path, class: "flex flex-col justify-center items-center" do %>
+      <%= link_to root_path, class: "flex flex-col justify-center items-center text-ink" do %>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -26,18 +26,18 @@
           />
         </svg>
 
-        <p class="text-sm text-gray-400 text-center"><%= t('.dashboard') %></p>
+        <p class="text-caption text-center"><%= t('.dashboard') %></p>
       <% end %>
 
       <%# イベント作成＋ %>
-      <%= link_to new_event_group_selection_path, "aria-label": "イベント作成", data: { turbo_frame: "modal" }, class: "w-14 h-14 -mt-1 rounded-full bg-blue-500 text-white shadow-lg flex items-center justify-center justify-self-center" do %>
+      <%= link_to new_event_group_selection_path, "aria-label": "イベント作成", data: { turbo_frame: "modal" }, class: "w-14 h-14 -mt-1 rounded-full bg-brand text-white shadow-lg flex items-center justify-center justify-self-center" do %>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           stroke-width="2"
           stroke="currentColor"
-          class="size-6 text-white"
+          class="size-6"
         >
           <path
             stroke-linecap="round"
@@ -48,7 +48,7 @@
       <% end %>
 
       <%# 設定 %>
-      <%= link_to edit_user_registration_path, class: "flex flex-col justify-center items-center" do %>
+      <%= link_to edit_user_registration_path, class: "flex flex-col justify-center items-center text-ink" do %>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -64,7 +64,7 @@
           />
         </svg>
 
-        <p class="text-sm text-gray-400 text-center"><%= t('.edit') %></p>
+        <p class="text-caption text-center"><%= t('.edit') %></p>
       <% end %>
     </div>
   </nav>
@@ -72,8 +72,8 @@
 
 <footer
   class="
-    hidden md:block border-t border-line py-6 text-center text-sm
-    text-gray-400
+    hidden md:block border-t border-line py-6 text-center text-caption
+    text-ink-muted
   "
 >
   © 2026 Schere

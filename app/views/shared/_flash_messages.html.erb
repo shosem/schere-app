@@ -1,8 +1,8 @@
 <% flash.each do |type, message| %>
-  <% styles = type.to_sym == :notice ? "bg-green-50 text-green-800 border-green-200" : "bg-red-50 text-red-800 border-red-200" %>
+  <% styles = type.to_sym == :notice ? "bg-ok-subtle text-ok" : "bg-danger-subtle text-danger" %>
 
   <div
-    class="border px-4 py-3 text-sm text-center <%= styles %>"
+    class="px-4 py-3 text-caption text-center <%= styles %>"
     data-turbo-temporary
   >
     <%= message %>
