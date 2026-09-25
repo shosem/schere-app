@@ -118,7 +118,7 @@
     @apply text-body md:text-lead text-ink font-bold
   }
   .page-caption {
-    @apply text-caption text-ink-muted
+    @apply text-badge md:text-caption text-ink-muted
   }
     /* 集計結果表示 */
   .page-count {

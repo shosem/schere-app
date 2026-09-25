@@ -1,9 +1,10 @@
-<details>
-  <summary class="text-ink-muted cursor-pointer">回答者を見る</summary>
+<details class="page-caption text-ink-muted">
+  <summary class="cursor-pointer page-caption">回答者を見る</summary>
 
+  <div class="text-ink-strong">
   <div class="flex gap-2 items-center">
     <span class="text-brand">○</span>
-    <p class="text-ink-muted"><%= names["available"].present? ? names["available"].join("、") : "-" %></p>
+    <%= names["available"].present? ? names["available"].join("、") : "-" %>
   </div>
 
   <div class="flex gap-2 items-center">
@@ -14,5 +15,6 @@
   <div class="flex gap-2 items-center">
     <span class="text-danger">×</span>
     <%= names["unavailable"].present? ? names["unavailable"].join("、") : "-" %>
+  </div>
   </div>
 </details>

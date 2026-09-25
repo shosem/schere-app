@@ -1,14 +1,16 @@
-<div class="text-brand" data-testid="<%= id %>">
-  <span>○</span>
-  <%= counts["available"] %>
-</div>
+<div class="flex gap-2">
+  <div class="text-brand" data-testid="<%= id %>">
+    <span>○</span>
+    <%= counts["available"] %>
+  </div>
 
-<div class="text-warn">
-  <span>△</span>
-  <%= counts["maybe"] %>
-</div>
+  <div class="text-warn">
+    <span>△</span>
+    <%= counts["maybe"] %>
+  </div>
 
-<div class="text-danger">
-  <span>×</span>
-  <%= counts["unavailable"] %>
+  <div class="text-danger">
+    <span>×</span>
+    <%= counts["unavailable"] %>
+  </div>
 </div>
