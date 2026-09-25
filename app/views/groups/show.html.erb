@@ -11,19 +11,20 @@
       data-share-url-value="<%= new_group_join_url(@group.join_token) %>"
       data-share-title-value="グループ共有"
       data-share-text-value="グループ「<%= @group.name %>」に参加しませんか？"
-      class="flex flex-col items-end"
+      class="flex flex-col items-end shrink-0"
     >
-      <div>
+      <div class="flex items-center gap-2">
+        <button
+          type="button"
+          data-action="click->share#share"
+          class="p-1.5 rounded-control cursor-pointer hover:bg-sunken"
+        >
+          <%= render "shared/icons/share", style: "size-6 md:size-8" %>
+        </button>
+
         <% if owned && @events.present? %>
           <%= link_to "＋ イベント作成", new_group_event_path(@group), class: "btn btn-primary" %>
         <% end %>
-
-        <button
-          data-action="click->share#share"
-          class="btn text-ink border border-ink hover:bg-surface"
-        >
-          共有
-        </button>
       </div>
 
       <p data-share-target="sharedMessage" class="px-2 rounded-control"></p>
