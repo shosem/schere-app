@@ -99,7 +99,7 @@ RSpec.describe "Groups", type: :system do
         it "共有ボタンを押すとリンクを共有する関数が呼ばれ成功用のテキストが表示されること" do
           visit group_path(group)
           page.execute_script("navigator.share = ()=> { window.__shared = true; return Promise.resolve() }")
-          click_on "共有"
+          find('button[data-action="click->share#share"]').click
           expect(page).to have_content("成功しました")
           expect(evaluate_script("window.__shared")).to eq true
         end
@@ -115,7 +115,7 @@ RSpec.describe "Groups", type: :system do
         it "共有ボタンを押すとリンクを共有する関数が呼ばれ失敗用のテキストが表示されること" do
           visit group_path(group)
           stab_share("Promise.reject(new Error())")
-          click_on "共有"
+          find('button[data-action="click->share#share"]').click
           expect(page).to have_content("失敗しました")
           expect(evaluate_script("window.__shared")).to eq true
         end
@@ -123,7 +123,7 @@ RSpec.describe "Groups", type: :system do
         it "キャンセルした場合、成功・失敗のテキストは表示されないこと" do
           visit group_path(group)
           stab_share("Promise.reject(new DOMException('canceled', 'AbortError'))")
-          click_on "共有"
+          find('button[data-action="click->share#share"]').click
           expect(page).to have_no_content("成功しました", wait: 0)
           expect(page).to have_no_content("失敗しました", wait: 0)
           expect(evaluate_script("window.__shared")).to eq true

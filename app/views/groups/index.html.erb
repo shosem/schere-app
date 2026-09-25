@@ -1,14 +1,12 @@
 <div class="grow flex flex-col">
   <div class="flex justify-between items-center">
-    <h1 class="page-header">こんにちは、<%= current_user.name %>さん！</h1>
+    <h1 class="page-header">グループ一覧</h1>
 
     <%# @groupsが空の場合は重複しないように右上のボタンを隠す %>
     <% if @groups.present? %>
       <%= link_to "＋ グループ作成", new_group_path, class: "btn btn-primary" %>
     <% end %>
   </div>
-
-  <p class="page-caption">予定を管理しましょう！</p>
 
   <div class="index mt-4">
     <% if @groups.present? %>

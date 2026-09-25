@@ -5,29 +5,29 @@
 
 <div
   id="<%= dom_id(venue) %>"
-  class="card card-surface mt-4 flex justify-between items-start border-l-4 shadow-lg <%= venue.reserved? ? badge["reserved"][2] : badge["unreserved"][2] %>"
+  class="card card-surface p-3 md:p-5 mt-4 flex justify-between items-start border-l-4 shadow-lg <%= venue.reserved? ? badge["reserved"][2] : badge["unreserved"][2] %>"
 >
-  <div class="flex flex-col gap-2">
+  <div class="flex flex-col gap-1 md:gap-2">
     <% if venue.reserved? %>
       <span class="badge self-start <%= badge["reserved"][1] %>"><%= badge["reserved"][0] %></span>
     <% else %>
       <span class="badge self-start <%= badge["unreserved"][1] %>"><%= badge["unreserved"][0] %></span>
     <% end %>
 
-    <p>
+    <p class="text-caption md:text-body">
       <span class="text-ink mr-2">場所</span><span class="font-semibold text-ink-strong"><%= venue.name %></span>
     </p>
 
     <% if venue.price.present? %>
-      <p>
+      <p class="text-caption md:text-body">
         <span class="text-ink mr-2">費用</span><span class="font-semibold text-ink-strong"><%= number_to_currency(venue.price, unit: "¥", format: "%u%n") %></span>
       </p>
     <% end %>
 
     <% if venue.note.present? %>
-      <p>
-        <span class="text-ink mr-2">備考</span><span class="font-semibold text-ink-strong"><%= venue.note %></span>
-      </p>
+      <div class="card card-sunken p-2">
+        <p class="text-badge md:text-caption whitespace-pre-line"><%= venue.note %></p>
+      </div>
     <% end %>
 
     <% if (url = safe_url(venue.page_url)).present? %>
@@ -38,9 +38,29 @@
   </div>
 
   <% if group.owned_by?(current_user) %>
-    <div>
-      <%= link_to "編集", edit_group_event_venue_path(group, event, venue), data: { turbo_frame: "modal" }, class: "btn btn-secondary py-1.5" %>
-      <%= link_to "削除", group_event_venue_path(group, event, venue), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, class: "btn btn-danger py-1.5" %>
+    <div
+      data-controller="dropdown"
+      data-action="click@window->dropdown#hide"
+      class="flex items-center gap-3 relative"
+    >
+      <button
+        type="button"
+        data-action="click->dropdown#toggle"
+        class="p-1.5 rounded-control cursor-pointer hover:bg-sunken"
+      >
+        <%= render "shared/icons/ellipsis_horizontal", style: "size-6 md:size-8" %>
+      </button>
+
+      <div
+        data-dropdown-target="menu"
+        class="
+          absolute hidden top-full right-0 w-44 card
+          card-surface shadow-lg p-1
+        "
+      >
+        <%= link_to "編集する", edit_group_event_venue_path(group, event, venue), data: { turbo_frame: "modal" }, class: "dropdown" %>
+        <%= link_to "削除する", group_event_venue_path(group, event, venue), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, class: "dropdown text-danger" %>
+      </div>
     </div>
   <% end %>
 </div>
