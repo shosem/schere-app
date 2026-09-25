@@ -2,6 +2,13 @@ require 'rails_helper'
 
 RSpec.describe "Events", type: :system do
   include LoginMacros
+
+  def open_owner_menu
+    within("[data-controller='share']") do
+      find('button[data-action="click->dropdown#toggle"]').click
+    end
+  end
+
   let(:user) { create(:user) }
   let(:group) { create(:group, user: user) }
   before do
@@ -47,7 +54,8 @@ RSpec.describe "Events", type: :system do
     end
     context "編集可能" do
       it "イベントを編集できること" do
-        click_on "編集"
+        open_owner_menu
+        click_on "イベントを編集する"
         fill_in "タイトル", with: "テストイベントだよ"
         click_on "保存"
         expect(page).to have_content("編集内容を保存しました")
@@ -66,7 +74,9 @@ RSpec.describe "Events", type: :system do
         click_on "参加する"
         expect(page).to have_content("入室しました")
         visit group_event_path(group, event)
-        expect(page).to have_no_link("編集")
+        within("[data-controller='share']") do
+          expect(page).to have_no_css("[data-controller='dropdown']")
+        end
       end
     end
   end
@@ -78,8 +88,9 @@ RSpec.describe "Events", type: :system do
     end
     context "削除可能" do
       it "イベントを削除できること" do
+        open_owner_menu
         page.accept_confirm do
-          click_on "削除"
+          click_on "イベントを削除する"
         end
         expect(page).to have_content("イベントを削除しました")
         expect(Event.count).to eq 0
@@ -96,7 +107,9 @@ RSpec.describe "Events", type: :system do
         click_on "参加する"
         expect(page).to have_content("入室しました")
         visit group_event_path(group, event)
-        expect(page).to have_no_link("削除")
+        within("[data-controller='share']") do
+          expect(page).to have_no_css("[data-controller='dropdown']")
+        end
       end
     end
   end
@@ -172,7 +185,7 @@ RSpec.describe "Events", type: :system do
       end
       it "投票フォーム、日程確定ボタンが表示され、確定された日程のバナーは表示されないこと" do
         expect(page).to have_content("調整中")
-        expect(page).to have_content("回答状況")
+        expect(page).to have_content("日程を投票する")
         expect(page).to have_content("日程を確定する")
         expect(page).to have_no_content("確定日程")
       end
@@ -189,7 +202,7 @@ RSpec.describe "Events", type: :system do
         expect(page).to have_content("確定済み")
         expect(page).to have_content("施設情報")
         expect(page).to have_content("確定日程")
-        expect(page).to have_no_content("回答状況")
+        expect(page).to have_no_content("日程を投票する")
         expect(page).to have_no_content("日程を確定する")
       end
 
@@ -250,8 +263,8 @@ RSpec.describe "Events", type: :system do
 
     context "グループ作成者のアカウントでログインしている場合" do
       it "施設情報の作成ができること" do
-        expect(page).to have_content("＋追加")
-        click_on "＋追加"
+        expect(page).to have_content(event.title)
+        find("a[href='#{new_group_event_venue_path(group, event)}']").click
         fill_in "施設名", with: "スポーツセンター"
         click_on "登録"
         expect(page).to have_content("スポーツセンター")
@@ -265,7 +278,8 @@ RSpec.describe "Events", type: :system do
         venue = create(:venue, event: event)
         visit current_path
         within("[id='venue_#{venue.id}']") do
-          click_on "編集"
+          find('button[data-action="click->dropdown#toggle"]').click
+          click_on "編集する"
         end
         fill_in "施設名", with: "変更テストセンター"
         check('venue[reserved]', allow_label_click: true)
@@ -278,8 +292,9 @@ RSpec.describe "Events", type: :system do
         venue = create(:venue, event: event)
         visit current_path
         within("[id='venue_#{venue.id}']") do
+          find('button[data-action="click->dropdown#toggle"]').click
           page.accept_confirm do
-            click_on "削除"
+            click_on "削除する"
           end
         end
         expect(page).to have_no_content(venue.name)
