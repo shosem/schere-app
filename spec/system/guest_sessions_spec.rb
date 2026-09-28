@@ -11,7 +11,7 @@ RSpec.describe "GuestSessions", type: :system do
     context "入室可能" do
       it "ゲスト入室ページからグループに参加できること" do
         fill_in "ゲスト名", with: "テストゲスト"
-        click_on "参加する"
+        click_on "入室する"
         expect(page).to have_current_path(group_path(group))
         expect(page).to have_content("#{group.name}にテストゲストさんとして入室しました")
         expect(Guest.count).to eq 1
@@ -19,7 +19,7 @@ RSpec.describe "GuestSessions", type: :system do
 
       it "ゲストログイン後、同一セッションであればグループ詳細画面に遷移すること" do
         fill_in "ゲスト名", with: "テストゲスト"
-        click_on "参加する"
+        click_on "入室する"
         expect(page).to have_content("#{group.name}にテストゲストさんとして入室しました")
         visit new_group_join_path(group.join_token)
         expect(page).to have_current_path(group_path(group))
@@ -29,7 +29,7 @@ RSpec.describe "GuestSessions", type: :system do
     context "入室不可" do
       it "名前が空欄の場合グループに参加できないこと" do
         fill_in "ゲスト名", with: ""
-        click_on "参加する"
+        click_on "入室する"
         expect(page).to have_current_path(new_group_join_path(group.join_token))
         expect(page).to have_content("入室できませんでした")
         expect(page).to have_content("ゲスト名を入力してください")
@@ -41,7 +41,7 @@ RSpec.describe "GuestSessions", type: :system do
       let!(:guest) { create(:guest, name: "ゲストくん", group: group) }
       before do
         fill_in "ゲスト名", with: "ゲストくん"
-        click_on "参加する"
+        click_on "入室する"
       end
 
       it "確認用のモーダルが開くこと" do
@@ -67,7 +67,7 @@ RSpec.describe "GuestSessions", type: :system do
       it "グループ入室後、違うグループの詳細画面にアクセスできず、元のグループ詳細ページに戻ること" do
         other_group = create(:group)
         fill_in "ゲスト名", with: "テストゲスト"
-        click_on "参加する"
+        click_on "入室する"
         expect(page).to have_content("#{group.name}にテストゲストさんとして入室しました")
         visit group_path(other_group)
         expect(page).to have_current_path(group_path(group))
@@ -86,7 +86,7 @@ describe "イベント共有リンクからの入室" do
 
         it "名前を入力するとイベント詳細画面に着地すること" do
           fill_in "ゲスト名", with: "テストゲスト"
-          click_on "参加する"
+          click_on "入室する"
           expect(page).to have_current_path(group_event_path(group, event))
           expect(page).to have_content(event.title)
         end
@@ -94,7 +94,7 @@ describe "イベント共有リンクからの入室" do
         it "確認モーダルの「本人です」を経由してもイベント詳細画面に着地すること" do
           create(:guest, name: "ゲストくん", group: group)
           fill_in "ゲスト名", with: "ゲストくん"
-          click_on "参加する"
+          click_on "入室する"
           click_on "本人です"
           expect(page).to have_current_path(group_event_path(group, event))
         end
@@ -104,7 +104,7 @@ describe "イベント共有リンクからの入室" do
         it "名前の入力なしでイベント詳細画面に遷移すること" do
           visit new_group_join_path(group.join_token)
           fill_in "ゲスト名", with: "テストゲスト"
-          click_on "参加する"
+          click_on "入室する"
           expect(page).to have_content("入室しました")
           visit new_group_join_path(group.join_token, event_id: event.id)
           expect(page).to have_current_path(group_event_path(group, event))
@@ -125,7 +125,7 @@ describe "イベント共有リンクからの入室" do
         it "存在しないidのときはグループ詳細画面に着地すること" do
           visit new_group_join_path(group.join_token, event_id: 0)
           fill_in "ゲスト名", with: "テストゲスト"
-          click_on "参加する"
+          click_on "入室する"
           expect(page).to have_current_path(group_path(group))
         end
 
@@ -133,7 +133,7 @@ describe "イベント共有リンクからの入室" do
           other_event = create(:event)
           visit new_group_join_path(group.join_token, event_id: other_event.id)
           fill_in "ゲスト名", with: "テストゲスト"
-          click_on "参加する"
+          click_on "入室する"
           expect(page).to have_current_path(group_path(group))
         end
       end

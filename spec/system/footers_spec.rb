@@ -91,7 +91,7 @@ RSpec.describe "Footers", type: :system do
         before do
           visit new_group_join_path(group.join_token)
           fill_in "ゲスト名", with: "テストゲスト"
-          click_on "参加する"
+          click_on "入室する"
           expect(page).to have_content(group.name)
         end
 

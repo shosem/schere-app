@@ -71,7 +71,7 @@ RSpec.describe "Events", type: :system do
         expect(page).to have_content("ログアウトしました")
         visit new_group_join_path(group.join_token)
         fill_in "ゲスト名", with: "ゲスト"
-        click_on "参加する"
+        click_on "入室する"
         expect(page).to have_content("入室しました")
         visit group_event_path(group, event)
         within("[data-controller='share']") do
@@ -104,7 +104,7 @@ RSpec.describe "Events", type: :system do
         expect(page).to have_content("ログアウトしました")
         visit new_group_join_path(group.join_token)
         fill_in "ゲスト名", with: "ゲスト"
-        click_on "参加する"
+        click_on "入室する"
         expect(page).to have_content("入室しました")
         visit group_event_path(group, event)
         within("[data-controller='share']") do
@@ -311,7 +311,7 @@ RSpec.describe "Events", type: :system do
         expect(page).to have_content("ログアウトしました")
         visit new_group_join_path(group.join_token)
         fill_in "ゲスト名", with: "テストゲスト"
-        click_on "参加する"
+        click_on "入室する"
         expect(page).to have_current_path(group_path(group))
         visit group_event_path(group, event)
         expect(page).to have_no_content("＋追加")

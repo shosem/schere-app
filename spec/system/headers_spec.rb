@@ -73,7 +73,7 @@ RSpec.describe "Headers", type: :system do
       before do
         visit new_group_join_path(group.join_token)
         fill_in "ゲスト名", with: "テストさん"
-        click_on "参加する"
+        click_on "入室する"
       end
 
       it "ロゴがリンク化されていないこと" do
@@ -151,7 +151,7 @@ RSpec.describe "Headers", type: :system do
           it "退室後、別の名前で入室できること" do
             click_on "退室する"
             fill_in "ゲスト名", with: "べつのなまえ"
-            click_on "参加する"
+            click_on "入室する"
             expect(page).to have_content("#{group.name}にべつのなまえさんとして入室しました")
             expect(Guest.count).to eq 2
           end
@@ -164,7 +164,7 @@ RSpec.describe "Headers", type: :system do
       before do
         visit new_group_join_path(group.join_token)
         fill_in "ゲスト名", with: "テストさん"
-        click_on "参加する"
+        click_on "入室する"
       end
 
       it "ログイン時のヘッダーが表示されること" do
