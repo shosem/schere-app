@@ -62,7 +62,7 @@
           </p>
         </div>
 
-        <%= f.submit t("devise.registrations.edit.update"), class: "w-full btn btn-primary" %>
+        <%= f.submit "更新", class: "w-full btn btn-primary" %>
       <% end %>
 
       <div class="my-6 flex items-center">
@@ -71,7 +71,7 @@
         <div class="grow border-t border-line"></div>
       </div>
 
-      <%= button_to t("devise.registrations.edit.cancel_my_account"), registration_path(resource_name), data: { confirm: t("devise.registrations.edit.are_you_sure"), turbo_confirm: t("devise.registrations.edit.are_you_sure") }, method: :delete, class: "w-full btn btn-danger" %>
+      <%= button_to "アカウント削除", registration_path(resource_name), data: { confirm: "本当に削除しますか？", turbo_confirm: "本当に削除しますか？" }, method: :delete, class: "w-full btn btn-danger" %>
     </div>
   </div>
 </div>

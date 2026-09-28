@@ -33,10 +33,10 @@
             shadow-lg p-1
           "
         >
-          <%= link_to t('.create_group'), new_group_path, class: "dropdown" %>
-          <%= link_to t('.edit_user'), edit_user_registration_path, class: "dropdown" %>
+          <%= link_to "グループ作成", new_group_path, class: "dropdown" %>
+          <%= link_to "アカウント設定", edit_user_registration_path, class: "dropdown" %>
 
-          <%= button_to t('.logout'), destroy_user_session_path, method: :delete,                                                                                                            
+          <%= button_to "ログアウト", destroy_user_session_path, method: :delete,                                                                                                            
                 class: "dropdown w-full text-start text-danger" %>
         </div>
       </div>
@@ -93,10 +93,10 @@
     <% else %>
       <%# 非ログイン時 %>
       <nav class="flex items-center gap-4">
-        <%= link_to t('.login'), new_user_session_path,                                                                                                                                     
+        <%= link_to "ログイン", new_user_session_path,                                                                                                                                     
               class: "text-badge md:text-caption font-medium text-ink hover:text-ink-strong hover:border-b" %>
 
-        <%= link_to t('.create_user'), new_user_registration_path,                                                                                                                                
+        <%= link_to "新規登録", new_user_registration_path,                                                                                                                                
               class: "btn btn-primary text-badge md:text-caption p-2" %>
       </nav>
     <% end %>

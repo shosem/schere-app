@@ -1,7 +1,7 @@
 <div class="grow flex flex-col justify-center items-center">
   <div class="text-center">
-    <h1 class="page-header"><%= t('.title') %></h1>
-    <p class="page-caption">ゲスト名を入力して、グループに参加しましょう！</p>
+    <h1 class="page-header">ゲスト入室</h1>
+    <p class="page-caption">ゲスト名を入力して、グループに入室しましょう！</p>
   </div>
 
   <div class="w-full max-w-3xl mx-auto">
@@ -13,7 +13,7 @@
         <%= f.text_field :name, class: "form-input" %>
       </div>
 
-      <%= f.submit t('.submit'), class: "mt-4 w-full btn btn-primary py-2" %>
+      <%= f.submit "入室する", class: "mt-4 w-full btn btn-primary py-2" %>
     <% end %>
   </div>
 

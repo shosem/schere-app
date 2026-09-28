@@ -148,7 +148,7 @@ RSpec.describe "Groups", type: :system do
           expect(page).to have_content("ログアウトしました")
           visit new_group_join_path(group.join_token)
           fill_in "ゲスト名", with: "テストゲスト"
-          click_on "参加する"
+          click_on "入室する"
         end
 
         it "グループ削除ボタンが表示されないこと" do
@@ -184,7 +184,7 @@ RSpec.describe "Groups", type: :system do
           expect(page).to have_content("ログアウトしました")
           visit new_group_join_path(group.join_token)
           fill_in "ゲスト名", with: "テストゲスト"
-          click_on "参加する"
+          click_on "入室する"
         end
 
         it "イベントが0件のとき、作成ボタンは表示されず、文言だけが表示されること" do
