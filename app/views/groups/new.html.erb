@@ -1,6 +1,6 @@
 <div class="grow flex flex-col justify-center">
   <div class="text-center">
-    <h1 class="page-header"><%= t('.create') %></h1>
+    <h1 class="page-header">グループを作成する</h1>
     <p class="page-caption">グループ名を設定しましょう！招待リンクはグループ作成後に共有できます。</p>
   </div>
 
@@ -10,6 +10,6 @@
       <%= f.text_field :name, class: "form-input" %>
     </div>
 
-    <%= f.submit t('.submit'), class: "mt-4 w-full btn btn-primary py-2" %>
+    <%= f.submit "作成", class: "mt-4 w-full btn btn-primary py-2" %>
   <% end %>
 </div>
