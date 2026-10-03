@@ -29,7 +29,7 @@
         <div
           data-dropdown-target="menu"
           class="
-            absolute hidden top-full right-0 w-44 card card-surface
+            absolute hidden top-full right-0 w-fit card card-surface
             shadow-lg p-1
           "
         >
@@ -38,6 +38,11 @@
 
           <%= button_to "ログアウト", destroy_user_session_path, method: :delete,                                                                                                            
                 class: "dropdown w-full text-start text-danger" %>
+
+          <hr class="my-2 border-line">
+          <%= link_to "利用規約", terms_path, class: "dropdown" %>
+          <%= link_to "プライバシーポリシー", privacy_path, class: "dropdown" %>
+          <%= link_to "お問い合わせ", contact_path, class: "dropdown" %>
         </div>
       </div>
     <% elsif current_guest %>
@@ -49,7 +54,11 @@
         data-action="click@window->dropdown#hide"
         class="flex items-center gap-3"
       >
-        <button type="button" data-action="click->dropdown#toggle">
+        <button
+          type="button"
+          data-action="click->dropdown#toggle"
+          class="cursor-pointer"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -69,7 +78,7 @@
         <div
           data-dropdown-target="menu"
           class="
-            absolute hidden top-full right-0 w-44 card card-surface
+            absolute hidden top-full right-0 w-fit card card-surface
             shadow-lg p-1
           "
         >
@@ -88,6 +97,11 @@
 
           <%= button_to "退室する", destroy_guest_session_path, method: :delete,
                   class: "dropdown text-danger" %>
+
+          <hr class="my-2 border-line">
+          <%= link_to "利用規約", terms_path, class: "dropdown" %>
+          <%= link_to "プライバシーポリシー", privacy_path, class: "dropdown" %>
+          <%= link_to "お問い合わせ", contact_path, class: "dropdown" %>
         </div>
       </div>
     <% else %>

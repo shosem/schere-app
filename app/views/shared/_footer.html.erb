@@ -72,9 +72,14 @@
 
 <footer
   class="
-    hidden md:block border-t border-line py-6 text-center text-caption
+    hidden md:block border-t border-line py-4 text-center text-caption
     text-ink-muted
   "
 >
   © 2026 Schere
+  <div class="flex justify-center items-center gap-4 mx-auto w-full">
+    <%= link_to "利用規約", terms_path, class: "hover:text-brand-strong" %>
+    <%= link_to "プライバシーポリシー", privacy_path, class: "hover:text-brand-strong" %>
+    <%= link_to "お問い合わせ", contact_path, class: "hover:text-brand-strong" %>
+  </div>
 </footer>
