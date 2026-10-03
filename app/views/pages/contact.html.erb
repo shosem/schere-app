@@ -1,0 +1,44 @@
+<div class="w-full max-w-3xl mx-auto">
+  <h1 class="page-header">お問い合わせ</h1>
+
+  <p class="mt-4 text-body text-ink leading-relaxed">
+    Schereに関するご質問・ご要望・不具合のご報告は、以下のメールアドレスまでお寄せください。
+    個人で運営しているため、お返事までにお時間をいただくことがあります。
+  </p>
+
+  <div class="card card-surface mt-6">
+    <p class="page-caption">メールアドレス</p>
+
+    <p class="mt-1 text-lead text-ink-strong font-bold break-all">
+      <%# TODO: 公開用のメールアドレスに差し替える %>
+      <%= mail_to "scheresupport26@gmail.com", class: "text-brand underline hover:text-brand-strong" %>
+    </p>
+  </div>
+
+  <section class="mt-8">
+    <h2 class="page-lead">お問い合わせいただける内容</h2>
+
+    <ul class="mt-2 pl-5 list-disc text-body text-ink leading-relaxed space-y-1">
+      <li>不具合のご報告、使い方についてのご質問</li>
+      <li>機能についてのご要望</li>
+      <li>お預かりしている情報の開示・訂正・削除のご依頼</li>
+    </ul>
+
+    <p class="mt-4 text-body text-ink leading-relaxed">
+      情報の取り扱いについては
+      <%= link_to "プライバシーポリシー", privacy_path, class: "text-brand underline hover:text-brand-strong" %>
+      、ご利用の条件については
+      <%= link_to "利用規約", terms_path, class: "text-brand underline hover:text-brand-strong" %>
+      もあわせてご確認ください。
+    </p>
+  </section>
+
+  <section class="mt-8">
+    <h2 class="page-lead">お問い合わせの前に</h2>
+
+    <p class="mt-2 text-body text-ink leading-relaxed">
+      パスワードはお預かりしていないため、運営者がお調べしてお伝えすることはできません。
+      ログインできない場合は、お手数ですが新しくアカウントを作成してください。
+    </p>
+  </section>
+</div>
