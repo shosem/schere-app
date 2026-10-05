@@ -118,6 +118,27 @@ RSpec.describe "Footers", type: :system do
         expect(page).to have_no_css(plus_button)
         expect(page).to have_no_content("設定")
       end
+
+      it "リンクからお問い合わせ画面へ遷移できること" do
+        within("footer") do
+          click_link "お問い合わせ"
+        end
+        expect(page).to have_current_path(contact_path)
+      end
+
+      it "リンクから利用規約画面へ遷移できること" do
+        within("footer") do
+          click_link "利用規約"
+        end
+        expect(page).to have_current_path(terms_path)
+      end
+
+      it "リンクからプライバシーポリシー画面へ遷移できること" do
+        within("footer") do
+          click_link "プライバシーポリシー"
+        end
+        expect(page).to have_current_path(privacy_path)
+      end
     end
 
     describe "認証画面のフッター表示" do

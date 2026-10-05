@@ -74,6 +74,30 @@ RSpec.describe "GuestSessions", type: :system do
         expect(page).to have_content("グループにアクセスする権限がありません")
       end
     end
+
+    # 入室前のゲストも名前を預ける側なので、同意文を出している。
+    # この画面は application レイアウトのため、PC幅ではフッターにも同じ3リンクが出る。
+    # 同意文側を踏んだことを保証するために main の中に絞る。
+    describe "同意文" do
+      it "同意文と2ページへのリンクが表示されること" do
+        within("main") do
+          expect(page).to have_content("入室することで")
+          expect(page).to have_content("に同意したものとみなします")
+          expect(page).to have_link("利用規約", href: terms_path)
+          expect(page).to have_link("プライバシーポリシー", href: privacy_path)
+        end
+      end
+
+      it "利用規約へ遷移できること" do
+        within("main") { click_link "利用規約" }
+        expect(page).to have_current_path(terms_path)
+      end
+
+      it "プライバシーポリシーへ遷移できること" do
+        within("main") { click_link "プライバシーポリシー" }
+        expect(page).to have_current_path(privacy_path)
+      end
+    end
   end
 describe "イベント共有リンクからの入室" do
       let(:group) { create(:group) }
