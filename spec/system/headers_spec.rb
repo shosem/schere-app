@@ -42,6 +42,27 @@ RSpec.describe "Headers", type: :system do
           expect(page).to have_current_path(new_group_path)
           expect(page).to have_content("グループを作成する")
         end
+
+        it "リンクからお問い合わせ画面へ遷移できること" do
+          within("[data-dropdown-target='menu']") do
+            click_link "お問い合わせ"
+          end
+          expect(page).to have_current_path(contact_path)
+        end
+
+        it "リンクから利用規約画面へ遷移できること" do
+          within("[data-dropdown-target='menu']") do
+            click_link "利用規約"
+          end
+          expect(page).to have_current_path(terms_path)
+        end
+
+        it "リンクからプライバシーポリシー画面へ遷移できること" do
+          within("[data-dropdown-target='menu']") do
+            click_link "プライバシーポリシー"
+          end
+          expect(page).to have_current_path(privacy_path)
+        end
       end
     end
 
@@ -65,6 +86,12 @@ RSpec.describe "Headers", type: :system do
         visit new_user_registration_path
         expect(page).to have_no_link("Schere")
         expect(page).to have_no_button(user.name.first)
+      end
+
+      it "静的ページへの動線が表示されていないこと" do
+        expect(page).to have_no_link("利用規約")
+        expect(page).to have_no_link("プライバシーポリシー")
+        expect(page).to have_no_link("お問い合わせ")
       end
     end
 
@@ -131,6 +158,27 @@ RSpec.describe "Headers", type: :system do
         it "ログインページに遷移できること" do
           click_on "ログイン"
           expect(page).to have_current_path(new_user_session_path)
+        end
+
+        it "リンクからお問い合わせ画面へ遷移できること" do
+          within("[data-dropdown-target='menu']") do
+            click_link "お問い合わせ"
+          end
+          expect(page).to have_current_path(contact_path)
+        end
+
+        it "リンクから利用規約画面へ遷移できること" do
+          within("[data-dropdown-target='menu']") do
+            click_link "利用規約"
+          end
+          expect(page).to have_current_path(terms_path)
+        end
+
+        it "リンクからプライバシーポリシー画面へ遷移できること" do
+          within("[data-dropdown-target='menu']") do
+            click_link "プライバシーポリシー"
+          end
+          expect(page).to have_current_path(privacy_path)
         end
 
         describe "退室" do

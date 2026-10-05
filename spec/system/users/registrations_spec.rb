@@ -59,5 +59,26 @@ RSpec.describe "Registrations", type: :system do
         expect(page).to have_content("パスワード（確認用）とパスワードの入力が一致しません")
       end
     end
+
+    # 認証画面は auth レイアウトでヘッダーもフッターも無い。
+    # 登録前に規約とポリシーを読む経路はこの同意文だけなので、遷移まで確かめる。
+    describe "同意文" do
+      it "同意文と2ページへのリンクが表示されること" do
+        expect(page).to have_content("登録することで")
+        expect(page).to have_content("に同意したものとみなします")
+        expect(page).to have_link("利用規約", href: terms_path)
+        expect(page).to have_link("プライバシーポリシー", href: privacy_path)
+      end
+
+      it "利用規約へ遷移できること" do
+        click_link "利用規約"
+        expect(page).to have_current_path(terms_path)
+      end
+
+      it "プライバシーポリシーへ遷移できること" do
+        click_link "プライバシーポリシー"
+        expect(page).to have_current_path(privacy_path)
+      end
+    end
   end
 end

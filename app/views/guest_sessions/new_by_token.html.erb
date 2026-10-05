@@ -15,6 +15,8 @@
 
       <%= f.submit "入室する", class: "mt-4 w-full btn btn-primary py-2" %>
     <% end %>
+
+    <%= render "shared/agreement_statement", submit: "入室" %>
   </div>
 
   <div class="card mt-4 bg-warn-subtle border-warn">
