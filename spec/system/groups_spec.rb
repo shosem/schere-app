@@ -5,10 +5,10 @@ RSpec.describe "Groups", type: :system do
 
   def stab_share(js_return)
     page.execute_script(<<~JS)
-      navigator.share = () => {
-        window.__shared = true;
-        return #{js_return}
-    }
+        navigator.share = () => {
+          window.__shared = true;
+          return #{js_return}
+      }
     JS
   end
 

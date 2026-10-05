@@ -16,8 +16,9 @@ RSpec.describe "Venues", type: :request do
       end
 
       it "施設情報を作成できること" do
-        expect { post group_event_venues_path(group, event), params: {
-          venue: { name: "居酒屋" }
+        expect {
+          post group_event_venues_path(group, event), params: {
+            venue: { name: "居酒屋" }
           }, as: :turbo_stream
         }.to change(Venue, :count).by(1)
         expect(response).to have_http_status(200)
@@ -40,7 +41,8 @@ RSpec.describe "Venues", type: :request do
 
       it "施設情報を削除できること" do
         venue = create(:venue, event: event)
-        expect { delete group_event_venue_path(group, event, venue)
+        expect {
+          delete group_event_venue_path(group, event, venue)
         }.to change(Venue, :count).by(-1)
         expect(Venue.count).to eq 0
       end
@@ -50,7 +52,7 @@ RSpec.describe "Venues", type: :request do
       it "施設情報を作成できないこと" do
         post group_event_venues_path(group, event), params: {
           venue: { name: "居酒屋" }
-          }
+        }
         expect(response).to have_http_status(302)
         expect(response).to redirect_to(group_event_path(group, event))
         expect(Venue.count).to eq 0
@@ -68,7 +70,8 @@ RSpec.describe "Venues", type: :request do
 
       it "施設情報を削除できないこと" do
         venue = create(:venue, event: event)
-        expect { delete group_event_venue_path(group, event, venue)
+        expect {
+          delete group_event_venue_path(group, event, venue)
         }.to_not change(Venue, :count)
         expect(Venue.count).to eq 1
       end

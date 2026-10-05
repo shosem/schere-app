@@ -34,7 +34,7 @@ module App
     config.generators do |g|
       g.assets false    # css,javascriptファイルを作成しない
       g.helper false    # helperファイルを作成しない
-      g.test_framework false  # テストファイルを作成しない
+      g.test_framework false # テストファイルを作成しない
       g.factory_bot dir: "spec/factories"
     end
 

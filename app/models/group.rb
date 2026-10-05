@@ -11,6 +11,7 @@ class Group < ApplicationRecord
   end
 
   private
+
   def generate_join_token
     token = SecureRandom.urlsafe_base64(16)
     while Group.exists?(join_token: token)
