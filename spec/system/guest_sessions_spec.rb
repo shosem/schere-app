@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "GuestSessions", type: :system do
   include LoginMacros
+
   describe "ゲスト入室機能" do
     let(:group) { create(:group) }
     before do

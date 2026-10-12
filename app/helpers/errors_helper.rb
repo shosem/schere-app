@@ -6,6 +6,7 @@ module ErrorsHelper
   def reload_path
     path = request.env["action_dispatch.original_path"]
     return root_path if path.nil?
+
     path += "?#{request.query_string}" if request.query_string.present?
     path
   end
