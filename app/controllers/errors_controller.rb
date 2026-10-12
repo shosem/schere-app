@@ -4,8 +4,8 @@ class ErrorsController < ApplicationController
   def show
     @exception = request.env["action_dispatch.exception"]
     @status_code = ActionDispatch::ExceptionWrapper.new(
-                     request.env, @exception
-                   ).status_code
+      request.env, @exception
+    ).status_code
 
     render view_for_code(@status_code), status: @status_code
   end
@@ -13,13 +13,10 @@ class ErrorsController < ApplicationController
   private
 
     def view_for_code(code)
-      supported_error_codes.fetch(code, "500")
-    end
-
-    def supported_error_codes
-      {
-        403 => "403",
-        404 => "404",
-      }
+      if code == 404
+        "404"
+      else
+        "500"
+      end
     end
 end
