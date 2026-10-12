@@ -23,6 +23,10 @@ module App
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 8.1
 
+    config.exceptions_app = ->(env) {
+      ErrorsController.action(:show).call(env)
+    }
+
     # i18nを日本語設定
     config.i18n.default_locale = :ja
 
@@ -34,7 +38,7 @@ module App
     config.generators do |g|
       g.assets false    # css,javascriptファイルを作成しない
       g.helper false    # helperファイルを作成しない
-      g.test_framework false  # テストファイルを作成しない
+      g.test_framework false # テストファイルを作成しない
       g.factory_bot dir: "spec/factories"
     end
 

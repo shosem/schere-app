@@ -36,7 +36,7 @@ class Event < ApplicationRecord
       unavailable_counts[c.id] = c.votes.count { |v| v.answer == "unavailable" }
     end
 
-    counts  = unavailable_counts.values
+    counts = unavailable_counts.values
 
     return [] if counts.max == counts.min
 

@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "GuestSessions", type: :system do
   include LoginMacros
+
   describe "ゲスト入室機能" do
     let(:group) { create(:group) }
     before do
@@ -45,7 +46,7 @@ RSpec.describe "GuestSessions", type: :system do
       end
 
       it "確認用のモーダルが開くこと" do
-        expect(page).to have_content("このグループには既に#{ guest.name }さんがいます。")
+        expect(page).to have_content("このグループには既に#{guest.name}さんがいます。")
         expect(page).to have_button("本人です")
         expect(page).to have_button("違う名前にする")
       end
@@ -58,7 +59,7 @@ RSpec.describe "GuestSessions", type: :system do
 
       it "違う名前にするを選択するとモーダルが閉じること" do
         click_on "違う名前にする"
-        expect(page).to have_no_content("このグループには既に#{ guest.name }さんがいます。")
+        expect(page).to have_no_content("このグループには既に#{guest.name}さんがいます。")
         expect(page).to have_current_path(new_group_join_path(group.join_token))
       end
     end
@@ -161,5 +162,5 @@ describe "イベント共有リンクからの入室" do
           expect(page).to have_current_path(group_path(group))
         end
       end
-    end
+end
 end

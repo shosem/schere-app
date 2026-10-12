@@ -48,7 +48,7 @@ class EventsController < ApplicationController
     # また、候補日ごとの入れ物を作っておく。初期値を入れておかないと、nilになってしまう
     @candidate_dates.each do |cd|
       @vote_counts[cd.id] = { "available" => 0, "maybe" => 0, "unavailable" => 0 }
-      @voter_names[cd.id]  = { "available" => [], "maybe" => [], "unavailable" => [] }
+      @voter_names[cd.id] = { "available" => [], "maybe" => [], "unavailable" => [] }
       cd.votes.each do |vote|
         # 候補日=>{回答=>数}に1を足す
         @vote_counts[cd.id][vote.answer] += 1
@@ -116,6 +116,7 @@ class EventsController < ApplicationController
     @event.candidate_dates.each do |cd|
       # 削除予定（removed）ならスルー
       next if cd.marked_for_destruction?
+
       @selected_days[cd.date.to_s] = { "id" => cd.id, "startTime" => cd.start_time.present? ? cd.start_time.strftime("%H:%M:00") : "", "endTime" => cd.end_time.present? ? cd.end_time.strftime("%H:%M:00") : "" }
     end
   end
