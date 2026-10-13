@@ -6,4 +6,9 @@ module ApplicationHelper
       link_to "Schere", root_path, class: "page-section text-brand"
     end
   end
+
+  def page_title(title = "")
+    base_title = "Schere"
+    title.present? ? "#{title} | #{base_title}" : base_title
+  end
 end
