@@ -1,5 +1,7 @@
 <% owned = @group.owned_by?(current_user) %>
 
+<% content_for(:title, @group.name) %>
+
 <div class="grow flex flex-col">
   <div class="flex justify-between items-center">
     <div>
