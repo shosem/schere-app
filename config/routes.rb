@@ -3,16 +3,14 @@ Rails.application.routes.draw do
     get "/(*path)", to: redirect { |_params, req| "https://schere.shosem.com#{req.fullpath}" }
   end
   devise_for :users, controllers:
-    { registrations: "users/registrations"
-  }
+    { registrations: "users/registrations" }
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
 
-  # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
-  # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
+  get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
   # Defines the root path route ("/")
@@ -21,6 +19,10 @@ Rails.application.routes.draw do
   # join_tokenによるゲストログイン
   get "join/:join_token", to: "guest_sessions#new_by_token", as: :new_group_join
   post "join/:join_token", to: "guest_sessions#create_by_token", as: :group_join
+  delete "guest_sessions/sign_out", to: "guest_sessions#destroy", as: :destroy_guest_session
+  get "contact", to: "pages#contact"
+  get "privacy", to: "pages#privacy"
+  get "terms", to: "pages#terms"
 
   resources :groups, only: %i[ index new create show destroy ] do
     resources :events, only: %i[ new create show edit update destroy ] do

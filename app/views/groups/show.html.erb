@@ -1,38 +1,62 @@
-<div class="min-h-[80vh] flex flex-col">
+<% owned = @group.owned_by?(current_user) %>
+
+<% content_for(:title, @group.name) %>
+
+<div class="grow flex flex-col">
   <div class="flex justify-between items-center">
     <div>
-      <h2 class="text-xl md:text-4xl text-gray-800 font-bold"><%= @group.name %></h2>
+      <h1 class="page-header"><%= @group.name %></h1>
     </div>
-    <div data-controller="share" data-share-url-value="<%= new_group_join_url(@group.join_token) %>" 
-                                 data-share-title-value="グループ共有"
-                                 data-share-text-value="グループ「<%= @group.name %>」に参加しませんか？"
-                                 class="flex flex-col items-end">
-      <div>
-        <% if @group.owned_by?(current_user) %>
+
+    <div
+      data-controller="share"
+      data-share-url-value="<%= new_group_join_url(@group.join_token) %>"
+      data-share-title-value="グループ共有"
+      data-share-text-value="グループ「<%= @group.name %>」に参加しませんか？"
+      class="flex flex-col items-end shrink-0"
+    >
+      <div class="flex items-center gap-2">
+        <button
+          type="button"
+          data-action="click->share#share"
+          class="p-1.5 rounded-control cursor-pointer hover:bg-sunken"
+        >
+          <%= render "shared/icons/share", style: "size-6 md:size-8" %>
+        </button>
+
+        <% if owned && @events.present? %>
           <%= link_to "＋ イベント作成", new_group_event_path(@group), class: "btn btn-primary" %>
         <% end %>
-        <button data-action="click->share#share" class="btn text-gray-800 border border-gray-800 hover:bg-gray-200">共有</button>
       </div>
-      <p data-share-target="sharedMessage" class="px-2 rounded-xl"></p>
+
+      <p data-share-target="sharedMessage" class="px-2 rounded-control"></p>
     </div>
   </div>
 
-  <div class="mt-4 bg-gray-50 flex-grow flex flex-col p-4">
+  <div class="index mt-4">
     <% if @events.present? %>
       <div class="mt-4 flex flex-col gap-4">
         <% @events.each do |event| %>
-          <%= link_to group_event_path(@group, event) do%>
-            <div class="card">
+          <%= link_to group_event_path(@group, event) do %>
+            <div class="card card-clickable">
               <%= event.title %>
             </div>
           <% end %>
         <% end %>
       </div>
     <% else %>
-      <p class="mt-4 flex-grow flex items-center justify-center text-gray-400">まだイベントはありません</p>
+      <div class="empty-state">
+        <% if owned %>
+          <p>まだイベントはありません。イベントを作成してみましょう！</p>
+          <%= link_to "＋ イベント作成", new_group_event_path(@group), class: "btn btn-primary" %>
+        <% else %>
+          <p>まだイベントはありません。</p>
+        <% end %>
+      </div>
     <% end %>
   </div>
-  <% if @group.owned_by?(current_user) %>
+
+  <% if owned %>
     <%= link_to "グループを削除", group_path(@group), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, class: "mt-4 self-end btn btn-danger" %>
   <% end %>
 </div>

@@ -1,0 +1,15 @@
+<% content_for(:title, "エラー") %>
+
+<div class="empty-state">
+  <h1 class="page-header">500：エラーが発生しました。</h1>
+
+  <p>サーバーでエラーが発生しています。</p>
+
+  <div class="flex gap-2 items-center">
+    <%= link_to "トップに戻る", root_path, class: "btn btn-primary" %>
+
+    <%= link_to reload_path, class: "btn btn-secondary" do %>
+      <%= render "shared/icons/arrow_path" %>再読み込み
+    <% end %>
+  </div>
+</div>

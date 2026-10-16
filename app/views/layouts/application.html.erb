@@ -1,35 +1,39 @@
 <!DOCTYPE html>
+
 <html>
   <head>
-    <title><%= content_for(:title) || "App" %></title>
+    <title><%= page_title(yield(:title)) %></title>
+
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="App">
+    <meta name="application-name" content="Schere">
     <meta name="mobile-web-app-capable" content="yes">
+
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= yield :head %>
 
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+    <%= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
 
     <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
     <%# app/assets 配下の .css を全て読み込む。ビルド前のCSSをここに置かないこと %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
   </head>
 
-  <body class="min-h-screen flex flex-col">
+  <body class="min-h-screen flex flex-col bg-ground">
     <%= render 'shared/header' %>
     <%= render 'shared/flash_messages' %>
 
-    <main class="flex-grow w-full max-w-7xl mx-auto p-4">       <%# コンテンツをここで包んで伸ばす %>
+    <main class="flex flex-col grow w-full max-w-7xl mx-auto p-4">
+      <%# コンテンツをここで包んで伸ばす %>
       <%= yield %>
-    </main> 
+    </main>
 
     <%= render 'shared/footer' %>
     <%= turbo_frame_tag "modal", data: { controller: "modal", modal_target: "modal", action: "turbo:before-cache@document->modal#close" } %>
