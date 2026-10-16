@@ -1,0 +1,130 @@
+@import "tailwindcss";
+
+@theme {
+  /* ブランドテーマ */
+  --color-brand: #3D5F92;
+  --color-brand-strong: #2F4A75;
+  --color-brand-subtle: #E4EBF4;
+
+  /* 意味 */
+  --color-ok: #2D7852;
+  --color-ok-subtle: #E1F0E7;
+  --color-warn: #8A6212;
+  --color-warn-subtle: #F6EDD8;
+  --color-danger: #B8382D;
+  --color-danger-subtle: #FAEDEB;
+  --color-danger-strong: #912C23;
+
+  /* テキスト */
+  --color-ink-strong: #111418; /* 見出し */
+  --color-ink: #3A4149; /* 本文 */
+  --color-ink-muted: #67707A; /* 説明 */
+
+  /* 役割 */
+  --color-line: #C9D0D9; /* 境界枠線 */
+  --color-surface: #FFFFFF; /* カード面 */
+  --color-sunken: #F1F4F7; /* カード内のセクション */
+  --color-ground: #F7F9FA; /* 最奥 */
+
+  /* テキストサイズ */
+  --text-badge: 12px;
+  --text-caption: 14px;
+  --text-body: 16px;
+  --text-lead: 18px;
+  --text-section: 24px;
+  --text-page: 32px;
+
+  /* 角丸 */
+  --radius-control: 8px;
+  --radius-surface: 12px;
+
+  /* 影 */
+  --shadow-card: 0 1px 2px rgb(17 20 24 / 0.06);
+}
+
+@layer components {
+  .btn {
+    @apply text-center font-semibold p-2 md:p-3 rounded-control transition inline-flex items-center justify-center hover:cursor-pointer
+  }
+  .btn-primary {
+    @apply text-white bg-brand hover:bg-brand-strong
+  }
+  .btn-danger {
+    @apply text-white bg-danger hover:bg-danger-strong
+  }
+  .btn-secondary {
+    @apply text-ink border border-line hover:border-ink hover:bg-surface
+  }
+
+  /* カード */
+  .card {
+    @apply rounded-surface p-5 border border-line
+  }
+  .card-clickable {
+    @apply bg-surface shadow-card hover:cursor-pointer hover:bg-sunken
+  }
+  .card-surface {
+    @apply bg-surface
+  }
+  .card-sunken {
+    @apply bg-sunken
+  }
+
+  .badge {
+    @apply text-badge font-bold px-2.5 py-1 rounded-full
+  }
+  .badge-pending {
+    @apply bg-warn-subtle text-warn
+  }
+  .badge-done {
+    @apply bg-ok-subtle text-ok
+  }
+  .form-label {
+    @apply block text-caption font-medium text-ink mb-1
+  }
+  .form-input {
+    @apply w-full border border-line bg-surface rounded-control px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand
+  }
+  /* 一覧画面の背景。growがあるため親はflex強制 */
+  .index {
+    @apply grow flex flex-col p-4
+  }
+  /* 一覧画面の空状態 */
+  .empty-state {
+    @apply flex flex-col items-center justify-center grow gap-4;
+    & p { @apply text-ink text-lead }
+  }
+  .vote-btn {
+    @apply text-ink-muted text-lead font-bold border-2 border-line rounded-full flex items-center justify-center w-11 h-11
+  }
+  .vote-available {
+    @apply peer-checked:text-brand peer-checked:border-brand peer-checked:bg-brand-subtle/50 hover:border-brand
+  }
+  .vote-maybe {
+    @apply peer-checked:text-warn peer-checked:border-warn peer-checked:bg-warn-subtle/50 hover:border-warn
+  }
+  .vote-unavailable {
+    @apply peer-checked:text-danger peer-checked:border-danger peer-checked:bg-danger-subtle/50 hover:border-danger
+  }
+
+  /* 見出し */
+  .page-header {
+    @apply text-section md:text-page text-ink-strong font-bold
+  }
+  .page-section {
+    @apply text-lead md:text-section text-ink font-bold
+  }
+  .page-lead {
+    @apply text-body md:text-lead text-ink font-bold
+  }
+  .page-caption {
+    @apply text-badge md:text-caption text-ink-muted
+  }
+    /* 集計結果表示 */
+  .page-count {
+    @apply text-section md:text-page font-bold
+  }
+  .dropdown {
+    @apply block px-4 py-2 text-caption text-ink hover:bg-sunken
+  }
+}

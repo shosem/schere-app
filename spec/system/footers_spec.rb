@@ -91,7 +91,7 @@ RSpec.describe "Footers", type: :system do
         before do
           visit new_group_join_path(group.join_token)
           fill_in "ゲスト名", with: "テストゲスト"
-          click_on "参加する"
+          click_on "入室する"
           expect(page).to have_content(group.name)
         end
 
@@ -117,6 +117,27 @@ RSpec.describe "Footers", type: :system do
         expect(page).to have_no_content("ダッシュボード")
         expect(page).to have_no_css(plus_button)
         expect(page).to have_no_content("設定")
+      end
+
+      it "リンクからお問い合わせ画面へ遷移できること" do
+        within("footer") do
+          click_link "お問い合わせ"
+        end
+        expect(page).to have_current_path(contact_path)
+      end
+
+      it "リンクから利用規約画面へ遷移できること" do
+        within("footer") do
+          click_link "利用規約"
+        end
+        expect(page).to have_current_path(terms_path)
+      end
+
+      it "リンクからプライバシーポリシー画面へ遷移できること" do
+        within("footer") do
+          click_link "プライバシーポリシー"
+        end
+        expect(page).to have_current_path(privacy_path)
       end
     end
 

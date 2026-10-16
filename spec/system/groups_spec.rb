@@ -5,10 +5,10 @@ RSpec.describe "Groups", type: :system do
 
   def stab_share(js_return)
     page.execute_script(<<~JS)
-      navigator.share = () => {
-        window.__shared = true;
-        return #{js_return}
-    }
+        navigator.share = () => {
+          window.__shared = true;
+          return #{js_return}
+      }
     JS
   end
 
@@ -63,6 +63,24 @@ RSpec.describe "Groups", type: :system do
       expect(page).not_to have_content(other_group.name)
     end
 
+    describe "グループ作成への動線" do
+      it "0件のとき、作成ボタンが空の状態の中にひとつだけ表示されること" do
+        visit root_path
+        expect(page).to have_content("まだグループはありません。グループを作成してみましょう！")
+        expect(page).to have_link("＋ グループ作成", count: 1)
+        within(".empty-state") do
+          expect(page).to have_link("＋ グループ作成")
+        end
+      end
+
+      it "1件以上のとき、作成ボタンがヘッダにひとつだけ表示されること" do
+        create(:group, user: user)
+        visit root_path
+        expect(page).to have_no_css(".empty-state")
+        expect(page).to have_link("＋ グループ作成", count: 1)
+      end
+    end
+
     it "一覧画面から該当グループの詳細画面に遷移できること" do
       group = create(:group, user: user)
       other_group = create(:group, user: user)
@@ -81,7 +99,7 @@ RSpec.describe "Groups", type: :system do
         it "共有ボタンを押すとリンクを共有する関数が呼ばれ成功用のテキストが表示されること" do
           visit group_path(group)
           page.execute_script("navigator.share = ()=> { window.__shared = true; return Promise.resolve() }")
-          click_on "共有"
+          find('button[data-action="click->share#share"]').click
           expect(page).to have_content("成功しました")
           expect(evaluate_script("window.__shared")).to eq true
         end
@@ -97,7 +115,7 @@ RSpec.describe "Groups", type: :system do
         it "共有ボタンを押すとリンクを共有する関数が呼ばれ失敗用のテキストが表示されること" do
           visit group_path(group)
           stab_share("Promise.reject(new Error())")
-          click_on "共有"
+          find('button[data-action="click->share#share"]').click
           expect(page).to have_content("失敗しました")
           expect(evaluate_script("window.__shared")).to eq true
         end
@@ -105,7 +123,7 @@ RSpec.describe "Groups", type: :system do
         it "キャンセルした場合、成功・失敗のテキストは表示されないこと" do
           visit group_path(group)
           stab_share("Promise.reject(new DOMException('canceled', 'AbortError'))")
-          click_on "共有"
+          find('button[data-action="click->share#share"]').click
           expect(page).to have_no_content("成功しました", wait: 0)
           expect(page).to have_no_content("失敗しました", wait: 0)
           expect(evaluate_script("window.__shared")).to eq true
@@ -113,15 +131,11 @@ RSpec.describe "Groups", type: :system do
       end
     end
 
-    describe "幹事とゲストの表示" do
+    describe "グループ削除ボタンの表示" do
       before do
         visit group_path(group)
       end
       context "幹事でログインしている場合" do
-        it "イベント作成ボタンが表示されること" do
-          expect(page).to have_link("＋ イベント作成")
-        end
-
         it "グループ削除ボタンが表示されること" do
           expect(page).to have_link("グループを削除")
         end
@@ -134,15 +148,54 @@ RSpec.describe "Groups", type: :system do
           expect(page).to have_content("ログアウトしました")
           visit new_group_join_path(group.join_token)
           fill_in "ゲスト名", with: "テストゲスト"
-          click_on "参加する"
-        end
-
-        it "イベント作成ボタンが表示されないこと" do
-          expect(page).to have_no_link("＋ イベント作成")
+          click_on "入室する"
         end
 
         it "グループ削除ボタンが表示されないこと" do
           expect(page).to have_no_link("グループを削除")
+        end
+      end
+    end
+
+    describe "イベント作成への動線" do
+      context "幹事でログインしている場合" do
+        it "イベントが0件のとき、作成ボタンが空の状態の中にひとつだけ表示されること" do
+          visit group_path(group)
+          expect(page).to have_content("まだイベントはありません。イベントを作成してみましょう！")
+          expect(page).to have_link("＋ イベント作成", count: 1)
+          within(".empty-state") do
+            expect(page).to have_link("＋ イベント作成")
+          end
+        end
+
+        it "イベントが1件以上のとき、作成ボタンがヘッダにひとつだけ表示されること" do
+          create(:event, group: group, user: user)
+          visit group_path(group)
+          expect(page).to have_no_css(".empty-state")
+          expect(page).to have_link("＋ イベント作成", count: 1)
+        end
+      end
+
+      context "ゲストで入室している場合" do
+        before do
+          visit group_path(group)
+          click_button(user.name.first)
+          click_on("ログアウト")
+          expect(page).to have_content("ログアウトしました")
+          visit new_group_join_path(group.join_token)
+          fill_in "ゲスト名", with: "テストゲスト"
+          click_on "入室する"
+        end
+
+        it "イベントが0件のとき、作成ボタンは表示されず、文言だけが表示されること" do
+          expect(page).to have_content("まだイベントはありません")
+          expect(page).to have_no_link("＋ イベント作成")
+        end
+
+        it "イベントが1件以上のとき、作成ボタンが表示されないこと" do
+          create(:event, group: group, user: user)
+          visit group_path(group)
+          expect(page).to have_no_link("＋ イベント作成")
         end
       end
     end

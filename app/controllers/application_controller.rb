@@ -11,11 +11,12 @@ class ApplicationController < ActionController::Base
     end
 
     def after_sign_out_path_for(resource_or_scope)
-      new_user_session_path   # ログイン画面へ
+      new_user_session_path # ログイン画面へ
     end
 
     def current_guest
       return if user_signed_in?
+
       @current_guest ||= Guest.find_by(session_token: session[:guest_token])
     end
 

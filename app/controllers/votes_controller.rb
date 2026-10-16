@@ -29,7 +29,6 @@ class VotesController < ApplicationController
     end
   end
 
-
   private
 
   def set_group
