@@ -15,8 +15,13 @@
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         <% @groups.each do |group| %>
           <%= link_to group_path(group) do %>
-            <div class="card card-clickable">
-              <%= group.name %>
+            <div class="card card-clickable flex flex-col h-full">
+              <h2 class="page-lead"><%= group.name %></h2>
+
+              <p class="page-caption mt-auto">
+                <%= group.events.size %>件のイベント |
+                <%= group.guests.size + 1 %>人が参加中
+              </p>
             </div>
           <% end %>
         <% end %>

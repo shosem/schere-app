@@ -3,7 +3,7 @@ class GroupsController < ApplicationController
   before_action :authenticate_user!, except: :show
   before_action :set_group, only: %i[ show destroy ]
   def index
-    @groups = current_user.groups
+    @groups = current_user.groups.includes(:guests, :events)
   end
 
   def new
