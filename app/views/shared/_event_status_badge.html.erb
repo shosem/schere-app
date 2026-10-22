@@ -1,0 +1,8 @@
+<%# locals: (status:) %>
+
+<% badge = {
+             "adjusting"  => ["調整中",   "badge-pending"],
+             "confirmed"  => ["確定済み", "badge-done"]
+            } %>
+
+<span class="badge <%= badge[status][1] %>"><%= badge[status][0] %></span>

@@ -21,7 +21,10 @@ class GroupsController < ApplicationController
   end
 
   def show
-    @events = @group.events
+    @events = @group.events.includes(:confirmed_candidate_date)
+    @answered_counts = Vote.answered_counts_by_event(@events)
+    @member_count = @group.guests.size + 1
+    @available_counts = Vote.answer_counts(@events, "available")
   end
 
   def destroy

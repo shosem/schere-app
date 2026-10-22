@@ -38,8 +38,35 @@
       <div class="mt-4 flex flex-col gap-4">
         <% @events.each do |event| %>
           <%= link_to group_event_path(@group, event) do %>
-            <div class="card card-clickable">
-              <%= event.title %>
+            <div class="card card-clickable flex flex-col gap-2 w-full">
+              <div class="flex justify-between">
+                <h2 class="page-lead"><%= event.title %></h2>
+                <%= render "shared/event_status_badge", status: event.status %>
+              </div>
+
+              <div class="flex gap-4">
+                <% if event.location.present? %>
+                  <span class="page-caption text-ink-muted">📍<%= event.location %></span>
+                <% end %>
+
+                <% if event.confirmed? %>
+                  <p class="page-caption text-ink font-bold">
+                    <%= l(event.confirmed_candidate_date.date, format: :confirm_card) %>
+                  </p>
+                  <p class="page-caption">○ <%= @available_counts[event.confirmed_candidate_date_id] %>人</p>
+                <% else %>
+                  <p class="page-caption">
+                    回答 <%= @answered_counts[event.id] %>/<%= @member_count %> 人
+                  </p>
+                <% end %>
+              </div>
+
+              <% unless event.confirmed? %>
+                <% percent = @answered_counts[event.id]*100/@member_count %>
+                <div class="bg-sunken w-full h-2 rounded-full">
+                  <div class="bg-brand rounded-full h-2" style="width: <%= percent %>%"></div>
+                </div>
+              <% end %>
             </div>
           <% end %>
         <% end %>
