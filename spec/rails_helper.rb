@@ -54,6 +54,12 @@ RSpec.configure do |config|
     driven_by SYSTEM_SPEC_DRIVER
   end
 
+  config.after(:each, type: :system) do |example|
+    if example.exception
+      puts page.driver.browser.logs.get(:browser).map(&:message)
+    end
+  end
+
   config.include FactoryBot::Syntax::Methods
 
   config.include Devise::Test::IntegrationHelpers, type: :request
