@@ -11,11 +11,11 @@ RSpec.describe "Events", type: :system do
 
   let(:user) { create(:user) }
   let(:group) { create(:group, user: user) }
-  before do
-    login(user)
-  end
 
   describe "作成機能" do
+    before do
+      login(user)
+    end
     context "作成可能" do
       # 候補日のため未来が好ましいが、カレンダー（ブラウザ）は当月を描画するため、月末にテストを行うと落ちる。そのため当日にした
       # アプリ内ではDate.currentを使用するよう統一しているが、
@@ -49,10 +49,12 @@ RSpec.describe "Events", type: :system do
 
   describe "編集機能" do
     let(:event) { create(:event, group: group) }
-    before do
-      visit group_event_path(group, event)
-    end
+
     context "編集可能" do
+      before do
+        login(user)
+        visit group_event_path(group, event)
+      end
       it "イベントを編集できること" do
         open_owner_menu
         click_on "イベントを編集する"
@@ -66,10 +68,6 @@ RSpec.describe "Events", type: :system do
 
     context "編集不可" do
       it "ゲスト入室の場合編集ボタンが表示されないこと" do
-        click_button(user.name.first)
-        expect(page).to have_content("ログアウト")
-        click_on "ログアウト"
-        expect(page).to have_content("ログアウトしました")
         visit new_group_join_path(group.join_token)
         fill_in "ゲスト名", with: "ゲスト"
         click_on "入室する"
@@ -84,10 +82,12 @@ RSpec.describe "Events", type: :system do
 
   describe "削除機能" do
     let(:event) { create(:event, group: group) }
-    before do
-      visit group_event_path(group, event)
-    end
+
     context "削除可能" do
+      before do
+        login(user)
+        visit group_event_path(group, event)
+      end
       it "イベントを削除できること" do
         open_owner_menu
         page.accept_confirm do
@@ -100,10 +100,6 @@ RSpec.describe "Events", type: :system do
 
     context "削除不可" do
       it "ゲスト入室の場合削除ボタンが表示されないこと" do
-        click_button(user.name.first)
-        expect(page).to have_content("ログアウト")
-        click_on "ログアウト"
-        expect(page).to have_content("ログアウトしました")
         visit new_group_join_path(group.join_token)
         fill_in "ゲスト名", with: "ゲスト"
         click_on "入室する"
@@ -119,6 +115,7 @@ RSpec.describe "Events", type: :system do
   describe "投票機能" do
     let(:event) { create(:event, group: group, candidate_dates_count: 3) }
     before do
+      login(user)
       visit group_event_path(group, event)
     end
     context "投票可能" do
@@ -143,6 +140,7 @@ RSpec.describe "Events", type: :system do
   describe "日程確定機能" do
     let(:event) { create(:event, group: group, candidate_dates_count: 3) }
     before do
+      login(user)
       visit group_event_path(group, event)
     end
 
@@ -180,6 +178,9 @@ RSpec.describe "Events", type: :system do
   end
 
   describe "ステータスによる詳細画面の出し分け" do
+    before do
+      login(user)
+    end
     context "調整中の場合" do
       let(:event) { create(:event, group: group, candidate_dates_count: 3, status: "adjusting") }
       before do
@@ -242,6 +243,7 @@ RSpec.describe "Events", type: :system do
   describe "共有ボタン" do
     let(:event) { create(:event, group: group) }
     before do
+      login(user)
       visit group_event_path(group, event)
     end
 
@@ -259,6 +261,7 @@ RSpec.describe "Events", type: :system do
   describe "施設情報機能" do
     let(:event) { create(:event, group: group, candidate_dates_count: 3, status: "confirmed") }
       before do
+        login(user)
         event.update(confirmed_candidate_date_id: event.candidate_dates.last.id)
         visit group_event_path(group, event)
       end
@@ -325,6 +328,9 @@ RSpec.describe "Events", type: :system do
 
   describe "選択した候補日のフォーム表示" do
     let(:date) { Date.today }
+    before do 
+      login(user)
+    end
     context "作成失敗時" do
       before do
         visit new_group_event_path(group)
