@@ -1,13 +1,8 @@
 <% content_for(:title, @event.title) %>
 
-<% badge = {
-             "adjusting"  => ["調整中",   "badge-pending"],
-             "confirmed"  => ["確定済み", "badge-done"]
-            } %>
-
 <%# タイトル、場所、説明表示div %>
 <div>
-  <span class="badge <%= badge[@event.status][1] %>"><%= badge[@event.status][0] %></span>
+  <%= render "shared/event_status_badge", status: @event.status %>
 
   <div
     class="flex justify-between items-center"

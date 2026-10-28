@@ -71,10 +71,6 @@
                                 params: { candidate_date_id: c.id },
                                 class: "card card-clickable w-full p-2 md:p-4 h-36 relative" do %>
           <div dir="rtl">
-            <p class="page-lead text-center">
-              <%= l(c.date, format: :confirm_card) %>
-            </p>
-
             <div class="absolute inset-s-1 top-1 flex items-center gap-1">
               <% if top_available_day_ids.include?(c.id) %>
                 <span class="badge text-brand border bg-brand-subtle p-1">
@@ -89,6 +85,10 @@
               <% end %>
             </div>
           </div>
+
+          <p class="page-lead text-center">
+            <%= l(c.date, format: :confirm_card) %>
+          </p>
 
           <%# 時間の入力があれば表示 %>
           <div class="flex justify-center">
