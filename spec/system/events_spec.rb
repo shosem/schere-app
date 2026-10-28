@@ -67,7 +67,8 @@ RSpec.describe "Events", type: :system do
     context "編集不可" do
       it "ゲスト入室の場合編集ボタンが表示されないこと" do
         click_button(user.name.first)
-        click_on("ログアウト")
+        expect(page).to have_content("ログアウト")
+        click_on "ログアウト"
         expect(page).to have_content("ログアウトしました")
         visit new_group_join_path(group.join_token)
         fill_in "ゲスト名", with: "ゲスト"
@@ -100,7 +101,8 @@ RSpec.describe "Events", type: :system do
     context "削除不可" do
       it "ゲスト入室の場合削除ボタンが表示されないこと" do
         click_button(user.name.first)
-        click_on("ログアウト")
+        expect(page).to have_content("ログアウト")
+        click_on "ログアウト"
         expect(page).to have_content("ログアウトしました")
         visit new_group_join_path(group.join_token)
         fill_in "ゲスト名", with: "ゲスト"
