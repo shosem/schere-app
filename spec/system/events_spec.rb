@@ -328,7 +328,7 @@ RSpec.describe "Events", type: :system do
 
   describe "選択した候補日のフォーム表示" do
     let(:date) { Date.today }
-    before do 
+    before do
       login(user)
     end
     context "作成失敗時" do
