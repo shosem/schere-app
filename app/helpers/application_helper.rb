@@ -7,8 +7,30 @@ module ApplicationHelper
     end
   end
 
-  def page_title(title = "")
+  # メタタグや動的なOGP
+  def default_meta_tags
     base_title = "Schere"
-    title.present? ? "#{title} | #{base_title}" : base_title
+    title = content_for(:title)
+    description = "イベント作成から日程調整まで"
+    {
+      site: base_title,
+      title: title,
+      reverse: true,
+      charset: "UTF-8",
+      description: description,
+      keywords: "予定 日程 調整 幹事 イベント",
+      og: {
+        site_name: base_title,
+        title: title,
+        description: description,
+        url: request.original_url,
+        image: "#{request.base_url}/ogp/light.png",
+        locale: "ja-JP"
+      },
+      twitter: {
+        card: "summary_large_image",
+        image: "#{request.base_url}/ogp/light.png"
+      }
+    }
   end
 end
