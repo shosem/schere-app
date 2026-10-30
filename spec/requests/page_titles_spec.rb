@@ -1,9 +1,10 @@
 require 'rails_helper'
 
-# 守りたいのは page_title の計算結果ではなく、「レイアウトが page_title を
-# 呼んでいること」。実装中、application.html.erb だけ直して auth.html.erb が
-# 取り残され、ログイン・新規登録のタブが "ログイン"（サイト名なし）になった。
-# page_title 自体は正しく動いていたので、ヘルパー単体のテストでは捕まらない。
+# 守りたいのは default_meta_tags の計算結果ではなく、「レイアウトが
+# display_meta_tags(default_meta_tags) を呼んでいること」。実装中、
+# application.html.erb だけ直して auth.html.erb が取り残され、ログイン・
+# 新規登録のタブが "ログイン"（サイト名なし）になった。
+# default_meta_tags 自体は正しく動いていたので、ヘルパー単体のテストでは捕まらない。
 #
 # レイアウトは3枚（application / auth / error）あり、増える可能性もある。
 # 1枚ずつ代表ページを通して、呼び忘れたレイアウトが混ざらないようにする。
@@ -66,7 +67,7 @@ RSpec.describe "ページタイトル", type: :request do
   end
 
   # content_for を書いていないページ（モーダルなど）でタイトルが空になると、
-  # ブラウザはURLを表示する。フォールバックは page_title が持っている。
+  # ブラウザはURLを表示する。フォールバックは meta-tags の site が持っている。
   describe "content_for を書いていないページ" do
     let(:user) { create(:user) }
 
